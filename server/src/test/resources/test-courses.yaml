@@ -1,0 +1,37 @@
+courses:
+  - courseId: test-course
+    title: Test Course
+    lessons:
+      - lessonId: lesson-1
+        name: Lesson One
+        steps:
+          - stepId: single-step
+            type: single-answer
+            question: Choose the only correct option.
+            answers:
+              - Option A
+              - Option B
+              - Option C
+            correct: Option B
+            explanation: Option B is correct for this single-answer question.
+            repetable: true
+          - stepId: multiple-step
+            type: multiple-answer
+            question: Choose all correct options.
+            answers:
+              - First
+              - Second
+              - Third
+            correct:
+              - First
+              - Third
+            explanation: First and Third are correct answers.
+            repetable: false
+          - stepId: exact-step
+            type: exact-text
+            question: Type the exact keyword.
+            correct:
+              - keyword
+              - KEYWORD
+            explanation: Both lowercase and uppercase forms are accepted.
+            repetable: true

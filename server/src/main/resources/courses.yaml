@@ -1,0 +1,40 @@
+courses:
+  - courseId: kotlin-basics
+    title: Kotlin Basics
+    lessons:
+      - lessonId: variables
+        name: Variables and Types
+        steps:
+          - stepId: var-vs-val
+            type: single-answer
+            question: Which keyword defines an immutable variable in Kotlin?
+            answers:
+              - var
+              - val
+            correct: val
+            explanation: Use val for read-only values; var creates a mutable reference.
+            repetable: true
+          - stepId: numeric-types
+            type: multiple-answer
+            question: Which of the following are Kotlin numeric types?
+            answers:
+              - Int
+              - Double
+              - String
+              - Float
+            correct:
+              - Int
+              - Double
+              - Float
+            explanation: String is not a numeric type; Int, Double, and Float are numeric.
+            repetable: true
+      - lessonId: functions
+        name: Functions
+        steps:
+          - stepId: function-keyword
+            type: exact-text
+            question: What keyword starts a function declaration in Kotlin?
+            correct:
+              - fun
+            explanation: Kotlin uses the fun keyword to declare functions.
+            repetable: false
