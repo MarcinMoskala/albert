@@ -63,3 +63,13 @@ data class ExactTextStepApi(
     @SerialName("repetable") override val repeatable: Boolean,
     val correct: List<String>
 ) : LessonStepApi()
+
+@Serializable
+@SerialName("text")
+data class TextStepApi(
+    override val stepId: String,
+    override val question: String,
+    override val explanation: String,
+    @SerialName("repetable") override val repeatable: Boolean,
+    val text: String
+) : LessonStepApi()

@@ -23,6 +23,7 @@ koin = "4.1.1"
 sqldelight = "2.2.1"
 kotlinx-datetime = "0.7.1"
 androidx-navigation = "2.9.1"
+multiplatform-markdown-renderer = "0.28.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -69,6 +70,8 @@ sqldelight-async-extensions = { module = "app.cash.sqldelight:async-extensions",
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+multiplatform-markdown-renderer = { module = "com.mikepenz:multiplatform-markdown-renderer", version.ref = "multiplatform-markdown-renderer" }
+multiplatform-markdown-renderer-m3 = { module = "com.mikepenz:multiplatform-markdown-renderer-m3", version.ref = "multiplatform-markdown-renderer" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -11,6 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.marcinmoskala.albert.presentation.ui.learning.components.SingleAnswerStepView
+import com.marcinmoskala.albert.presentation.ui.learning.components.MultipleAnswerStepView
+import com.marcinmoskala.albert.presentation.ui.learning.components.ExactTextStepView
+import com.marcinmoskala.albert.presentation.ui.learning.components.TextStepView
+import com.marcinmoskala.albert.domain.model.SingleAnswerStep
+import com.marcinmoskala.albert.domain.model.MultipleAnswerStep
+import com.marcinmoskala.albert.domain.model.ExactTextStep
+import com.marcinmoskala.albert.domain.model.TextStep
+import com.marcinmoskala.model.course.ExactTextStepApi
+import com.marcinmoskala.model.course.MultipleAnswerStepApi
+import com.marcinmoskala.model.course.SingleAnswerStepApi
+import com.marcinmoskala.model.course.TextStepApi
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -94,7 +106,7 @@ private fun LearningContent(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         // Progress indicator
         Column(
@@ -115,64 +127,46 @@ private fun LearningContent(
             )
         }
 
-        // Step content placeholder
-        Card(
+        // Step content
+        Box(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            )
+                .padding(vertical = 16.dp)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                uiState.currentStep?.let { step ->
-                    Text(
-                        text = step.question,
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold
+            uiState.currentStep?.let { step ->
+                when (step) {
+                    is SingleAnswerStep -> SingleAnswerStepView(
+                        step = step,
+                        courseId = uiState.courseId,
+                        lessonId = uiState.lessonId,
+                        onStepCompleted = onNext
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "Step type: ${step::class.simpleName}",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+
+                    is MultipleAnswerStep -> MultipleAnswerStepView(
+                        step = step,
+                        courseId = uiState.courseId,
+                        lessonId = uiState.lessonId,
+                        onStepCompleted = onNext
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "(Step implementation pending)",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+
+                    is ExactTextStep -> ExactTextStepView(
+                        step = step,
+                        courseId = uiState.courseId,
+                        lessonId = uiState.lessonId,
+                        onStepCompleted = onNext
+                    )
+
+                    is TextStep -> TextStepView(
+                        step = step,
+                        courseId = uiState.courseId,
+                        lessonId = uiState.lessonId,
+                        onStepCompleted = onNext
                     )
                 }
             }
         }
 
-        // Navigation buttons
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            OutlinedButton(
-                onClick = onPrevious,
-                enabled = uiState.hasPrevious
-            ) {
-                Text("Previous")
-            }
-
-            Button(
-                onClick = onNext,
-                enabled = uiState.hasNext
-            ) {
-                Text("Next")
-            }
-        }
     }
 }
 

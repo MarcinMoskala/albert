@@ -1,7 +1,7 @@
 package com.marcinmoskala.albert.presentation.ui.app
 
+import com.marcinmoskala.albert.domain.model.Course
 import com.marcinmoskala.albert.domain.repository.CourseRepository
-import com.marcinmoskala.model.course.CourseApi
 import com.marcinmoskala.albert.presentation.common.viewmodels.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +20,14 @@ class MainViewModel(
 
     init {
         courseRepository.courses
-            .onEach { courses -> _uiState.update { it.copy(loading = false, courses = createCoursesUi(courses)) } }
+            .onEach { courses ->
+                _uiState.update {
+                    it.copy(
+                        loading = false,
+                        courses = createCoursesUi(courses)
+                    )
+                }
+            }
             .launchIn(viewModelScope)
         refresh()
     }
@@ -31,7 +38,7 @@ class MainViewModel(
         }
     }
 
-    private fun createCoursesUi(courses: List<CourseApi>): List<CourseMainUi> =
+    private fun createCoursesUi(courses: List<Course>): List<CourseMainUi> =
         courses.map { course ->
             CourseMainUi(
                 courseId = course.courseId,

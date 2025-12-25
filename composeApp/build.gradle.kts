@@ -68,6 +68,8 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json.client)
             implementation(libs.kotlinx.datetime)
             implementation(libs.androidx.navigation.compose)
+            implementation(libs.multiplatform.markdown.renderer)
+            implementation(libs.multiplatform.markdown.renderer.m3)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -28,9 +28,69 @@ courses:
               - Float
             explanation: String is not a numeric type; Int, Double, and Float are numeric.
             repetable: true
+      - lessonId: introduction
+        name: Introduction to Kotlin
+        steps:
+          - stepId: welcome
+            type: text
+            question: Welcome to Kotlin Basics
+            explanation: This is an introduction to Kotlin programming language
+            repetable: false
+            text: |
+              # Welcome to Kotlin!
+              
+              Kotlin is a modern, concise, and safe programming language that makes developers happier.
+              
+              ## Why Kotlin?
+              
+              - **Concise**: Drastically reduce the amount of boilerplate code
+              - **Safe**: Avoid entire classes of errors such as null pointer exceptions
+              - **Interoperable**: Leverage existing libraries for the JVM, Android, and the browser
+              - **Tool-friendly**: Choose any Java IDE or build from the command line
+              
+              ## What You'll Learn
+              
+              In this course, you'll learn:
+              
+              1. Variables and types
+              2. Functions and lambdas
+              3. Classes and objects
+              4. Collections and sequences
+              
+              Let's get started! 🚀
       - lessonId: functions
         name: Functions
         steps:
+          - stepId: functions-intro
+            type: text
+            question: Introduction to Functions
+            explanation: Learn about Kotlin functions
+            repetable: false
+            text: |
+              # Functions in Kotlin
+              
+              Functions are declared using the `fun` keyword:
+              
+              ```kotlin
+              fun greet(name: String): String {
+                  return "Hello, $name!"
+              }
+              ```
+              
+              ## Key Features
+              
+              - **Default parameters**: Provide default values for function parameters
+              - **Named arguments**: Call functions using parameter names
+              - **Single-expression functions**: Simplify simple functions
+              - **Extension functions**: Add functions to existing classes
+              
+              ### Example: Single-Expression Function
+              
+              ```kotlin
+              fun double(x: Int) = x * 2
+              ```
+              
+              Functions are fundamental to Kotlin programming. Let's practice!
           - stepId: function-keyword
             type: exact-text
             question: What keyword starts a function declaration in Kotlin?

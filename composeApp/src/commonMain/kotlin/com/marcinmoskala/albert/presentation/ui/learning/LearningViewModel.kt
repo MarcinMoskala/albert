@@ -1,8 +1,8 @@
 package com.marcinmoskala.albert.presentation.ui.learning
 
+import com.marcinmoskala.albert.domain.model.LessonStep
 import com.marcinmoskala.albert.domain.repository.CourseRepository
 import com.marcinmoskala.albert.presentation.common.viewmodels.BaseViewModel
-import com.marcinmoskala.model.course.LessonStepApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -58,7 +58,9 @@ class LearningViewModel(
                         loading = false,
                         steps = steps,
                         currentStepIndex = 0,
-                        totalSteps = steps.size
+                        totalSteps = steps.size,
+                        courseId = courseId ?: "",
+                        lessonId = lessonId ?: ""
                     )
                 }
             } catch (e: Exception) {
@@ -93,12 +95,14 @@ class LearningViewModel(
 
 data class LearningUiState(
     val loading: Boolean = false,
-    val steps: List<LessonStepApi> = emptyList(),
+    val steps: List<LessonStep> = emptyList(),
     val currentStepIndex: Int = 0,
     val totalSteps: Int = 0,
+    val courseId: String = "",
+    val lessonId: String = "",
     val error: Throwable? = null
 ) {
-    val currentStep: LessonStepApi?
+    val currentStep: LessonStep?
         get() = steps.getOrNull(currentStepIndex)
 
     val hasNext: Boolean
