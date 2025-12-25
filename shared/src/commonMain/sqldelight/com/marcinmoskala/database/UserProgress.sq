@@ -1,0 +1,40 @@
+CREATE TABLE user_progress (
+  userId TEXT NOT NULL,
+  courseId TEXT NOT NULL,
+  lessonId TEXT NOT NULL,
+  stepId TEXT NOT NULL,
+  status TEXT NOT NULL,
+  createdAt TEXT NOT NULL,
+  updatedAt TEXT NOT NULL,
+  reviewAt TEXT,
+  lastIntervalDays INTEGER,
+  PRIMARY KEY(userId, courseId, lessonId, stepId)
+);
+
+insertUserProgress:
+INSERT OR REPLACE INTO user_progress(
+  userId,
+  courseId,
+  lessonId,
+  stepId,
+  status,
+  createdAt,
+  updatedAt,
+  reviewAt,
+  lastIntervalDays
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+selectUserProgress:
+SELECT * FROM user_progress
+WHERE userId = ? AND courseId = ? AND lessonId = ? AND stepId = ?;
+
+selectAllUserProgress:
+SELECT * FROM user_progress;
+
+selectUserProgressByUser:
+SELECT * FROM user_progress
+WHERE userId = ?;
+
+deleteUserProgress:
+DELETE FROM user_progress
+WHERE userId = ? AND courseId = ? AND lessonId = ? AND stepId = ?;

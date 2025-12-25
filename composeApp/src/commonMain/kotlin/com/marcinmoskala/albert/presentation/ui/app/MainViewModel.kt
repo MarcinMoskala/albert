@@ -1,7 +1,7 @@
 package com.marcinmoskala.albert.presentation.ui.app
 
 import com.marcinmoskala.albert.domain.repository.CourseRepository
-import com.marcinmoskala.model.course.CourseDefinitionApi
+import com.marcinmoskala.model.course.CourseApi
 import com.marcinmoskala.albert.presentation.common.viewmodels.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,14 +31,14 @@ class MainViewModel(
         }
     }
 
-    private fun createCoursesUi(courses: List<CourseDefinitionApi>): List<CourseMainUi> =
+    private fun createCoursesUi(courses: List<CourseApi>): List<CourseMainUi> =
         courses.map { course ->
             CourseMainUi(
                 courseId = course.courseId,
                 title = course.title,
                 lessons = course.lessons.map { lesson ->
                     LessonMainUi(
-                        courseId = course.courseId,
+                        lessonId = lesson.lessonId,
                         name = lesson.name,
                         steps = lesson.steps.size
                     )

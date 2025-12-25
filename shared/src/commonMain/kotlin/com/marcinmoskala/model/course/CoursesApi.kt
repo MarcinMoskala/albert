@@ -4,19 +4,19 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CourseApi(
-    val courses: List<CourseDefinitionApi>
+data class CoursesApi(
+    val courses: List<CourseApi>
 )
 
 @Serializable
-data class CourseDefinitionApi(
+data class CourseApi(
     val courseId: String,
     val title: String,
-    val lessons: List<LessonDefinitionApi>
+    val lessons: List<LessonApi>
 )
 
 @Serializable
-data class LessonDefinitionApi(
+data class LessonApi(
     val lessonId: String,
     val name: String,
     val steps: List<LessonStepApi>

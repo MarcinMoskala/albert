@@ -1,7 +1,5 @@
 package com.marcinmoskala.albert.presentation.ui.app
 
-import com.marcinmoskala.model.course.LessonDefinitionApi
-
 data class MainUiState(
     val loading: Boolean = false,
     val courses: List<CourseMainUi> = emptyList(),
@@ -15,7 +13,7 @@ data class CourseMainUi(
 )
 
 data class LessonMainUi(
-    val courseId: String,
+    val lessonId: String,
     val name: String,
     val steps: Int,
 )

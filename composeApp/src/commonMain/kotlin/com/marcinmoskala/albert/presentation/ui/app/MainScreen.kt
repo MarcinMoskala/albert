@@ -17,7 +17,10 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel = koinViewModel()
+    viewModel: MainViewModel = koinViewModel(),
+    onCourseClick: (String) -> Unit = {},
+    onLessonClick: (String, String) -> Unit = { _, _ -> },
+    onReviewAllClick: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -25,7 +28,12 @@ fun MainScreen(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CoursesList(courses = uiState.courses)
+        CoursesList(
+            courses = uiState.courses,
+            onCourseClick = onCourseClick,
+            onLessonClick = onLessonClick,
+            onReviewAllClick = onReviewAllClick
+        )
         if (uiState.loading) CircularProgressIndicator()
         if (uiState.error != null) ErrorView(
             message = uiState.error?.message ?: "Unknown error",
@@ -37,6 +45,9 @@ fun MainScreen(
 @Composable
 private fun CoursesList(
     courses: List<CourseMainUi>,
+    onCourseClick: (String) -> Unit,
+    onLessonClick: (String, String) -> Unit,
+    onReviewAllClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -44,14 +55,32 @@ private fun CoursesList(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+        // Review All button at the top
+        item {
+            Button(
+                onClick = onReviewAllClick,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Review All")
+            }
+        }
+
         items(courses, key = { it.courseId }) { course ->
-            CourseCard(course = course)
+            CourseCard(
+                course = course,
+                onCourseClick = onCourseClick,
+                onLessonClick = onLessonClick
+            )
         }
     }
 }
 
 @Composable
-private fun CourseCard(course: CourseMainUi) {
+private fun CourseCard(
+    course: CourseMainUi,
+    onCourseClick: (String) -> Unit,
+    onLessonClick: (String, String) -> Unit
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
@@ -62,15 +91,30 @@ private fun CourseCard(course: CourseMainUi) {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(
-                text = course.title,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = course.title,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
+                )
+                Button(
+                    onClick = { onCourseClick(course.courseId) }
+                ) {
+                    Text("Start Course")
+                }
+            }
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 course.lessons.forEach { lesson ->
-                    key(lesson.courseId) {
-                        LessonRow(lesson = lesson)
+                    key(lesson.lessonId) {
+                        LessonRow(
+                            lesson = lesson,
+                            onClick = { onLessonClick(course.courseId, lesson.lessonId) }
+                        )
                     }
                 }
             }
@@ -79,23 +123,33 @@ private fun CourseCard(course: CourseMainUi) {
 }
 
 @Composable
-private fun LessonRow(lesson: LessonMainUi) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+private fun LessonRow(
+    lesson: LessonMainUi,
+    onClick: () -> Unit
+) {
+    Card(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth()
     ) {
-        Column {
-            Text(
-                text = lesson.name,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Medium
-            )
-            Text(
-                text = "Steps: ${lesson.steps}",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = lesson.name,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium
+                )
+                Text(
+                    text = "Steps: ${lesson.steps}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
     }
 }

@@ -35,7 +35,7 @@ fun Application.module(extraModules: List<Module> = emptyList()) {
     }
     routing {
         get("/") {
-            call.respondText("Ktor: Hello World!")
+            call.respondText("Works!")
         }
     }
     configureCourseRouting()

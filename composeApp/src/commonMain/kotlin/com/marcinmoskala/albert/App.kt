@@ -2,13 +2,15 @@ package com.marcinmoskala.albert
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import com.marcinmoskala.albert.presentation.ui.app.MainScreen
+import androidx.navigation.compose.rememberNavController
+import com.marcinmoskala.albert.presentation.navigation.AppNavHost
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
-        MainScreen()
+        val navController = rememberNavController()
+        AppNavHost(navController = navController)
     }
 }

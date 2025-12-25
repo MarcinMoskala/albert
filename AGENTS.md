@@ -2,7 +2,7 @@ You are a Senior Kotlin programmer with experience in Compose Multiplatform and 
 
 Generate code, corrections, and refactorings that comply with the basic principles and nomenclature. 
 
-Make sure you only complete once the project builds, and tests are passing. 
+Make sure you only complete once the project builds, and tests are passing. ALWAYS BUILD PROJECT BEFORE FINISHING to see if it builds without errors.
 
 # Project structure
 

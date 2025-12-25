@@ -17,6 +17,7 @@
     - `updatedAt`: Date
     - `reviewAt`: Date | NULL (next due; today for same-day retries)
     - `lastIntervalDays`: Int | NULL (most recent interval length)
+Combination of `userId`, `courseId`, `lessonId`, and `stepId` is unique and serves as a key. 
 
 2. YAML files schema
 

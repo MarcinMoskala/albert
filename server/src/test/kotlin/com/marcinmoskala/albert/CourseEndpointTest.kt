@@ -4,7 +4,7 @@ import com.marcinmoskala.albert.data.yaml.CourseYamlRepository
 import com.marcinmoskala.albert.domain.course.CourseRepository
 import com.marcinmoskala.albert.domain.course.CourseService
 import com.marcinmoskala.albert.di.serverModule
-import com.marcinmoskala.model.course.CourseApi
+import com.marcinmoskala.model.course.CoursesApi
 import com.marcinmoskala.model.course.ExactTextStepApi
 import com.marcinmoskala.model.course.MultipleAnswerStepApi
 import com.marcinmoskala.model.course.SingleAnswerStepApi
@@ -14,7 +14,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.testing.*
-import org.koin.dsl.module
+import org.koin.dsl.module as koinModule
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -34,7 +34,7 @@ class CourseEndpointTest {
         val response = client.get("/course")
         assertEquals(HttpStatusCode.OK, response.status)
 
-        val body = response.body<CourseApi>()
+        val body = response.body<CoursesApi>()
         assertTrue(body.courses.isNotEmpty(), "Expected at least one course")
         val firstCourse = body.courses.first()
         assertTrue(firstCourse.lessons.isNotEmpty(), "Expected at least one lesson")
@@ -45,7 +45,7 @@ class CourseEndpointTest {
     fun `returns expected courses from test yaml`() = testApplication {
         application {
             module(
-                listOf(
+                extraModules = listOf(
                     serverModule,
                     testModule()
                 )
@@ -58,7 +58,7 @@ class CourseEndpointTest {
         val response = client.get("/course")
         assertEquals(HttpStatusCode.OK, response.status)
 
-        val body = response.body<CourseApi>()
+        val body = response.body<CoursesApi>()
         val course = body.courses.single()
         assertEquals("test-course", course.courseId)
         assertEquals("Test Course", course.title)
@@ -86,7 +86,7 @@ class CourseEndpointTest {
         assertTrue(exact.repeatable)
     }
 
-    private fun testModule() = module(override = true) {
+    private fun testModule() = koinModule {
         single<CourseRepository> { CourseYamlRepository(resourcePath = "test-courses.yaml") }
         single { CourseService(get()) }
     }

@@ -4,8 +4,7 @@ import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import com.marcinmoskala.albert.domain.course.CourseRepository
-import com.marcinmoskala.model.course.CourseApi
-import kotlinx.serialization.decodeFromString
+import com.marcinmoskala.model.course.CoursesApi
 import java.io.IOException
 
 class CourseYamlRepository(
@@ -18,11 +17,11 @@ class CourseYamlRepository(
     )
 ) : CourseRepository {
 
-    override suspend fun getCourses(): CourseApi {
+    override suspend fun getCourses(): CoursesApi {
         val resource = javaClass.classLoader.getResource(resourcePath)
             ?: throw IllegalStateException("Course YAML file not found at path: $resourcePath")
         val content = runCatching { resource.readText() }
             .getOrElse { throw IOException("Unable to read YAML file at $resourcePath", it) }
-        return yaml.decodeFromString(CourseApi.serializer(), content)
+        return yaml.decodeFromString(CoursesApi.serializer(), content)
     }
 }
