@@ -23,9 +23,7 @@ class TextStepViewModel(
 
     fun complete() {
         if (!_uiState.value.hasReachedEnd) return
-
         _uiState.update { it.copy(isCompleted = true) }
-        // Text steps are always considered correct when completed
         onAnswerSubmitted(true)
     }
 }

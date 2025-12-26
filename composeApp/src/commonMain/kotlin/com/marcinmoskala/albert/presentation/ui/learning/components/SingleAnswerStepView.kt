@@ -20,8 +20,9 @@ import org.koin.core.parameter.parametersOf
 fun SingleAnswerStepView(
     step: SingleAnswerStep,
     onAnswerSubmitted: (isCorrect: Boolean) -> Unit,
+    stepKey: Int,
     modifier: Modifier = Modifier,
-    viewModel: SingleAnswerStepViewModel = koinViewModel {
+    viewModel: SingleAnswerStepViewModel = koinViewModel(key = stepKey.toString()) {
         parametersOf(step, onAnswerSubmitted)
     }
 ) {

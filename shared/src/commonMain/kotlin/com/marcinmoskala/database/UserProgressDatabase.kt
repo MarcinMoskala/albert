@@ -3,8 +3,7 @@ package com.marcinmoskala.database
 import app.cash.sqldelight.async.coroutines.awaitAsList
 import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
 import app.cash.sqldelight.db.SqlDriver
-import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDate
+import kotlin.time.Instant
 
 enum class UserProgressStatus {
     PENDING,
@@ -18,7 +17,7 @@ data class UserProgressRecord(
     val status: UserProgressStatus,
     val createdAt: Instant,
     val updatedAt: Instant,
-    val reviewAt: LocalDate?,
+    val reviewAt: Instant?,
     val lastIntervalDays: Int?
 )
 
@@ -70,7 +69,7 @@ class SqlDelightUserProgressLocalClient(private val database: AlbertDatabase) : 
         status = UserProgressStatus.valueOf(status),
         createdAt = Instant.parse(createdAt),
         updatedAt = Instant.parse(updatedAt),
-        reviewAt = reviewAt?.let(LocalDate::parse),
+        reviewAt = reviewAt?.let(Instant::parse),
         lastIntervalDays = lastIntervalDays?.toInt()
     )
 }

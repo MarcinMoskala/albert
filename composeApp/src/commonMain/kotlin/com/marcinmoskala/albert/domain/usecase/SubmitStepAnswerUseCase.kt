@@ -13,10 +13,10 @@ class SubmitStepAnswerUseCase(
     private val userProgressRepository: UserProgressRepository
 ) {
     suspend operator fun invoke(
+        userId: String,
         step: LessonStep,
         isCorrect: Boolean,
     ) {
-        val userId = "guest1" // TODO: Get actual user ID from auth system
         val now = Clock.System.now()
 
         // Get existing record or create new one
@@ -24,11 +24,11 @@ class SubmitStepAnswerUseCase(
 
         val (reviewAt, lastIntervalDays) = when {
             !step.repeatable -> null to null
-            !isCorrect -> now.toLocalDateTime(TimeZone.UTC).date to null
+            !isCorrect -> now to null
             else -> { // isCorrect && step.repeatable
                 val lastIntervalDays = existingRecord?.lastIntervalDays
                 val newInterval = if (lastIntervalDays == null) 1 else lastIntervalDays * 2
-                (now + newInterval.days).toLocalDateTime(TimeZone.UTC).date to newInterval
+                now + newInterval.days to newInterval
             }
         }
 

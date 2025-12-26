@@ -17,8 +17,9 @@ import org.koin.core.parameter.parametersOf
 fun MultipleAnswerStepView(
     step: MultipleAnswerStep,
     onAnswerSubmitted: (isCorrect: Boolean) -> Unit,
+    stepKey: Int,
     modifier: Modifier = Modifier,
-    viewModel: MultipleAnswerStepViewModel = koinViewModel {
+    viewModel: MultipleAnswerStepViewModel = koinViewModel(key = stepKey.toString()) {
         parametersOf(step, onAnswerSubmitted)
     }
 ) {

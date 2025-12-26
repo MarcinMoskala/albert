@@ -3,6 +3,7 @@ package com.marcinmoskala.albert.data
 import com.marcinmoskala.albert.domain.repository.UserProgressRepository
 import com.marcinmoskala.database.UserProgressLocalClient
 import com.marcinmoskala.database.UserProgressRecord
+import com.marcinmoskala.database.UserProgressStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,14 +20,12 @@ class UserProgressRepositoryImpl(
     private val _progress = MutableStateFlow<Map<String, UserProgressRecord>>(emptyMap())
     override val progress: StateFlow<Map<String, UserProgressRecord>> = _progress.asStateFlow()
 
-    init {
-        backgroundScope.launch { 
-            _progress.value = localClient.getAll().associateBy { record ->
-                makeKey(record.userId, record.stepId)
-            }
+    val loadedJob = backgroundScope.launch {
+        _progress.value = localClient.getAll().associateBy { record ->
+            makeKey(record.userId, record.stepId)
         }
     }
-    
+
     override suspend fun upsert(record: UserProgressRecord) = mutex.withLock {
         localClient.upsert(record)
         val key = makeKey(record.userId, record.stepId)
@@ -67,6 +66,11 @@ class UserProgressRepositoryImpl(
             makeKey(record.userId, record.stepId)
         }
         _progress.value += newMap
+    }
+
+    override suspend fun getProgress(userId: String, stepId: String): UserProgressRecord? {
+        loadedJob.join()
+        return _progress.value[makeKey(userId, stepId)]
     }
 
     private fun makeKey(

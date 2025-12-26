@@ -8,11 +8,14 @@ import com.marcinmoskala.albert.presentation.common.ErrorHandler
 import com.marcinmoskala.albert.presentation.common.viewmodels.BaseViewModel
 import com.marcinmoskala.albert.presentation.navigation.AppDestination
 import com.marcinmoskala.albert.presentation.navigation.Navigator
+import com.marcinmoskala.database.UserProgressStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Clock
 
 class LearningViewModel(
     private val courseRepository: CourseRepository,
@@ -23,17 +26,39 @@ class LearningViewModel(
     private val lessonId: String?,
     errorHandler: ErrorHandler
 ) : BaseViewModel(errorHandler) {
-    private val steps = getSteps().toMutableList()
+    private val steps = MutableStateFlow(emptyList<LessonStep>())
+    private val userId = "unlogged"
 
-    private val _uiState = MutableStateFlow(LearningUiState(
-        currentStep = steps.firstOrNull(),
-        remainingSteps = steps.size
-    ))
+    private val _uiState = MutableStateFlow(
+        LearningUiState(
+            currentStep = null,
+            remainingSteps = 0
+        )
+    )
     val uiState: StateFlow<LearningUiState> = _uiState.asStateFlow()
 
     init {
-        if (steps.isEmpty()) {
-            navigator.navigateBack()
+        viewModelScope.launch {
+            val lessonSteps = getAllSteps()
+                .filter { shouldBeSeen(it) }
+            steps.value = lessonSteps
+            if (lessonSteps.isEmpty()) {
+                navigator.navigateBack()
+            } else {
+                _uiState.update { it.copy(currentStep = lessonSteps.first(), remainingSteps = lessonSteps.size) }
+            }
+        }
+    }
+
+    private suspend fun shouldBeSeen(step: LessonStep): Boolean {
+        val record = userProgressRepository.getProgress(userId, step.stepId)
+        return when (record?.status) {
+            null, UserProgressStatus.PENDING -> true
+            UserProgressStatus.COMPLETED -> false
+            UserProgressStatus.REPEATING -> {
+                val reviewAt = record.reviewAt ?: return true
+                reviewAt < Clock.System.now()
+            }
         }
     }
 
@@ -41,23 +66,25 @@ class LearningViewModel(
         val currentStep = _uiState.value.currentStep ?: return
         val updateRepositoryJob = viewModelScope.launch {
             submitStepAnswerUseCase(
+                userId = userId,
                 step = currentStep,
                 isCorrect = isCorrect,
             )
         }
-        if (isCorrect) {
-            steps.removeAt(0)
-        } else {
-            val incorrectStep = steps.removeAt(0)
-            val insertPosition = minOf(5, steps.size)
-            steps.add(insertPosition, incorrectStep)
+        steps.update {
+            if (isCorrect) {
+                it - currentStep
+            } else {
+                val removed = it - currentStep
+                removed.take(5) + currentStep + removed.drop(5)
+            }
         }
-        val nextStep = steps.firstOrNull()
+        val nextStep = steps.value.firstOrNull()
         if (nextStep != null) {
             _uiState.update { state ->
                 state.copy(
                     currentStep = nextStep,
-                    remainingSteps = steps.size,
+                    remainingSteps = steps.value.size,
                     stepPresentationCounter = state.stepPresentationCounter + 1,
                 )
             }
@@ -73,7 +100,7 @@ class LearningViewModel(
         navigator.navigateBack()
     }
 
-    private fun getSteps(): List<LessonStep> {
+    private fun getAllSteps(): List<LessonStep> {
         val courses = courseRepository.courses.value
         return when {
             // Review all mode - collect all steps from all lessons

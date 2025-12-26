@@ -80,6 +80,7 @@ kotlin {
             implementation(libs.kotlinx.coroutinesSwing)
             implementation(libs.ktor.client.cio)
             implementation(libs.koin.core)
+            implementation(libs.logback)
         }
         jvmTest.dependencies {
             implementation(libs.kotlinx.datetime)

@@ -114,22 +114,26 @@ private fun LearningContent(
                     when (step) {
                         is SingleAnswerStep -> SingleAnswerStepView(
                             step = step,
-                            onAnswerSubmitted = onAnswerSubmitted
+                            onAnswerSubmitted = onAnswerSubmitted,
+                            stepKey = uiState.stepPresentationCounter
                         )
 
                         is MultipleAnswerStep -> MultipleAnswerStepView(
                             step = step,
-                            onAnswerSubmitted = onAnswerSubmitted
+                            onAnswerSubmitted = onAnswerSubmitted,
+                            stepKey = uiState.stepPresentationCounter
                         )
 
                         is ExactTextStep -> ExactTextStepView(
                             step = step,
-                            onAnswerSubmitted = onAnswerSubmitted
+                            onAnswerSubmitted = onAnswerSubmitted,
+                            stepKey = uiState.stepPresentationCounter
                         )
 
                         is TextStep -> TextStepView(
                             step = step,
-                            onAnswerSubmitted = onAnswerSubmitted
+                            onAnswerSubmitted = onAnswerSubmitted,
+                            stepKey = uiState.stepPresentationCounter
                         )
                     }
                 }

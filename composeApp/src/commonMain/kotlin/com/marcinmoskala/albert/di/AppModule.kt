@@ -23,6 +23,7 @@ import com.marcinmoskala.albert.presentation.ui.learning.components.TextStepView
 import com.marcinmoskala.client.CourseClient
 import com.marcinmoskala.client.buildDefaultHttpClient
 import com.marcinmoskala.database.UserProgressLocalClient
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -36,7 +37,7 @@ val appModule = module {
 
     // Background scope for repository
     single<CoroutineScope>(createdAtStart = true) {
-        CoroutineScope(SupervisorJob() + Dispatchers.Default)
+        CoroutineScope(SupervisorJob() + Dispatchers.Default + CoroutineExceptionHandler { _, e -> get<ErrorHandler>().handleError(e) })
     }
 
     // User Progress Repository - requires UserProgressLocalClient to be provided by platform

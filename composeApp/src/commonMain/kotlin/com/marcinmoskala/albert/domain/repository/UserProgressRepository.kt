@@ -1,6 +1,7 @@
 package com.marcinmoskala.albert.domain.repository
 
 import com.marcinmoskala.database.UserProgressRecord
+import com.marcinmoskala.database.UserProgressStatus
 import kotlinx.coroutines.flow.StateFlow
 
 interface UserProgressRepository {
@@ -11,4 +12,5 @@ interface UserProgressRepository {
     suspend fun getAllForUser(userId: String): List<UserProgressRecord>
     suspend fun delete(userId: String, stepId: String)
     suspend fun loadAllForUser(userId: String)
+    suspend fun getProgress(userId: String, stepId: String): UserProgressRecord?
 }

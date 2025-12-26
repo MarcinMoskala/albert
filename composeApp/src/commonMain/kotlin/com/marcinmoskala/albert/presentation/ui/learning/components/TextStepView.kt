@@ -19,8 +19,9 @@ import org.koin.core.parameter.parametersOf
 fun TextStepView(
     step: TextStep,
     onAnswerSubmitted: (isCorrect: Boolean) -> Unit,
+    stepKey: Int,
     modifier: Modifier = Modifier,
-    viewModel: TextStepViewModel = koinViewModel {
+    viewModel: TextStepViewModel = koinViewModel(key = stepKey.toString()) {
         parametersOf(step, onAnswerSubmitted)
     }
 ) {
