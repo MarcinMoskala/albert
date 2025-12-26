@@ -12,8 +12,6 @@ class InMemoryUserProgressLocalClient : UserProgressLocalClient {
     override suspend fun upsert(record: UserProgressRecord) {
         records.removeAll {
             it.userId == record.userId &&
-                    it.courseId == record.courseId &&
-                    it.lessonId == record.lessonId &&
                     it.stepId == record.stepId
         }
         records.add(record)
@@ -21,13 +19,9 @@ class InMemoryUserProgressLocalClient : UserProgressLocalClient {
 
     override suspend fun get(
         userId: String,
-        courseId: String,
-        lessonId: String,
         stepId: String
     ): UserProgressRecord? = records.firstOrNull {
         it.userId == userId &&
-                it.courseId == courseId &&
-                it.lessonId == lessonId &&
                 it.stepId == stepId
     }
 
@@ -38,14 +32,10 @@ class InMemoryUserProgressLocalClient : UserProgressLocalClient {
 
     override suspend fun delete(
         userId: String,
-        courseId: String,
-        lessonId: String,
         stepId: String
     ) {
         records.removeAll {
             it.userId == userId &&
-                    it.courseId == courseId &&
-                    it.lessonId == lessonId &&
                     it.stepId == stepId
         }
     }

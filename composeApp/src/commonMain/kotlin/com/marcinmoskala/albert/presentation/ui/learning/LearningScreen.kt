@@ -64,21 +64,6 @@ fun LearningScreen(
             contentAlignment = Alignment.Center
         ) {
             when {
-                uiState.loading -> {
-                    CircularProgressIndicator()
-                }
-
-                uiState.error != null -> {
-                    ErrorView(
-                        message = uiState.error?.message ?: "Unknown error",
-                        onRetry = viewModel::retry
-                    )
-                }
-
-                !uiState.hasSteps -> {
-                    EmptyView()
-                }
-
                 else -> {
                     LearningContent(
                         uiState = uiState,
@@ -108,7 +93,7 @@ private fun LearningContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Remaining: ${uiState.totalSteps}",
+                text = "Remaining: ${uiState.remainingSteps}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

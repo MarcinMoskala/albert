@@ -19,3 +19,4 @@ captures
 node_modules/
 .server-pid.txt
 server.log
+/composeApp/albert.db

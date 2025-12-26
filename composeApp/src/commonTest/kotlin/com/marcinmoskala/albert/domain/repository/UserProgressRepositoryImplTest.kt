@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -39,7 +41,7 @@ class UserProgressRepositoryImplTest {
         // Then
         val progressMap = repository.progress.value
         assertEquals(1, progressMap.size)
-        assertEquals(record, progressMap["user-1:course-1:lesson-1:step-1"])
+        assertEquals(record, progressMap["user-1:step-1"])
         assertEquals(listOf(record), localClient.records)
     }
 
@@ -59,7 +61,7 @@ class UserProgressRepositoryImplTest {
         // Then
         val progressMap = repository.progress.value
         assertEquals(1, progressMap.size)
-        assertEquals(record2, progressMap["user-1:course-1:lesson-1:step-1"])
+        assertEquals(record2, progressMap["user-1:step-1"])
         assertEquals(listOf(record2), localClient.records)
         assertEquals(2, localClient.upsertCallCount)
     }
@@ -74,7 +76,7 @@ class UserProgressRepositoryImplTest {
         repository.upsert(record)
 
         // When
-        val result = repository.get("user-1", "course-1", "lesson-1", "step-1")
+        val result = repository.get("user-1", "step-1")
 
         // Then
         assertEquals(record, result)
@@ -90,12 +92,12 @@ class UserProgressRepositoryImplTest {
         testScheduler.advanceUntilIdle()
 
         // When
-        val result = repository.get("user-1", "course-1", "lesson-1", "step-1")
+        val result = repository.get("user-1", "step-1")
 
         // Then
         assertEquals(record, result)
         assertEquals(1, repository.progress.value.size)
-        assertEquals(record, repository.progress.value["user-1:course-1:lesson-1:step-1"])
+        assertEquals(record, repository.progress.value["user-1:step-1"])
     }
 
     @Test
@@ -106,7 +108,7 @@ class UserProgressRepositoryImplTest {
         testScheduler.advanceUntilIdle()
 
         // When
-        val result = repository.get("user-1", "course-1", "lesson-1", "step-1")
+        val result = repository.get("user-1", "step-1")
 
         // Then
         assertNull(result)
@@ -143,7 +145,7 @@ class UserProgressRepositoryImplTest {
         repository.upsert(record)
 
         // When
-        repository.delete("user-1", "course-1", "lesson-1", "step-1")
+        repository.delete("user-1", "step-1")
 
         // Then
         assertEquals(emptyMap(), repository.progress.value)
@@ -169,8 +171,8 @@ class UserProgressRepositoryImplTest {
         val progressMap = repository.progress.value
         // 3 from init (all records loaded), loadAllForUser doesn't add new ones since they're already there
         assertEquals(3, progressMap.size)
-        assertEquals(record1, progressMap["user-1:course-1:lesson-1:step-1"])
-        assertEquals(record2, progressMap["user-1:course-1:lesson-1:step-2"])
+        assertEquals(record1, progressMap["user-1:step-1"])
+        assertEquals(record2, progressMap["user-1:step-2"])
     }
 
     @Test
@@ -185,16 +187,16 @@ class UserProgressRepositoryImplTest {
         // When
         repository.upsert(record1)
         repository.upsert(record2)
-        val retrievedRecord1 = repository.get("user-1", "course-1", "lesson-1", "step-1")
-        val retrievedRecord2 = repository.get("user-1", "course-1", "lesson-1", "step-2")
-        repository.delete("user-1", "course-1", "lesson-1", "step-1")
+        val retrievedRecord1 = repository.get("user-1", "step-1")
+        val retrievedRecord2 = repository.get("user-1", "step-2")
+        repository.delete("user-1", "step-1")
 
         // Then
         assertEquals(record1, retrievedRecord1)
         assertEquals(record2, retrievedRecord2)
         val finalState = repository.progress.value
         assertEquals(1, finalState.size)
-        assertEquals(record2, finalState["user-1:course-1:lesson-1:step-2"])
+        assertEquals(record2, finalState["user-1:step-2"])
         assertEquals(listOf(record2), localClient.records)
     }
 
@@ -235,7 +237,7 @@ class UserProgressRepositoryImplTest {
         // Then
         assertEquals(emptyMap(), initialState)
         assertEquals(1, updatedState.size)
-        assertEquals(record, updatedState["user-1:course-1:lesson-1:step-1"])
+        assertEquals(record, updatedState["user-1:step-1"])
     }
 
     @Test
@@ -275,26 +277,22 @@ class UserProgressRepositoryImplTest {
         // Then
         val progressMap = repository.progress.value
         assertEquals(2, progressMap.size)
-        assertEquals(record1, progressMap["user-1:course-1:lesson-1:step-1"])
-        assertEquals(record2, progressMap["user-2:course-1:lesson-1:step-2"])
+        assertEquals(record1, progressMap["user-1:step-1"])
+        assertEquals(record2, progressMap["user-2:step-2"])
     }
 
     private fun createTestRecord(
         userId: String = "user-1",
-        courseId: String = "course-1",
-        lessonId: String = "lesson-1",
         stepId: String = "step-1"
     ): UserProgressRecord {
         val now = kotlin.time.Clock.System.now()
         return UserProgressRecord(
             userId = userId,
-            courseId = courseId,
-            lessonId = lessonId,
             stepId = stepId,
             status = UserProgressStatus.REPEATING,
             createdAt = now,
             updatedAt = now,
-            reviewAt = now,
+            reviewAt = now.toLocalDateTime(TimeZone.UTC).date,
             lastIntervalDays = 3
         )
     }
@@ -308,8 +306,6 @@ class FakeUserProgressLocalClient : UserProgressLocalClient {
         upsertCallCount++
         records.removeAll {
             it.userId == record.userId &&
-                    it.courseId == record.courseId &&
-                    it.lessonId == record.lessonId &&
                     it.stepId == record.stepId
         }
         records.add(record)
@@ -317,13 +313,9 @@ class FakeUserProgressLocalClient : UserProgressLocalClient {
 
     override suspend fun get(
         userId: String,
-        courseId: String,
-        lessonId: String,
         stepId: String
     ): UserProgressRecord? = records.firstOrNull {
         it.userId == userId &&
-                it.courseId == courseId &&
-                it.lessonId == lessonId &&
                 it.stepId == stepId
     }
 
@@ -334,14 +326,10 @@ class FakeUserProgressLocalClient : UserProgressLocalClient {
 
     override suspend fun delete(
         userId: String,
-        courseId: String,
-        lessonId: String,
         stepId: String
     ) {
         records.removeAll {
             it.userId == userId &&
-                    it.courseId == courseId &&
-                    it.lessonId == lessonId &&
                     it.stepId == stepId
         }
     }

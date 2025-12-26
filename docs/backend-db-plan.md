@@ -7,17 +7,23 @@
     - `createdAt`: Date
     - `lastLoginAt`: Date
 
+- `user_lesson_progress` - individual user's progress:
+    - `userId`: String (immutable, required on every query)
+    - `lessonId`: String (associated, with lesson ID)
+    - `status`: "not_started"|"started"|"completed"
+    - `createdAt`: Date
+    - `updatedAt`: Date
+Combination of `userId` and `lessonId` is unique and serves as a key.
+
 - `user_progress` - individual user's progress:
     - `userId`: String (immutable, required on every query)
-    - `courseId`: String (associated, with step ID)
-    - `lessonId`: String (associated, with step ID)
     - `stepId`: String (associated, with step ID)
     - `status`: "repeating"|"completed"
     - `createdAt`: Date
     - `updatedAt`: Date
     - `reviewAt`: Date | NULL (next due; today for same-day retries)
     - `lastIntervalDays`: Int | NULL (most recent interval length)
-Combination of `userId`, `courseId`, `lessonId`, and `stepId` is unique and serves as a key. 
+Combination of `userId` and `stepId` is unique and serves as a key. 
 
 2. YAML files schema
 

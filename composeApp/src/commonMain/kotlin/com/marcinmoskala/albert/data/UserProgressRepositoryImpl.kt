@@ -22,25 +22,23 @@ class UserProgressRepositoryImpl(
     init {
         backgroundScope.launch { 
             _progress.value = localClient.getAll().associateBy { record ->
-                makeKey(record.userId, record.courseId, record.lessonId, record.stepId)
+                makeKey(record.userId, record.stepId)
             }
         }
     }
     
     override suspend fun upsert(record: UserProgressRecord) = mutex.withLock {
         localClient.upsert(record)
-        val key = makeKey(record.userId, record.courseId, record.lessonId, record.stepId)
+        val key = makeKey(record.userId, record.stepId)
         _progress.value += (key to record)
     }
 
     override suspend fun get(
         userId: String,
-        courseId: String,
-        lessonId: String,
         stepId: String
     ): UserProgressRecord? = mutex.withLock {
-        val key = makeKey(userId, courseId, lessonId, stepId)
-        _progress.value[key] ?: localClient.get(userId, courseId, lessonId, stepId)
+        val key = makeKey(userId, stepId)
+        _progress.value[key] ?: localClient.get(userId, stepId)
             ?.also { record ->
                 _progress.value = _progress.value + (key to record)
             }
@@ -56,27 +54,23 @@ class UserProgressRepositoryImpl(
 
     override suspend fun delete(
         userId: String,
-        courseId: String,
-        lessonId: String,
         stepId: String
     ) = mutex.withLock {
-        localClient.delete(userId, courseId, lessonId, stepId)
-        val key = makeKey(userId, courseId, lessonId, stepId)
+        localClient.delete(userId, stepId)
+        val key = makeKey(userId, stepId)
         _progress.value -= key
     }
 
     override suspend fun loadAllForUser(userId: String) = mutex.withLock {
         val records = localClient.getAllForUser(userId)
         val newMap = records.associateBy { record ->
-            makeKey(record.userId, record.courseId, record.lessonId, record.stepId)
+            makeKey(record.userId, record.stepId)
         }
         _progress.value += newMap
     }
 
     private fun makeKey(
         userId: String,
-        courseId: String,
-        lessonId: String,
         stepId: String
-    ): String = "$userId:$courseId:$lessonId:$stepId"
+    ): String = "$userId:$stepId"
 }
