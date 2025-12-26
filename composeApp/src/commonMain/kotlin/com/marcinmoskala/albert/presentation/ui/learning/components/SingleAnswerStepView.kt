@@ -13,19 +13,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.marcinmoskala.albert.domain.model.SingleAnswerStep
-import com.marcinmoskala.model.course.SingleAnswerStepApi
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 @Composable
 fun SingleAnswerStepView(
     step: SingleAnswerStep,
-    courseId: String,
-    lessonId: String,
-    onStepCompleted: () -> Unit,
+    onAnswerSubmitted: (isCorrect: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SingleAnswerStepViewModel = koinViewModel {
-        parametersOf(step, courseId, lessonId, onStepCompleted)
+        parametersOf(step, onAnswerSubmitted)
     }
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -94,15 +91,20 @@ fun SingleAnswerStepView(
         }
 
         Button(
-            onClick = { viewModel.submit() },
-            enabled = uiState.selectedAnswer != null && (!uiState.isSubmitted || !uiState.isCorrect),
+            onClick = {
+                if (uiState.isSubmitted) {
+                    viewModel.continueToNext()
+                } else {
+                    viewModel.submit()
+                }
+            },
+            enabled = uiState.selectedAnswer != null,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
                 text = when {
                     !uiState.isSubmitted -> "Submit"
-                    !uiState.isCorrect -> "Try Again"
-                    else -> "Submitted"
+                    else -> "Continue"
                 }
             )
         }

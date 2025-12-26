@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.marcinmoskala.albert.domain.model.TextStep
-import com.marcinmoskala.model.course.TextStepApi
 import com.mikepenz.markdown.m3.Markdown
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -19,12 +18,10 @@ import org.koin.core.parameter.parametersOf
 @Composable
 fun TextStepView(
     step: TextStep,
-    courseId: String,
-    lessonId: String,
-    onStepCompleted: () -> Unit,
+    onAnswerSubmitted: (isCorrect: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TextStepViewModel = koinViewModel {
-        parametersOf(step, courseId, lessonId, onStepCompleted)
+        parametersOf(step, onAnswerSubmitted)
     }
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

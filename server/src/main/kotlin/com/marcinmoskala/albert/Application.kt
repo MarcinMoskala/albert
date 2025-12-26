@@ -2,7 +2,6 @@ package com.marcinmoskala.albert
 
 import com.marcinmoskala.albert.di.serverModule
 import com.marcinmoskala.albert.endpoints.configureCourseRouting
-import io.ktor.http.ContentType.Application.Json
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*

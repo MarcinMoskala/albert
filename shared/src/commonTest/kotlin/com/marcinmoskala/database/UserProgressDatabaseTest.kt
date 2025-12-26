@@ -9,6 +9,7 @@ import kotlinx.datetime.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.time.Clock.*
 
 class UserProgressDatabaseTest {
     @Test
@@ -16,7 +17,7 @@ class UserProgressDatabaseTest {
         val driver = createTestDriver(AlbertDatabase.Schema)
         val database = createUserProgressDatabase(driver)
         val dataSource = SqlDelightUserProgressLocalClient(database)
-        val now = Clock.System.now()
+        val now = System.now()
         val record = UserProgressRecord(
             userId = "user-1",
             courseId = "course-1",

@@ -17,10 +17,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel = koinViewModel(),
-    onCourseClick: (String) -> Unit = {},
-    onLessonClick: (String, String) -> Unit = { _, _ -> },
-    onReviewAllClick: () -> Unit = {}
+    viewModel: MainViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -30,9 +27,9 @@ fun MainScreen(
     ) {
         CoursesList(
             courses = uiState.courses,
-            onCourseClick = onCourseClick,
-            onLessonClick = onLessonClick,
-            onReviewAllClick = onReviewAllClick
+            onCourseClick = viewModel::onCourseClick,
+            onLessonClick = viewModel::onLessonClick,
+            onReviewAllClick = viewModel::onReviewAllClick
         )
         if (uiState.loading) CircularProgressIndicator()
         if (uiState.error != null) ErrorView(

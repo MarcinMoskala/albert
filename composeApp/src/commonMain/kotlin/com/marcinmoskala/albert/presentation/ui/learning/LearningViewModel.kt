@@ -2,7 +2,11 @@ package com.marcinmoskala.albert.presentation.ui.learning
 
 import com.marcinmoskala.albert.domain.model.LessonStep
 import com.marcinmoskala.albert.domain.repository.CourseRepository
+import com.marcinmoskala.albert.domain.repository.UserProgressRepository
+import com.marcinmoskala.albert.domain.usecase.SubmitStepAnswerUseCase
+import com.marcinmoskala.albert.presentation.common.ErrorHandler
 import com.marcinmoskala.albert.presentation.common.viewmodels.BaseViewModel
+import com.marcinmoskala.albert.presentation.navigation.Navigator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,13 +15,17 @@ import kotlinx.coroutines.launch
 
 class LearningViewModel(
     private val courseRepository: CourseRepository,
+    private val userProgressRepository: UserProgressRepository,
+    private val submitStepAnswerUseCase: SubmitStepAnswerUseCase,
+    private val navigator: Navigator,
     private val courseId: String?,
-    private val lessonId: String?
-) : BaseViewModel() {
+    private val lessonId: String?,
+    errorHandler: ErrorHandler
+) : BaseViewModel(errorHandler) {
 
     private val _uiState = MutableStateFlow(LearningUiState(loading = true))
     val uiState: StateFlow<LearningUiState> = _uiState.asStateFlow()
-
+    
     init {
         loadLearningContent()
     }
@@ -28,8 +36,9 @@ class LearningViewModel(
                 _uiState.update { it.copy(loading = true, error = null) }
 
                 val courses = courseRepository.courses.value
+                val userId = "guest1" // TODO: Get actual user ID from auth system
 
-                val steps = when {
+                val allSteps = when {
                     // Review all mode - collect all steps from all lessons
                     courseId == null && lessonId == null -> {
                         courses.flatMap { course ->
@@ -53,12 +62,22 @@ class LearningViewModel(
                     else -> emptyList()
                 }
 
+                // Filter out already completed steps
+                val stepsToShow = allSteps.filter { step ->
+                    val progress = userProgressRepository.get(
+                        userId,
+                        courseId ?: "",
+                        lessonId ?: "",
+                        step.stepId
+                    )
+                    // Show step if it's not completed or if it's due for review
+                    progress == null || progress.reviewAt?.let { it <= kotlin.time.Clock.System.now() } == true
+                }
+
                 _uiState.update {
                     it.copy(
                         loading = false,
-                        steps = steps,
-                        currentStepIndex = 0,
-                        totalSteps = steps.size,
+                        remainingSteps = stepsToShow.toList(),
                         courseId = courseId ?: "",
                         lessonId = lessonId ?: ""
                     )
@@ -74,40 +93,64 @@ class LearningViewModel(
         }
     }
 
-    fun nextStep() {
-        _uiState.update { state ->
-            val nextIndex = (state.currentStepIndex + 1).coerceAtMost(state.totalSteps - 1)
-            state.copy(currentStepIndex = nextIndex)
-        }
-    }
+    fun onStepAnswered(isCorrect: Boolean) {
+        viewModelScope.launch {
+            val currentStep = _uiState.value.currentStep ?: return@launch
 
-    fun previousStep() {
-        _uiState.update { state ->
-            val prevIndex = (state.currentStepIndex - 1).coerceAtLeast(0)
-            state.copy(currentStepIndex = prevIndex)
+            // Save progress to database
+            submitStepAnswerUseCase.execute(
+                step = currentStep,
+                courseId = _uiState.value.courseId,
+                lessonId = _uiState.value.lessonId,
+                isCorrect = isCorrect
+            )
+
+            _uiState.update { state ->
+                val newRemainingSteps = state.remainingSteps.toMutableList()
+
+                if (isCorrect) {
+                    // Remove correctly answered step
+                    newRemainingSteps.removeAt(0)
+                } else {
+                    // Reposition this step to be retried after 5 other steps (or at end if fewer)
+                    val incorrectStep = newRemainingSteps.removeAt(0)
+                    // Insert at position 5 (which means after 5 other steps), or at the end if list is shorter
+                    val insertPosition = minOf(5, newRemainingSteps.size)
+                    newRemainingSteps.add(insertPosition, incorrectStep)
+                }
+
+                state.copy(
+                    remainingSteps = newRemainingSteps,
+                    // Increment counter to force UI refresh with new key
+                    stepPresentationCounter = state.stepPresentationCounter + 1
+                )
+            }
         }
     }
 
     fun retry() {
         loadLearningContent()
     }
+
+    fun onBack() {
+        navigator.navigateBack()
+    }
 }
 
 data class LearningUiState(
     val loading: Boolean = false,
-    val steps: List<LessonStep> = emptyList(),
-    val currentStepIndex: Int = 0,
-    val totalSteps: Int = 0,
+    val remainingSteps: List<LessonStep> = emptyList(),
     val courseId: String = "",
     val lessonId: String = "",
-    val error: Throwable? = null
+    val error: Throwable? = null,
+    val stepPresentationCounter: Int = 0
 ) {
     val currentStep: LessonStep?
-        get() = steps.getOrNull(currentStepIndex)
+        get() = remainingSteps.firstOrNull()
 
-    val hasNext: Boolean
-        get() = currentStepIndex < totalSteps - 1
+    val hasSteps: Boolean
+        get() = remainingSteps.isNotEmpty()
 
-    val hasPrevious: Boolean
-        get() = currentStepIndex > 0
+    val totalSteps: Int
+        get() = remainingSteps.size
 }

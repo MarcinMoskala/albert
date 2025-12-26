@@ -22,5 +22,7 @@
  
 - Unit test services with JUnit5 and fakes
 - Frontend: Compose testing
-- Backend: Ktor test framework for endpoint testing, with mocked database.
+- Backend: Ktor test framework for endpoint testing, with mocked database
+- Multiplatform: Tests run on JVM, Android, iOS, and JS (browser and Node.js) platforms
+- JS browser tests use Karma test runner with headless Chrome
 

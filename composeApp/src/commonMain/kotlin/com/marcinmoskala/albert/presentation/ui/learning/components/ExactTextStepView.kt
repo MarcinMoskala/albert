@@ -9,19 +9,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.marcinmoskala.albert.domain.model.ExactTextStep
-import com.marcinmoskala.model.course.ExactTextStepApi
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 @Composable
 fun ExactTextStepView(
     step: ExactTextStep,
-    courseId: String,
-    lessonId: String,
-    onStepCompleted: () -> Unit,
+    onAnswerSubmitted: (isCorrect: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ExactTextStepViewModel = koinViewModel {
-        parametersOf(step, courseId, lessonId, onStepCompleted)
+        parametersOf(step, onAnswerSubmitted)
     }
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -94,15 +91,20 @@ fun ExactTextStepView(
         Spacer(modifier = Modifier.weight(1f))
 
         Button(
-            onClick = { viewModel.submit() },
-            enabled = uiState.userAnswer.isNotBlank() && (!uiState.isSubmitted || !uiState.isCorrect),
+            onClick = {
+                if (uiState.isSubmitted) {
+                    viewModel.continueToNext()
+                } else {
+                    viewModel.submit()
+                }
+            },
+            enabled = uiState.userAnswer.isNotBlank(),
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
                 text = when {
                     !uiState.isSubmitted -> "Submit"
-                    !uiState.isCorrect -> "Try Again"
-                    else -> "Submitted"
+                    else -> "Continue"
                 }
             )
         }

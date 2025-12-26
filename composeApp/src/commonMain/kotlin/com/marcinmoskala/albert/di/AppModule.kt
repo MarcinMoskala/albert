@@ -2,14 +2,20 @@ package com.marcinmoskala.albert.di
 
 import com.marcinmoskala.albert.data.CourseRepositoryImpl
 import com.marcinmoskala.albert.data.UserProgressRepositoryImpl
-import com.marcinmoskala.albert.domain.repository.CourseRepository
-import com.marcinmoskala.albert.domain.repository.UserProgressRepository
-import com.marcinmoskala.albert.presentation.ui.app.MainViewModel
-import com.marcinmoskala.albert.presentation.ui.learning.LearningViewModel
 import com.marcinmoskala.albert.domain.model.SingleAnswerStep
 import com.marcinmoskala.albert.domain.model.MultipleAnswerStep
 import com.marcinmoskala.albert.domain.model.ExactTextStep
 import com.marcinmoskala.albert.domain.model.TextStep
+import com.marcinmoskala.albert.domain.repository.CourseRepository
+import com.marcinmoskala.albert.domain.repository.UserProgressRepository
+import com.marcinmoskala.albert.domain.usecase.SubmitStepAnswerUseCase
+import com.marcinmoskala.albert.presentation.common.ErrorHandler
+import com.marcinmoskala.albert.presentation.common.ErrorHandlerImpl
+import com.marcinmoskala.albert.presentation.common.SnackbarController
+import com.marcinmoskala.albert.presentation.navigation.Navigator
+import com.marcinmoskala.albert.presentation.navigation.NavigatorImpl
+import com.marcinmoskala.albert.presentation.ui.app.MainViewModel
+import com.marcinmoskala.albert.presentation.ui.learning.LearningViewModel
 import com.marcinmoskala.albert.presentation.ui.learning.components.SingleAnswerStepViewModel
 import com.marcinmoskala.albert.presentation.ui.learning.components.MultipleAnswerStepViewModel
 import com.marcinmoskala.albert.presentation.ui.learning.components.ExactTextStepViewModel
@@ -17,10 +23,6 @@ import com.marcinmoskala.albert.presentation.ui.learning.components.TextStepView
 import com.marcinmoskala.client.CourseClient
 import com.marcinmoskala.client.buildDefaultHttpClient
 import com.marcinmoskala.database.UserProgressLocalClient
-import com.marcinmoskala.model.course.ExactTextStepApi
-import com.marcinmoskala.model.course.MultipleAnswerStepApi
-import com.marcinmoskala.model.course.SingleAnswerStepApi
-import com.marcinmoskala.model.course.TextStepApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -40,22 +42,30 @@ val appModule = module {
     // User Progress Repository - requires UserProgressLocalClient to be provided by platform
     single<UserProgressRepository> { UserProgressRepositoryImpl(get(), get()) }
 
-    viewModel { MainViewModel(get()) }
+    // Use cases
+    single { SubmitStepAnswerUseCase(get()) }
+
+    // Navigation and UI controllers
+    single<Navigator> { NavigatorImpl() }
+    single { SnackbarController() }
+    single<ErrorHandler> { ErrorHandlerImpl(get()) }
+
+    viewModel { MainViewModel(get(), get(), get()) }
     viewModel { (courseId: String?, lessonId: String?) ->
-        LearningViewModel(get(), courseId, lessonId)
+        LearningViewModel(get(), get(), get(), get(), courseId, lessonId, get())
     }
 
     // Step view models
-    viewModel { (step: SingleAnswerStep, courseId: String, lessonId: String, onStepCompleted: () -> Unit) ->
-        SingleAnswerStepViewModel(step, courseId, lessonId, onStepCompleted, get())
+    viewModel { (step: SingleAnswerStep, onAnswerSubmitted: (Boolean) -> Unit) ->
+        SingleAnswerStepViewModel(step, onAnswerSubmitted, get())
     }
-    viewModel { (step: MultipleAnswerStep, courseId: String, lessonId: String, onStepCompleted: () -> Unit) ->
-        MultipleAnswerStepViewModel(step, courseId, lessonId, onStepCompleted, get())
+    viewModel { (step: MultipleAnswerStep, onAnswerSubmitted: (Boolean) -> Unit) ->
+        MultipleAnswerStepViewModel(step, onAnswerSubmitted, get())
     }
-    viewModel { (step: ExactTextStep, courseId: String, lessonId: String, onStepCompleted: () -> Unit) ->
-        ExactTextStepViewModel(step, courseId, lessonId, onStepCompleted, get())
+    viewModel { (step: ExactTextStep, onAnswerSubmitted: (Boolean) -> Unit) ->
+        ExactTextStepViewModel(step, onAnswerSubmitted, get())
     }
-    viewModel { (step: TextStep, courseId: String, lessonId: String, onStepCompleted: () -> Unit) ->
-        TextStepViewModel(step, courseId, lessonId, onStepCompleted, get())
+    viewModel { (step: TextStep, onAnswerSubmitted: (Boolean) -> Unit) ->
+        TextStepViewModel(step, onAnswerSubmitted, get())
     }
 }
