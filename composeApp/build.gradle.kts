@@ -1,9 +1,7 @@
-import com.android.build.gradle.AppExtension
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val isProductionBuild: Boolean = providers.gradleProperty("production").isPresent
-val enableAndroidTargets: Boolean = !project.hasProperty("skipAndroidTargets")
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -12,21 +10,16 @@ plugins {
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.googleServices) apply false
-    // Apply Android plugin only when Android targets are enabled (local/dev).
-    alias(libs.plugins.androidApplication) apply false
+    alias(libs.plugins.androidApplication)
 }
 
-if (enableAndroidTargets) {
-    pluginManager.apply("com.android.application")
-    pluginManager.apply("com.google.gms.google-services")
-}
+pluginManager.apply("com.android.application")
+pluginManager.apply("com.google.gms.google-services")
 
 kotlin {
-    if (enableAndroidTargets) {
-        androidTarget {
-            compilerOptions {
-                jvmTarget.set(JvmTarget.JVM_11)
-            }
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
     
@@ -48,17 +41,15 @@ kotlin {
     }
 
     sourceSets {
-        if (enableAndroidTargets) {
-            androidMain.dependencies {
-                implementation(compose.preview)
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.ktor.client.android)
-                implementation(libs.koin.core)
-                implementation(libs.kmpauth.google)
-                implementation(libs.kmpauth.firebase)
-                implementation(libs.kmpauth.uihelper)
-                implementation(libs.slf4jAndroid)
-            }
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.android)
+            implementation(libs.koin.core)
+            implementation(libs.kmpauth.google)
+            implementation(libs.kmpauth.firebase)
+            implementation(libs.kmpauth.uihelper)
+            implementation(libs.slf4jAndroid)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -117,41 +108,37 @@ kotlin {
     }
 }
 
-if (enableAndroidTargets) {
-    extensions.configure<AppExtension> {
-        namespace = "com.marcinmoskala.albert"
-        compileSdkVersion(36)
+android {
+    namespace = "com.marcinmoskala.albert"
+    compileSdk = 36
 
-        defaultConfig {
-            applicationId = "com.marcinmoskala.albert"
-            minSdk = libs.versions.android.minSdk.get().toInt()
-            targetSdk = libs.versions.android.targetSdk.get().toInt()
-            versionCode = 1
-            versionName = "1.0"
+    defaultConfig {
+        applicationId = "com.marcinmoskala.albert"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = 1
+        versionName = "1.0"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
-        packagingOptions {
-            resources {
-                excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            }
+    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
         }
-        buildTypes {
-            getByName("release") {
-                isMinifyEnabled = false
-            }
-        }
-        compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_11
-            targetCompatibility = JavaVersion.VERSION_11
-        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
 dependencies {
-    if (enableAndroidTargets) {
-        add("debugImplementation", compose.uiTooling)
-        add("implementation", platform(libs.firebase.bom))
-        add("implementation", libs.firebase.auth)
-    }
+    debugImplementation(compose.uiTooling)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
 }
 
 tasks.register<JavaExec>("jvmRun") {

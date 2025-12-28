@@ -211,5 +211,5 @@ Notes:
 - The server listens on `0.0.0.0` and honors Railway's `PORT` automatically.
 - `-Pproduction` builds the JS client (production bundle) and ships it with the server. Pass
   `-PskipComposeStatic` only if you host the frontend elsewhere.
-  If Railway lacks Android SDK, add `-PskipAndroidTargets` to skip Android tooling while still
-  building JS/JVM targets.
+  If you prefer to bundle the Android SDK instead, Railway can build from the provided `Dockerfile`
+  which installs the Android SDK before running the Gradle build.
