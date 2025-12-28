@@ -9,6 +9,14 @@ import com.marcinmoskala.albert.domain.auth.JwtService
 import com.marcinmoskala.albert.domain.auth.UserRepository
 import com.marcinmoskala.albert.domain.course.CourseRepository
 import com.marcinmoskala.albert.domain.course.CourseService
+import com.marcinmoskala.albert.domain.progress.ProgressService
+import com.marcinmoskala.database.ProgressSynchronizer
+import com.marcinmoskala.database.SqlDelightUserProgressLocalClient
+import com.marcinmoskala.database.UserProgressLocalClient
+import com.marcinmoskala.database.createUserProgressDatabase
+import com.marcinmoskala.database.DriverFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.koin.dsl.module
 
 val serverModule = module {
@@ -20,4 +28,13 @@ val serverModule = module {
     single<FirebaseAuthVerifier> { SimpleFirebaseAuthVerifier() }
     single { JwtService() }
     single { AuthService(get(), get(), get()) }
+
+    // Progress
+    single<UserProgressLocalClient> {
+        val driverFactory = DriverFactory()
+        val driver = runBlocking { driverFactory.createDriver() }
+        SqlDelightUserProgressLocalClient(createUserProgressDatabase(driver))
+    }
+    single { ProgressSynchronizer(get(), Dispatchers.Default) }
+    single { ProgressService(get(), get()) }
 }

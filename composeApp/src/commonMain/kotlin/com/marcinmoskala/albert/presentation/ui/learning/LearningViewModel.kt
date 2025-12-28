@@ -3,6 +3,8 @@ package com.marcinmoskala.albert.presentation.ui.learning
 import com.marcinmoskala.albert.domain.model.LessonStep
 import com.marcinmoskala.albert.domain.repository.CourseRepository
 import com.marcinmoskala.albert.domain.repository.UserProgressRepository
+import com.marcinmoskala.albert.domain.repository.UserProgressRepository.Companion.ANONYMOUS_USER_ID
+import com.marcinmoskala.albert.domain.repository.UserRepository
 import com.marcinmoskala.albert.domain.usecase.SubmitStepAnswerUseCase
 import com.marcinmoskala.albert.presentation.common.ErrorHandler
 import com.marcinmoskala.albert.presentation.common.viewmodels.BaseViewModel
@@ -12,14 +14,15 @@ import com.marcinmoskala.database.UserProgressStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.time.Clock
+import kotlin.time.Instant
+import kotlin.time.TimeSource
 
 class LearningViewModel(
     private val courseRepository: CourseRepository,
     private val userProgressRepository: UserProgressRepository,
+    private val userRepository: UserRepository,
     private val submitStepAnswerUseCase: SubmitStepAnswerUseCase,
     private val navigator: Navigator,
     private val courseId: String?,
@@ -27,7 +30,7 @@ class LearningViewModel(
     errorHandler: ErrorHandler
 ) : BaseViewModel(errorHandler) {
     private val steps = MutableStateFlow(emptyList<LessonStep>())
-    private val userId = "unlogged"
+    private val activeUserId: String = userRepository.currentUser.value?.userId ?: ANONYMOUS_USER_ID
 
     private val _uiState = MutableStateFlow(
         LearningUiState(
@@ -51,13 +54,16 @@ class LearningViewModel(
     }
 
     private suspend fun shouldBeSeen(step: LessonStep): Boolean {
-        val record = userProgressRepository.getProgress(userId, step.stepId)
+        val record = userProgressRepository.getProgress(activeUserId, step.stepId)
         return when (record?.status) {
             null, UserProgressStatus.PENDING -> true
             UserProgressStatus.COMPLETED -> false
             UserProgressStatus.REPEATING -> {
                 val reviewAt = record.reviewAt ?: return true
-                reviewAt < Clock.System.now()
+                val now = Instant.fromEpochMilliseconds(
+                    TimeSource.Monotonic.markNow().elapsedNow().inWholeMilliseconds
+                )
+                reviewAt < now
             }
         }
     }
@@ -66,7 +72,7 @@ class LearningViewModel(
         val currentStep = _uiState.value.currentStep ?: return
         val updateRepositoryJob = viewModelScope.launch {
             submitStepAnswerUseCase(
-                userId = userId,
+                userId = activeUserId,
                 step = currentStep,
                 isCorrect = isCorrect,
             )

@@ -4,6 +4,7 @@ import com.marcinmoskala.albert.config.FirebaseConfig
 import com.marcinmoskala.albert.di.serverModule
 import com.marcinmoskala.albert.endpoints.configureAuthRouting
 import com.marcinmoskala.albert.endpoints.configureCourseRouting
+import com.marcinmoskala.albert.endpoints.configureProgressRouting
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -83,10 +84,11 @@ fun Application.module(extraModules: List<Module> = emptyList()) {
         // API routes
         configureCourseRouting()
         configureAuthRouting()
+        configureProgressRouting()
 
-        // Serve static JS client from resources
         staticResources("/app/", "static") {
             default("index.html")
+            resource("sql-wasm.wasm", "static/sql-wasm.wasm")
         }
         get { call.respondRedirect("/app/") }
     }

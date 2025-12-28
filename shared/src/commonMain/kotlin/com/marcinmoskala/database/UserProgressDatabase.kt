@@ -4,7 +4,9 @@ import app.cash.sqldelight.async.coroutines.awaitAsList
 import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
 import app.cash.sqldelight.db.SqlDriver
 import kotlin.time.Instant
+import kotlinx.serialization.Serializable
 
+@Serializable
 enum class UserProgressStatus {
     PENDING,
     REPEATING,
@@ -36,6 +38,12 @@ class SqlDelightUserProgressLocalClient(private val database: AlbertDatabase) : 
             reviewAt = record.reviewAt?.toString(),
             lastIntervalDays = record.lastIntervalDays?.toLong()
         )
+    }
+
+    override suspend fun upsertMany(records: List<UserProgressRecord>) {
+        for (record in records) {
+            upsert(record)
+        }
     }
 
     override suspend fun get(

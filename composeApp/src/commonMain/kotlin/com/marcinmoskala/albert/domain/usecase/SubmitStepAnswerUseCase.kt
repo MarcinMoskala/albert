@@ -4,10 +4,10 @@ import com.marcinmoskala.albert.domain.model.LessonStep
 import com.marcinmoskala.albert.domain.repository.UserProgressRepository
 import com.marcinmoskala.database.UserProgressRecord
 import com.marcinmoskala.database.UserProgressStatus
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
-import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlin.time.Duration.Companion.days
+import kotlin.time.ExperimentalTime
+import kotlin.time.TimeSource
 
 class SubmitStepAnswerUseCase(
     private val userProgressRepository: UserProgressRepository
@@ -17,18 +17,31 @@ class SubmitStepAnswerUseCase(
         step: LessonStep,
         isCorrect: Boolean,
     ) {
-        val now = Clock.System.now()
+        val now = Instant.fromEpochMilliseconds(
+            TimeSource.Monotonic.markNow().elapsedNow().inWholeMilliseconds
+        )
 
         // Get existing record or create new one
         val existingRecord = userProgressRepository.get(userId, step.stepId)
 
-        val (reviewAt, lastIntervalDays) = when {
-            !step.repeatable -> null to null
-            !isCorrect -> now to null
+        val reviewAt: Instant?
+        val lastIntervalDays: Int?
+        when {
+            !step.repeatable -> {
+                reviewAt = null
+                lastIntervalDays = null
+            }
+
+            !isCorrect -> {
+                reviewAt = now
+                lastIntervalDays = null
+            }
             else -> { // isCorrect && step.repeatable
-                val lastIntervalDays = existingRecord?.lastIntervalDays
-                val newInterval = if (lastIntervalDays == null) 1 else lastIntervalDays * 2
-                now + newInterval.days to newInterval
+                val existingIntervalDays = existingRecord?.lastIntervalDays
+                val newIntervalDays =
+                    if (existingIntervalDays == null) 1 else existingIntervalDays * 2
+                reviewAt = now + newIntervalDays.days
+                lastIntervalDays = newIntervalDays
             }
         }
 

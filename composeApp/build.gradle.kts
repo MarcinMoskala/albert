@@ -44,6 +44,7 @@ kotlin {
             implementation(libs.kmpauth.google)
             implementation(libs.kmpauth.firebase)
             implementation(libs.kmpauth.uihelper)
+            implementation(libs.slf4jAndroid)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -70,6 +71,8 @@ kotlin {
             implementation(libs.kmpauth.google)
             implementation(libs.kmpauth.firebase)
             implementation(libs.kmpauth.uihelper)
+            implementation(libs.multiplatformSettings)
+            implementation(libs.multiplatformSettingsNoArg)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

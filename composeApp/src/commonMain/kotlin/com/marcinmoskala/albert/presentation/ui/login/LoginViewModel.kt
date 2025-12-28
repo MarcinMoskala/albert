@@ -1,6 +1,7 @@
 package com.marcinmoskala.albert.presentation.ui.login
 
 import com.marcinmoskala.albert.domain.repository.UserRepository
+import com.marcinmoskala.albert.domain.usecase.SynchronizeProgressUseCase
 import com.marcinmoskala.albert.presentation.common.ErrorHandler
 import com.marcinmoskala.albert.presentation.common.SnackbarController
 import com.marcinmoskala.albert.presentation.common.viewmodels.BaseViewModel
@@ -22,6 +23,7 @@ class LoginViewModel(
     private val userRepository: UserRepository,
     private val navigator: Navigator,
     private val snackbarController: SnackbarController,
+    private val synchronizeProgressUseCase: SynchronizeProgressUseCase,
     errorHandler: ErrorHandler
 ) : BaseViewModel(errorHandler) {
 
@@ -43,6 +45,7 @@ class LoginViewModel(
             val result = userRepository.login(idToken)
             result.fold(
                 onSuccess = { user ->
+                    synchronizeProgressUseCase()
                     _uiState.value = LoginUiState.Success(user.email)
                     snackbarController.showMessage("Logged in as ${user.email}")
                     navigator.navigateTo(AppDestination.Main)

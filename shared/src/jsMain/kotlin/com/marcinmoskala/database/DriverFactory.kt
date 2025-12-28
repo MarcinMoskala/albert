@@ -15,7 +15,7 @@ actual class DriverFactory {
         val worker = Worker(
             js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)""")
         )
-        return WebWorkerDriver(worker).also {
+        return WebWorkerDriver(worker = worker).also {
             schema.create(it).await()
         }
     }

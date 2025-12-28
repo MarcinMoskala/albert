@@ -13,4 +13,10 @@ interface UserProgressRepository {
     suspend fun delete(userId: String, stepId: String)
     suspend fun loadAllForUser(userId: String)
     suspend fun getProgress(userId: String, stepId: String): UserProgressRecord?
+    suspend fun migrateProgress(fromUserId: String, toUserId: String)
+    suspend fun synchronize(remote: com.marcinmoskala.model.UserCourseProgressApi)
+
+    companion object {
+        const val ANONYMOUS_USER_ID = "unlogged"
+    }
 }

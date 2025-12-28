@@ -6,7 +6,7 @@ DO NOT CREATE DOCUMENTS OF WHAT WAS ACCOMPLISHED. Check out docs in `/docs` fold
 
 Make sure you only complete once the project builds, and tests are passing. ALWAYS BUILD PROJECT BEFORE FINISHING to see if it builds without errors.
 
-Make time-constrained requests, to prevent situations where a command never ends.  
+Make time-constrained requests, to prevent situations where a command never ends.
 
 # Project structure
 
@@ -150,6 +150,7 @@ sealed class MainUiState {
 - Use repository pattern for data persistence
 - Use `kotlinx.serialization` for all data that needs to be serialized.
 - Put code shared between Frontend and Backend in the `shared` module (models, constants, common logic).
+- Do not use deprecated `kotlinx.datetime.Instant`, use `kotlin.time.Instant` instead
   
 ### Nomenclature
 

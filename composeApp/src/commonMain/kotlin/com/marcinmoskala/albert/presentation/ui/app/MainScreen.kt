@@ -167,7 +167,7 @@ private fun LessonRow(
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = "Steps: ${lesson.steps}",
+                    text = "Steps: ${lesson.steps}, Remaining: ${lesson.remainingSteps}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

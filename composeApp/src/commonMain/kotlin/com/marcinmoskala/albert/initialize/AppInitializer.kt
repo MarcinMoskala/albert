@@ -1,6 +1,7 @@
 package com.marcinmoskala.albert.initialize
 
 import com.marcinmoskala.albert.di.appModule
+import com.mmk.kmpauth.core.KMPAuth
 import com.mmk.kmpauth.google.GoogleAuthCredentials
 import com.mmk.kmpauth.google.GoogleAuthProvider
 import dev.gitlive.firebase.Firebase
@@ -11,13 +12,16 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 
 fun initializeApp(platformModuleProvider: () -> Module) {
-    initializeFirebaseIfNeeded()
+    initializeAuth()
     startKoin {
         modules(appModule, platformModuleProvider())
     }
 }
 
-private fun initializeFirebaseIfNeeded() {
+private fun initializeAuth() {
+    KMPAuth.setLogger {
+        println("KMPAuthLog: $it")
+    }
     if (Firebase.apps().isEmpty()) {
         Firebase.initialize(
             options = FirebaseOptions(

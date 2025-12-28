@@ -1,6 +1,7 @@
 package com.marcinmoskala.albert.domain.repository
 
 import com.marcinmoskala.albert.data.UserProgressRepositoryImpl
+import com.marcinmoskala.database.ProgressSynchronizer
 import com.marcinmoskala.database.UserProgressLocalClient
 import com.marcinmoskala.database.UserProgressRecord
 import com.marcinmoskala.database.UserProgressStatus
@@ -8,19 +9,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlinx.datetime.Clock
 
 class UserProgressRepositoryImplTest {
     @Test
     fun shouldStartWithEmptyProgress() = runTest {
         // Given
         val localClient = FakeUserProgressLocalClient()
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
 
         // Then
         testScheduler.advanceUntilIdle()
@@ -31,7 +31,7 @@ class UserProgressRepositoryImplTest {
     fun shouldUpsertRecordAndUpdateStateFlow() = runTest {
         // Given
         val localClient = FakeUserProgressLocalClient()
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.advanceUntilIdle()
         val record = createTestRecord()
 
@@ -49,7 +49,7 @@ class UserProgressRepositoryImplTest {
     fun shouldUpdateExistingRecordInState() = runTest {
         // Given
         val localClient = FakeUserProgressLocalClient()
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.advanceUntilIdle()
         val record1 = createTestRecord()
         val record2 = record1.copy(status = UserProgressStatus.COMPLETED)
@@ -70,7 +70,7 @@ class UserProgressRepositoryImplTest {
     fun shouldGetRecordFromStateFlow() = runTest {
         // Given
         val localClient = FakeUserProgressLocalClient()
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.advanceUntilIdle()
         val record = createTestRecord()
         repository.upsert(record)
@@ -88,7 +88,7 @@ class UserProgressRepositoryImplTest {
         val record = createTestRecord()
         val localClient = FakeUserProgressLocalClient()
         localClient.records.add(record)
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.advanceUntilIdle()
 
         // When
@@ -104,7 +104,7 @@ class UserProgressRepositoryImplTest {
     fun shouldReturnNullWhenRecordNotFound() = runTest {
         // Given
         val localClient = FakeUserProgressLocalClient()
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.advanceUntilIdle()
 
         // When
@@ -118,7 +118,7 @@ class UserProgressRepositoryImplTest {
     fun shouldGetAllForUser() = runTest {
         // Given
         val localClient = FakeUserProgressLocalClient()
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.advanceUntilIdle()
         val record1 = createTestRecord(userId = "user-1", stepId = "step-1")
         val record2 = createTestRecord(userId = "user-1", stepId = "step-2")
@@ -139,7 +139,7 @@ class UserProgressRepositoryImplTest {
     fun shouldDeleteRecordAndUpdateState() = runTest {
         // Given
         val localClient = FakeUserProgressLocalClient()
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.advanceUntilIdle()
         val record = createTestRecord()
         repository.upsert(record)
@@ -160,7 +160,7 @@ class UserProgressRepositoryImplTest {
         val record3 = createTestRecord(userId = "user-2", stepId = "step-1")
         val localClient = FakeUserProgressLocalClient()
         localClient.records.addAll(listOf(record1, record2, record3))
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.runCurrent() // Run the init block coroutine
         testScheduler.advanceUntilIdle()
 
@@ -179,7 +179,7 @@ class UserProgressRepositoryImplTest {
     fun shouldMaintainConsistencyBetweenStateAndDatabase() = runTest {
         // Given
         val localClient = FakeUserProgressLocalClient()
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.advanceUntilIdle()
         val record1 = createTestRecord(stepId = "step-1")
         val record2 = createTestRecord(stepId = "step-2")
@@ -204,7 +204,7 @@ class UserProgressRepositoryImplTest {
     fun shouldHandleMultipleUsersCorrectly() = runTest {
         // Given
         val localClient = FakeUserProgressLocalClient()
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.advanceUntilIdle()
         val user1Record = createTestRecord(userId = "user-1")
         val user2Record = createTestRecord(userId = "user-2")
@@ -225,7 +225,7 @@ class UserProgressRepositoryImplTest {
     fun shouldEmitStateFlowUpdates() = runTest {
         // Given
         val localClient = FakeUserProgressLocalClient()
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.advanceUntilIdle()
         val record = createTestRecord()
 
@@ -244,7 +244,7 @@ class UserProgressRepositoryImplTest {
     fun shouldGetAll() = runTest {
         // Given
         val localClient = FakeUserProgressLocalClient()
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.advanceUntilIdle()
         val record1 = createTestRecord(userId = "user-1", stepId = "step-1")
         val record2 = createTestRecord(userId = "user-2", stepId = "step-2")
@@ -270,7 +270,7 @@ class UserProgressRepositoryImplTest {
         localClient.records.addAll(listOf(record1, record2))
 
         // When
-        val repository = UserProgressRepositoryImpl(localClient, this.backgroundScope)
+        val repository = createRepository(localClient)
         testScheduler.runCurrent() // Run the init block coroutine
         testScheduler.advanceUntilIdle()
 
@@ -285,7 +285,7 @@ class UserProgressRepositoryImplTest {
         userId: String = "user-1",
         stepId: String = "step-1"
     ): UserProgressRecord {
-        val now = kotlin.time.Clock.System.now()
+        val now = Clock.System.now()
         return UserProgressRecord(
             userId = userId,
             stepId = stepId,
@@ -295,6 +295,12 @@ class UserProgressRepositoryImplTest {
             reviewAt = now,
             lastIntervalDays = 3
         )
+    }
+
+    private fun TestScope.createRepository(localClient: UserProgressLocalClient): UserProgressRepositoryImpl {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val progressSynchronizer = ProgressSynchronizer(localClient, dispatcher)
+        return UserProgressRepositoryImpl(localClient, progressSynchronizer, backgroundScope)
     }
 }
 

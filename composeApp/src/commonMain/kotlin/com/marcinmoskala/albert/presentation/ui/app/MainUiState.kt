@@ -17,4 +17,5 @@ data class LessonMainUi(
     val lessonId: String,
     val name: String,
     val steps: Int,
+    val remainingSteps: Int,
 )

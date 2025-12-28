@@ -9,11 +9,17 @@ config.resolve = {
     }
 };
 
+const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 config.plugins.push(
     new CopyWebpackPlugin({
         patterns: [
-            '../../node_modules/sql.js/dist/sql-wasm.wasm'
+            {
+                from: require.resolve('sql.js/dist/sql-wasm.wasm'),
+                to: '[name][ext]'
+            }
         ]
     })
 );
+config.output = config.output || {};
+config.output.publicPath = '/app/';

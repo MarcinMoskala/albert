@@ -3,14 +3,15 @@ package com.marcinmoskala.albert.di
 import com.marcinmoskala.albert.data.CourseRepositoryImpl
 import com.marcinmoskala.albert.data.UserProgressRepositoryImpl
 import com.marcinmoskala.albert.data.UserRepositoryImpl
-import com.marcinmoskala.albert.domain.model.SingleAnswerStep
-import com.marcinmoskala.albert.domain.model.MultipleAnswerStep
 import com.marcinmoskala.albert.domain.model.ExactTextStep
+import com.marcinmoskala.albert.domain.model.MultipleAnswerStep
+import com.marcinmoskala.albert.domain.model.SingleAnswerStep
 import com.marcinmoskala.albert.domain.model.TextStep
 import com.marcinmoskala.albert.domain.repository.CourseRepository
 import com.marcinmoskala.albert.domain.repository.UserProgressRepository
 import com.marcinmoskala.albert.domain.repository.UserRepository
 import com.marcinmoskala.albert.domain.usecase.SubmitStepAnswerUseCase
+import com.marcinmoskala.albert.domain.usecase.SynchronizeProgressUseCase
 import com.marcinmoskala.albert.presentation.common.ErrorHandler
 import com.marcinmoskala.albert.presentation.common.ErrorHandlerImpl
 import com.marcinmoskala.albert.presentation.common.SnackbarController
@@ -25,8 +26,10 @@ import com.marcinmoskala.albert.presentation.ui.learning.components.TextStepView
 import com.marcinmoskala.albert.presentation.ui.login.LoginViewModel
 import com.marcinmoskala.client.AuthClient
 import com.marcinmoskala.client.CourseClient
+import com.marcinmoskala.client.SynchronizeClient
 import com.marcinmoskala.client.buildDefaultHttpClient
-import com.marcinmoskala.database.UserProgressLocalClient
+import com.marcinmoskala.database.ProgressSynchronizer
+import com.russhwolf.settings.Settings
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,8 +41,10 @@ val appModule = module {
     single { buildDefaultHttpClient() }
     single { CourseClient(get()) }
     single { AuthClient(get()) }
+    single { SynchronizeClient(get()) }
+    single<Settings> { Settings() }
     single<CourseRepository> { CourseRepositoryImpl(get()) }
-    single<UserRepository> { UserRepositoryImpl(get()) }
+    single<UserRepository> { UserRepositoryImpl(get(), get()) }
 
     // Background scope for repository
     single<CoroutineScope>(createdAtStart = true) {
@@ -50,20 +55,22 @@ val appModule = module {
     }
 
     // User Progress Repository - requires UserProgressLocalClient to be provided by platform
-    single<UserProgressRepository> { UserProgressRepositoryImpl(get(), get()) }
+    single { ProgressSynchronizer(get(), Dispatchers.Default) }
+    single<UserProgressRepository> { UserProgressRepositoryImpl(get(), get(), get()) }
 
     // Use cases
     single { SubmitStepAnswerUseCase(get()) }
+    single { SynchronizeProgressUseCase(get(), get(), get()) }
 
     // Navigation and UI controllers
     single<Navigator> { NavigatorImpl() }
     single { SnackbarController() }
     single<ErrorHandler> { ErrorHandlerImpl(get()) }
 
-    viewModel { MainViewModel(get(), get(), get(), get()) }
-    viewModel { LoginViewModel(get(), get(), get(), get()) }
+    viewModel { MainViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { LoginViewModel(get(), get(), get(), get(), get()) }
     viewModel { (courseId: String?, lessonId: String?) ->
-        LearningViewModel(get(), get(), get(), get(), courseId, lessonId, get())
+        LearningViewModel(get(), get(), get(), get(), get(), courseId, lessonId, get())
     }
 
     // Step view models

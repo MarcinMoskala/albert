@@ -10,10 +10,18 @@ config.resolve = {
 };
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
 config.plugins.push(
     new CopyWebpackPlugin({
         patterns: [
-            '../../node_modules/sql.js/dist/sql-wasm.wasm'
+            {
+                from: require.resolve('sql.js/dist/sql-wasm.wasm'),
+                to: '[name][ext]'
+            }
         ]
     })
 );
+
+// Ensure assets are resolved relative to the worker/bundle root
+config.output = config.output || {};
+config.output.publicPath = '/app/';

@@ -87,7 +87,7 @@ class CourseEndpointTest {
     }
 
     private fun testModule() = koinModule {
-        single<CourseRepository> { CourseYamlRepository(resourcePath = "test-courses.yaml") }
+        single<CourseRepository> { CourseYamlRepository(resourcePaths = listOf("test-courses.yaml")) }
         single { CourseService(get()) }
     }
 }
