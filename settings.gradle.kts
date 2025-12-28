@@ -34,8 +34,6 @@ plugins {
 
 val isProductionBuild = providers.gradleProperty("production").isPresent
 
-if (!isProductionBuild) {
-    include(":composeApp")
-}
+include(":composeApp")
 include(":server")
 include(":shared")

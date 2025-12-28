@@ -23,7 +23,7 @@ if (localPropertiesFile.exists()) {
 
 val isProductionBuild: Boolean = providers.gradleProperty("production").isPresent
 val includeComposeStaticResources: Boolean =
-    !isProductionBuild && !project.hasProperty("skipComposeStatic") && project.findProject(":composeApp") != null
+    !project.hasProperty("skipComposeStatic") && project.findProject(":composeApp") != null
 
 fun loadLocalPropertiesFromRootProject(): Properties {
     val loadedProperties = Properties()
@@ -82,12 +82,23 @@ jib {
 
 tasks.named<ProcessResources>("processResources") {
     if (includeComposeStaticResources) {
-        // For local backend runs we want a build that always terminates.
-        // Production webpack uses Terser minification which can stall on Windows for large bundles.
-        dependsOn(":composeApp:jsBrowserDevelopmentExecutableDistribution")
+        // Build JS client in production using optimized distribution; dev builds can override via -PskipComposeStatic
+        val jsTask = if (isProductionBuild) {
+            ":composeApp:jsBrowserDistribution"
+        } else {
+            ":composeApp:jsBrowserDevelopmentExecutableDistribution"
+        }
+
+        dependsOn(jsTask)
 
         val composeAppBuildDirectory = project(":composeApp").layout.buildDirectory
-        from(composeAppBuildDirectory.dir("dist/js/developmentExecutable")) {
+        val jsOutputDir = if (isProductionBuild) {
+            composeAppBuildDirectory.dir("dist/js/productionExecutable")
+        } else {
+            composeAppBuildDirectory.dir("dist/js/developmentExecutable")
+        }
+
+        from(jsOutputDir) {
             into("static")
         }
     } else {

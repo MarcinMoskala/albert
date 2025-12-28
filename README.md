@@ -208,4 +208,5 @@ Notes:
 
 - CORS is open (`anyHost`) on the backend; tighten if you know your front-end origins.
 - The server listens on `0.0.0.0` and honors Railway's `PORT` automatically.
-- `-Pproduction` skips including the Compose web module on Railway to avoid needing Android SDK.
+- `-Pproduction` builds the JS client (production bundle) and ships it with the server. Pass
+  `-PskipComposeStatic` only if you host the frontend elsewhere.

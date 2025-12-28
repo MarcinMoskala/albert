@@ -1,3 +1,4 @@
+import com.android.build.gradle.LibraryExtension
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import app.cash.sqldelight.gradle.VerifyMigrationTask
@@ -7,14 +8,14 @@ val enableAndroidTargets: Boolean = !isProductionBuild
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    // Apply Android plugin only for local/dev builds. In production (-Pproduction) we skip it to avoid requiring Android SDK.
-    alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.sqldelight)
+    // Apply Android plugin only when Android targets enabled
+    alias(libs.plugins.androidLibrary) apply false
 }
 
 if (enableAndroidTargets) {
-    apply(plugin = "com.android.library")
+    pluginManager.apply("com.android.library")
 }
 
 kotlin {
@@ -101,7 +102,7 @@ kotlin {
 }
 
 if (enableAndroidTargets) {
-    android {
+    extensions.configure<LibraryExtension> {
         namespace = "com.marcinmoskala.albert.shared"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         compileOptions {
