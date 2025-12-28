@@ -16,8 +16,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Clock
 import kotlin.time.Instant
-import kotlin.time.TimeSource
 
 class LearningViewModel(
     private val courseRepository: CourseRepository,
@@ -42,8 +42,9 @@ class LearningViewModel(
 
     init {
         viewModelScope.launch {
+            val now: Instant = Clock.System.now()
             val lessonSteps = getAllSteps()
-                .filter { shouldBeSeen(it) }
+                .filter { shouldBeSeen(it, now) }
             steps.value = lessonSteps
             if (lessonSteps.isEmpty()) {
                 navigator.navigateBack()
@@ -53,16 +54,13 @@ class LearningViewModel(
         }
     }
 
-    private suspend fun shouldBeSeen(step: LessonStep): Boolean {
+    private suspend fun shouldBeSeen(step: LessonStep, now: Instant): Boolean {
         val record = userProgressRepository.getProgress(activeUserId, step.stepId)
         return when (record?.status) {
             null, UserProgressStatus.PENDING -> true
             UserProgressStatus.COMPLETED -> false
             UserProgressStatus.REPEATING -> {
                 val reviewAt = record.reviewAt ?: return true
-                val now = Instant.fromEpochMilliseconds(
-                    TimeSource.Monotonic.markNow().elapsedNow().inWholeMilliseconds
-                )
                 reviewAt < now
             }
         }

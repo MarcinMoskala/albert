@@ -2,17 +2,27 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import app.cash.sqldelight.gradle.VerifyMigrationTask
 
+val isProductionBuild: Boolean = providers.gradleProperty("production").isPresent
+val enableAndroidTargets: Boolean = !isProductionBuild
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    // Apply Android plugin only for local/dev builds. In production (-Pproduction) we skip it to avoid requiring Android SDK.
+    alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.sqldelight)
 }
 
+if (enableAndroidTargets) {
+    apply(plugin = "com.android.library")
+}
+
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+    if (enableAndroidTargets) {
+        androidTarget {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_11)
+            }
         }
     }
     
@@ -46,9 +56,11 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
         }
-        androidMain.dependencies {
-            implementation(libs.ktor.client.android)
-            implementation(libs.sqldelight.android.driver)
+        if (enableAndroidTargets) {
+            androidMain.dependencies {
+                implementation(libs.ktor.client.android)
+                implementation(libs.sqldelight.android.driver)
+            }
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -80,21 +92,25 @@ kotlin {
         wasmJsTest.dependencies {
             implementation(libs.sqldelight.web.worker.driver.wasm)
         }
-        androidUnitTest.dependencies {
-            implementation(libs.sqldelight.sqlite.driver)
+        if (enableAndroidTargets) {
+            androidUnitTest.dependencies {
+                implementation(libs.sqldelight.sqlite.driver)
+            }
         }
     }
 }
 
-android {
-    namespace = "com.marcinmoskala.albert.shared"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
+if (enableAndroidTargets) {
+    android {
+        namespace = "com.marcinmoskala.albert.shared"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_11
+            targetCompatibility = JavaVersion.VERSION_11
+        }
+        defaultConfig {
+            minSdk = libs.versions.android.minSdk.get().toInt()
+        }
     }
 }
 

@@ -16,8 +16,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.time.Clock
 import kotlin.time.Instant
-import kotlin.time.TimeSource
 
 class MainViewModel(
     private val courseRepository: CourseRepository,
@@ -33,6 +33,7 @@ class MainViewModel(
         userProgressRepository.progress,
         userRepository.isLoggedIn
     ) { courses, progress, isLoggedIn ->
+        println("In database, I can see: $progress")
         MainUiState(
             loading = false,
             courses = createCoursesUi(courses, progress),
@@ -103,9 +104,7 @@ class MainViewModel(
         courses: List<Course>,
         progress: Map<String, UserProgressRecord>
     ): List<CourseMainUi> {
-        val now = Instant.fromEpochMilliseconds(
-            TimeSource.Monotonic.markNow().elapsedNow().inWholeMilliseconds
-        )
+        val now: Instant = Clock.System.now()
         return courses.map { course ->
             val progressByStepId = progress.values.associateBy { it.stepId }
             CourseMainUi(

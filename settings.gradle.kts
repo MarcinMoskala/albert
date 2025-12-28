@@ -32,6 +32,10 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-include(":composeApp")
+val isProductionBuild = providers.gradleProperty("production").isPresent
+
+if (!isProductionBuild) {
+    include(":composeApp")
+}
 include(":server")
 include(":shared")

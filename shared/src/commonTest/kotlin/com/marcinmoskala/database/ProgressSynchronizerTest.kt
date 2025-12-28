@@ -4,7 +4,7 @@ import com.marcinmoskala.model.UserCourseProgressApi
 import com.marcinmoskala.model.UserProgressApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
-import kotlin.time.Instant
+import kotlinx.datetime.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

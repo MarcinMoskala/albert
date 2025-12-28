@@ -4,10 +4,9 @@ import com.marcinmoskala.albert.domain.model.LessonStep
 import com.marcinmoskala.albert.domain.repository.UserProgressRepository
 import com.marcinmoskala.database.UserProgressRecord
 import com.marcinmoskala.database.UserProgressStatus
+import kotlin.time.Clock
 import kotlin.time.Instant
 import kotlin.time.Duration.Companion.days
-import kotlin.time.ExperimentalTime
-import kotlin.time.TimeSource
 
 class SubmitStepAnswerUseCase(
     private val userProgressRepository: UserProgressRepository
@@ -17,9 +16,7 @@ class SubmitStepAnswerUseCase(
         step: LessonStep,
         isCorrect: Boolean,
     ) {
-        val now = Instant.fromEpochMilliseconds(
-            TimeSource.Monotonic.markNow().elapsedNow().inWholeMilliseconds
-        )
+        val now: Instant = Clock.System.now()
 
         // Get existing record or create new one
         val existingRecord = userProgressRepository.get(userId, step.stepId)
@@ -59,6 +56,7 @@ class SubmitStepAnswerUseCase(
             lastIntervalDays = lastIntervalDays,
         )
 
+        println("Store record: $record")
         userProgressRepository.upsert(record)
     }
 }

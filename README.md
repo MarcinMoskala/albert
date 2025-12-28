@@ -199,3 +199,13 @@ backend.
     - **Multiple-Choice:** Select one or more correct answers.
     - **Exact Word:** Free-text matching for specific terms.
 - **Spaced Repetition System:** Automated scheduling for repeatable items and same-day retries for mistakes.
+
+### Notes for Deployment
+
+- **Build command**: `./gradlew :server:installDist -Pproduction`
+
+Notes:
+
+- CORS is open (`anyHost`) on the backend; tighten if you know your front-end origins.
+- The server listens on `0.0.0.0` and honors Railway's `PORT` automatically.
+- `-Pproduction` skips including the Compose web module on Railway to avoid needing Android SDK.

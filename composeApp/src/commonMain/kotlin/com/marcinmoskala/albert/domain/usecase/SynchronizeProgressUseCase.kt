@@ -1,9 +1,7 @@
 package com.marcinmoskala.albert.domain.usecase
 
 import com.marcinmoskala.albert.domain.repository.UserProgressRepository
-import com.marcinmoskala.albert.domain.repository.UserRepository
 import com.marcinmoskala.client.SynchronizeClient
-import com.marcinmoskala.database.UserProgressLocalClient
 import com.marcinmoskala.database.toCourseProgressApi
 import com.marcinmoskala.model.UserCourseProgressApi
 

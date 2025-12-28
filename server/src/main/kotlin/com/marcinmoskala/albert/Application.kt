@@ -21,7 +21,9 @@ import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 
 private const val SERVER_PORT_SYSTEM_PROPERTY_NAME = "server.port"
+private const val PORT_ENVIRONMENT_VARIABLE_NAME = "PORT"
 private const val SERVER_PORT_ENVIRONMENT_VARIABLE_NAME = "SERVER_PORT"
+private const val DEFAULT_SERVER_PORT = 8080
 
 private fun resolveServerPort(): Int {
     val fromSystemProperty = System.getProperty(SERVER_PORT_SYSTEM_PROPERTY_NAME)
@@ -32,11 +34,19 @@ private fun resolveServerPort(): Int {
         return fromSystemProperty
     }
 
+    val fromPortEnvironmentVariable = System.getenv(PORT_ENVIRONMENT_VARIABLE_NAME)
+        ?.trim()
+        ?.toIntOrNull()
+
+    if (fromPortEnvironmentVariable != null) {
+        return fromPortEnvironmentVariable
+    }
+
     val fromEnvironmentVariable = System.getenv(SERVER_PORT_ENVIRONMENT_VARIABLE_NAME)
         ?.trim()
         ?.toIntOrNull()
 
-    return fromEnvironmentVariable ?: SERVER_PORT
+    return fromEnvironmentVariable ?: DEFAULT_SERVER_PORT
 }
 
 fun main() {
@@ -56,9 +66,7 @@ fun Application.module(extraModules: List<Module> = emptyList()) {
         modules(listOf(serverModule) + extraModules)
     }
     install(CORS) {
-        allowHost("localhost:8080")
-        allowHost("127.0.0.1:8080")
-        allowHost("0.0.0.0:8080")
+        anyHost()
         allowHeader(HttpHeaders.ContentType)
         allowHeader(HttpHeaders.Authorization)
         allowMethod(HttpMethod.Get)
@@ -88,7 +96,6 @@ fun Application.module(extraModules: List<Module> = emptyList()) {
 
         staticResources("/app/", "static") {
             default("index.html")
-            resource("sql-wasm.wasm", "static/sql-wasm.wasm")
         }
         get { call.respondRedirect("/app/") }
     }

@@ -16,7 +16,7 @@
 # Backend - Ktor
 
 - Ktor framework for building the server
-- MongoDB with native driver for database
+- SQLDelight for local storage
 
 # Testing
  

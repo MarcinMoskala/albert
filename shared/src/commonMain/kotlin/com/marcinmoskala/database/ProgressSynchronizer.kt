@@ -4,7 +4,7 @@ import com.marcinmoskala.model.UserCourseProgressApi
 import com.marcinmoskala.model.UserProgressApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import kotlin.time.Instant
+import kotlinx.datetime.Instant
 
 class ProgressSynchronizer(
     private val userProgressLocalClient: UserProgressLocalClient,

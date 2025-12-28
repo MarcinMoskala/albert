@@ -21,6 +21,10 @@ if (localPropertiesFile.exists()) {
     localPropertiesFile.inputStream().use { localProperties.load(it) }
 }
 
+val isProductionBuild: Boolean = providers.gradleProperty("production").isPresent
+val includeComposeStaticResources: Boolean =
+    !isProductionBuild && !project.hasProperty("skipComposeStatic") && project.findProject(":composeApp") != null
+
 fun loadLocalPropertiesFromRootProject(): Properties {
     val loadedProperties = Properties()
     val propertiesFile = rootProject.file("local.properties")
@@ -38,6 +42,7 @@ application {
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
+// Railway / container friendly: expose port via PORT env var (default handled in Application.kt)
 
 dependencies {
     implementation(projects.shared)
@@ -76,13 +81,17 @@ jib {
 }
 
 tasks.named<ProcessResources>("processResources") {
-    // For local backend runs we want a build that always terminates.
-    // Production webpack uses Terser minification which can stall on Windows for large bundles.
-    dependsOn(":composeApp:jsBrowserDevelopmentExecutableDistribution")
+    if (includeComposeStaticResources) {
+        // For local backend runs we want a build that always terminates.
+        // Production webpack uses Terser minification which can stall on Windows for large bundles.
+        dependsOn(":composeApp:jsBrowserDevelopmentExecutableDistribution")
 
-    val composeAppBuildDirectory = project(":composeApp").layout.buildDirectory
-    from(composeAppBuildDirectory.dir("dist/js/developmentExecutable")) {
-        into("static")
+        val composeAppBuildDirectory = project(":composeApp").layout.buildDirectory
+        from(composeAppBuildDirectory.dir("dist/js/developmentExecutable")) {
+            into("static")
+        }
+    } else {
+        logger.lifecycle("processResources: skipping compose web bundle (production/skipComposeStatic)")
     }
 }
 

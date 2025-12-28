@@ -3,7 +3,7 @@ package com.marcinmoskala.database
 import app.cash.sqldelight.async.coroutines.awaitAsList
 import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
 import app.cash.sqldelight.db.SqlDriver
-import kotlin.time.Instant
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
