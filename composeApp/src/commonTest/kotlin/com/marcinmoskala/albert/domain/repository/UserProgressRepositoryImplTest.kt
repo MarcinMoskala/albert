@@ -5,15 +5,17 @@ import com.marcinmoskala.database.ProgressSynchronizer
 import com.marcinmoskala.database.UserProgressLocalClient
 import com.marcinmoskala.database.UserProgressRecord
 import com.marcinmoskala.database.UserProgressStatus
-import kotlinx.coroutines.CoroutineScope
+import com.marcinmoskala.model.UserApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
-import kotlinx.datetime.Clock
+import kotlin.time.Instant
 
 class UserProgressRepositoryImplTest {
     @Test
@@ -41,7 +43,7 @@ class UserProgressRepositoryImplTest {
         // Then
         val progressMap = repository.progress.value
         assertEquals(1, progressMap.size)
-        assertEquals(record, progressMap["user-1:step-1"])
+        assertEquals(record, progressMap["step-1"])
         assertEquals(listOf(record), localClient.records)
     }
 
@@ -61,7 +63,7 @@ class UserProgressRepositoryImplTest {
         // Then
         val progressMap = repository.progress.value
         assertEquals(1, progressMap.size)
-        assertEquals(record2, progressMap["user-1:step-1"])
+        assertEquals(record2, progressMap["step-1"])
         assertEquals(listOf(record2), localClient.records)
         assertEquals(2, localClient.upsertCallCount)
     }
@@ -97,7 +99,7 @@ class UserProgressRepositoryImplTest {
         // Then
         assertEquals(record, result)
         assertEquals(1, repository.progress.value.size)
-        assertEquals(record, repository.progress.value["user-1:step-1"])
+        assertEquals(record, repository.progress.value["step-1"])
     }
 
     @Test
@@ -169,10 +171,10 @@ class UserProgressRepositoryImplTest {
 
         // Then
         val progressMap = repository.progress.value
-        // 3 from init (all records loaded), loadAllForUser doesn't add new ones since they're already there
-        assertEquals(3, progressMap.size)
-        assertEquals(record1, progressMap["user-1:step-1"])
-        assertEquals(record2, progressMap["user-1:step-2"])
+        // progress is filtered by active user (user-1)
+        assertEquals(2, progressMap.size)
+        assertEquals(record1, progressMap["step-1"])
+        assertEquals(record2, progressMap["step-2"])
     }
 
     @Test
@@ -196,7 +198,7 @@ class UserProgressRepositoryImplTest {
         assertEquals(record2, retrievedRecord2)
         val finalState = repository.progress.value
         assertEquals(1, finalState.size)
-        assertEquals(record2, finalState["user-1:step-2"])
+        assertEquals(record2, finalState["step-2"])
         assertEquals(listOf(record2), localClient.records)
     }
 
@@ -218,7 +220,8 @@ class UserProgressRepositoryImplTest {
         // Then
         assertEquals(listOf(user1Record), user1Progress)
         assertEquals(listOf(user2Record), user2Progress)
-        assertEquals(2, repository.progress.value.size)
+        // Progress is filtered by active user (user-1)
+        assertEquals(1, repository.progress.value.size)
     }
 
     @Test
@@ -237,7 +240,7 @@ class UserProgressRepositoryImplTest {
         // Then
         assertEquals(emptyMap(), initialState)
         assertEquals(1, updatedState.size)
-        assertEquals(record, updatedState["user-1:step-1"])
+        assertEquals(record, updatedState["step-1"])
     }
 
     @Test
@@ -276,16 +279,16 @@ class UserProgressRepositoryImplTest {
 
         // Then
         val progressMap = repository.progress.value
-        assertEquals(2, progressMap.size)
-        assertEquals(record1, progressMap["user-1:step-1"])
-        assertEquals(record2, progressMap["user-2:step-2"])
+        // Only active user (user-1) progress is exposed
+        assertEquals(1, progressMap.size)
+        assertEquals(record1, progressMap["step-1"])
     }
 
     private fun createTestRecord(
         userId: String = "user-1",
         stepId: String = "step-1"
     ): UserProgressRecord {
-        val now = Clock.System.now()
+        val now = Instant.fromEpochMilliseconds(0)
         return UserProgressRecord(
             userId = userId,
             stepId = stepId,
@@ -300,7 +303,13 @@ class UserProgressRepositoryImplTest {
     private fun TestScope.createRepository(localClient: UserProgressLocalClient): UserProgressRepositoryImpl {
         val dispatcher = StandardTestDispatcher(testScheduler)
         val progressSynchronizer = ProgressSynchronizer(localClient, dispatcher)
-        return UserProgressRepositoryImpl(localClient, progressSynchronizer, backgroundScope)
+        val userRepository = FakeUserRepository()
+        return UserProgressRepositoryImpl(
+            localClient,
+            progressSynchronizer,
+            userRepository,
+            backgroundScope
+        )
     }
 }
 
@@ -338,5 +347,23 @@ class FakeUserProgressLocalClient : UserProgressLocalClient {
             it.userId == userId &&
                     it.stepId == stepId
         }
+    }
+}
+
+private class FakeUserRepository : UserRepository {
+    private val userState = MutableStateFlow<UserApi?>(
+        UserApi(userId = "user-1", email = "test@example.com", displayName = "Test User")
+    )
+    private val isLoggedInState = MutableStateFlow(true)
+
+    override val currentUser: StateFlow<UserApi?> = userState
+    override val isLoggedIn: StateFlow<Boolean> = isLoggedInState
+
+    override suspend fun login(idToken: String): Result<UserApi> =
+        throw UnsupportedOperationException("Not needed in tests")
+
+    override suspend fun logout() {
+        userState.value = null
+        isLoggedInState.value = false
     }
 }

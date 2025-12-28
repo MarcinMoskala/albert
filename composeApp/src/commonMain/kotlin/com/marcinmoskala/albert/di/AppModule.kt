@@ -56,11 +56,11 @@ val appModule = module {
 
     // User Progress Repository - requires UserProgressLocalClient to be provided by platform
     single { ProgressSynchronizer(get(), Dispatchers.Default) }
-    single<UserProgressRepository> { UserProgressRepositoryImpl(get(), get(), get()) }
+    single<UserProgressRepository> { UserProgressRepositoryImpl(get(), get(), get(), get()) }
 
     // Use cases
     single { SubmitStepAnswerUseCase(get()) }
-    single { SynchronizeProgressUseCase(get(), get(), get()) }
+    single { SynchronizeProgressUseCase(get(), get()) }
 
     // Navigation and UI controllers
     single<Navigator> { NavigatorImpl() }

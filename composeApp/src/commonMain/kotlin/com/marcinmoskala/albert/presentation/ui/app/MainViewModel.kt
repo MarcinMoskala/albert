@@ -10,14 +10,14 @@ import com.marcinmoskala.albert.presentation.common.viewmodels.BaseViewModel
 import com.marcinmoskala.albert.presentation.navigation.AppDestination
 import com.marcinmoskala.albert.presentation.navigation.Navigator
 import com.marcinmoskala.database.UserProgressRecord
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.marcinmoskala.database.UserProgressStatus
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.time.Instant
+import kotlin.time.TimeSource
 
 class MainViewModel(
     private val courseRepository: CourseRepository,
@@ -28,27 +28,24 @@ class MainViewModel(
     errorHandler: ErrorHandler
 ) : BaseViewModel(errorHandler) {
 
-    private val _uiState = MutableStateFlow(MainUiState(loading = true))
-    val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<MainUiState> = combine(
+        courseRepository.courses,
+        userProgressRepository.progress,
+        userRepository.isLoggedIn
+    ) { courses, progress, isLoggedIn ->
+        MainUiState(
+            loading = false,
+            courses = createCoursesUi(courses, progress),
+            isLoggedIn = isLoggedIn
+        )
+    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = MainUiState()
+        )
 
     init {
-        courseRepository.courses
-            .combine(userProgressRepository.progress) { courses, progress ->
-                _uiState.update {
-                    it.copy(
-                        loading = false,
-                        courses = createCoursesUi(courses, progress)
-                    )
-                }
-            }
-            .launchIn(viewModelScope)
-
-        userRepository.isLoggedIn
-            .onEach { isLoggedIn ->
-                _uiState.update { it.copy(isLoggedIn = isLoggedIn) }
-            }
-            .launchIn(viewModelScope)
-
         refresh()
     }
 
@@ -60,11 +57,11 @@ class MainViewModel(
 
     fun onSyncClick() {
         viewModelScope.launch {
-            val isLoggedIn = userRepository.isLoggedIn.value
-            if (!isLoggedIn) {
+            val user = userRepository.currentUser.value
+            if (user== null) {
                 navigator.navigateTo(AppDestination.Login)
             } else {
-                synchronizeProgressUseCase()
+                synchronizeProgressUseCase(user.userId)
             }
         }
     }
@@ -105,22 +102,40 @@ class MainViewModel(
     private fun createCoursesUi(
         courses: List<Course>,
         progress: Map<String, UserProgressRecord>
-    ): List<CourseMainUi> =
-        courses.map { course ->
+    ): List<CourseMainUi> {
+        val now = Instant.fromEpochMilliseconds(
+            TimeSource.Monotonic.markNow().elapsedNow().inWholeMilliseconds
+        )
+        return courses.map { course ->
+            val progressByStepId = progress.values.associateBy { it.stepId }
             CourseMainUi(
                 courseId = course.courseId,
                 title = course.title,
                 lessons = course.lessons.map { lesson ->
-                    val completedCount = progress.values.count { record ->
-                        record.stepId.startsWith("${lesson.lessonId}:")
+                    val stepsDueToday = lesson.steps.count { step ->
+                        val record = progressByStepId[step.stepId]
+                        isStepDueToday(record, now)
                     }
                     LessonMainUi(
                         lessonId = lesson.lessonId,
                         name = lesson.name,
                         steps = lesson.steps.size,
-                        remainingSteps = (lesson.steps.size - completedCount).coerceAtLeast(0)
+                        remainingSteps = stepsDueToday
                     )
                 }
             )
+        }
+    }
+
+    private fun isStepDueToday(record: UserProgressRecord?, now: Instant): Boolean {
+        if (record == null) return true
+        return when (record.status) {
+            UserProgressStatus.COMPLETED -> false
+            UserProgressStatus.PENDING -> true
+            UserProgressStatus.REPEATING -> {
+                val reviewAt = record.reviewAt ?: return true
+                reviewAt <= now
+            }
+        }
     }
 }

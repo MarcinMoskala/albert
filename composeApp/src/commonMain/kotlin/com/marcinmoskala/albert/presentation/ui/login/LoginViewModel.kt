@@ -45,7 +45,7 @@ class LoginViewModel(
             val result = userRepository.login(idToken)
             result.fold(
                 onSuccess = { user ->
-                    synchronizeProgressUseCase()
+                    synchronizeProgressUseCase(user.userId)
                     _uiState.value = LoginUiState.Success(user.email)
                     snackbarController.showMessage("Logged in as ${user.email}")
                     navigator.navigateTo(AppDestination.Main)
