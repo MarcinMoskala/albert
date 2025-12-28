@@ -87,6 +87,7 @@ frontend and backend to ensure consistency and development efficiency.
 - **Android Studio / IntelliJ IDEA**
 - **Xcode** (for iOS development)
 - **MongoDB** (running locally on default port 27017 or configured via environment)
+- **Firebase Account** (for Google Sign-In authentication - see setup below)
 
 ### Setup Steps
 
@@ -103,17 +104,43 @@ cd albert
 ./gradlew build
 ```
 
-3. **Run the Backend:**
+3. **Firebase Authentication:**
+
+   ✅ **Fully configured** - Android uses real Firebase auth, other platforms use test tokens.
+
+   See [`docs/FIREBASE_SETUP.md`](docs/FIREBASE_SETUP.md) for details.
+
+4. **Run the Backend:**
+
+```bash
+./gradlew :server:startServer
+```
+
+If port `8080` is busy, choose a different port:
+
+```bash
+./gradlew :server:startServer -PserverPort=8081
+```
+
+Logs are written to `server/build/server/server.log`.
+
+Stop it with:
+
+```bash
+./gradlew :server:stopServer
+```
+
+If you prefer a foreground server (blocks the terminal/Gradle invocation), use:
 
 ```bash
 ./gradlew :server:run
 ```
 
-4. **Run the Frontend (Choose your platform):**
-    - **Desktop:** `./gradlew :composeApp:run`
-    - **Android:** Open in Android Studio and run `composeApp`.
-    - **Web (Wasm):** `./gradlew :composeApp:wasmJsBrowserDevelopmentRun`
-    - **iOS:** Open `iosApp/iosApp.xcodeproj` in Xcode.
+5. **Run the Frontend (Choose your platform):**
+    - **Desktop:** `./gradlew :composeApp:run` (test tokens, works immediately)
+    - **Android:** Open in Android Studio and run `composeApp` (real Firebase Google Sign-In)
+    - **Web (Wasm):** `./gradlew :composeApp:wasmJsBrowserDevelopmentRun` (test tokens)
+    - **iOS:** Open `iosApp/iosApp.xcodeproj` in Xcode (test tokens)
 
 ---
 
@@ -124,6 +151,8 @@ The project uses Gradle to manage all build and execution tasks.
 | Command                                             | Description                            |
 |-----------------------------------------------------|----------------------------------------|
 | `./gradlew :server:run`                             | Starts the Ktor backend server         |
+| `./gradlew :server:startServer`                     | Starts the backend in the background   |
+| `./gradlew :server:stopServer`                      | Stops the background backend           |
 | `./gradlew :composeApp:run`                         | Launches the Desktop (JVM) application |
 | `./gradlew :composeApp:wasmJsBrowserDevelopmentRun` | Launches the Web application (Wasm)    |
 | `./gradlew :composeApp:jsBrowserDevelopmentRun`     | Launches the Web application (JS)      |
@@ -133,11 +162,34 @@ The project uses Gradle to manage all build and execution tasks.
 
 ---
 
+## Authentication
+
+Albert uses **KMPAuth** for Google Sign-In on Android with Firebase token verification on the
+backend.
+
+### Features
+
+- ✅ Real Google Sign-In on Android (Firebase)
+- ✅ Backend token verification with Firebase Admin SDK
+- ✅ Test tokens for development (Desktop/Web/iOS)
+- ✅ Production-ready Android authentication
+
+### Status
+
+- **Android**: ✅ Real Firebase authentication working
+- **Backend**: ✅ Firebase Admin SDK verifying tokens
+- **Other platforms**: Test tokens (development)
+
+**Docs**: [`LOGIN_GUIDE.md`](docs/LOGIN_GUIDE.md) | [`FIREBASE_SETUP.md`](docs/FIREBASE_SETUP.md)
+
+---
+
 ## Project Scope
 
 ### MVP Functionalities
 
-- **Secure Authentication:** User login via KMPAuth what allows progress synchronization.
+- **Secure Authentication:** User login via Google Sign-In (KMPAuth + Firebase) for progress
+  synchronization.
 - **Course Catalog:** Browsing the hierarchy of Courses and Lessons.
 - **Lesson Flow:** Sequential presentation of lesson elements.
 - **Supported Element Types:**
@@ -145,5 +197,4 @@ The project uses Gradle to manage all build and execution tasks.
     - **Single-Choice:** Select one correct answer.
     - **Multiple-Choice:** Select one or more correct answers.
     - **Exact Word:** Free-text matching for specific terms.
-- **Spaced Repetition System:** Automated scheduling for repeatable items and same-day retries for
-  mistakes.
+- **Spaced Repetition System:** Automated scheduling for repeatable items and same-day retries for mistakes.

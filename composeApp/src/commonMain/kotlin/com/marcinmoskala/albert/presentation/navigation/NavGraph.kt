@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.marcinmoskala.albert.presentation.ui.app.MainScreen
 import com.marcinmoskala.albert.presentation.ui.learning.LearningScreen
+import com.marcinmoskala.albert.presentation.ui.login.LoginScreen
 
 @Composable
 fun AppNavHost(
@@ -29,6 +30,10 @@ fun AppNavHost(
                 courseId = route.courseId,
                 lessonId = route.lessonId
             )
+        }
+
+        composable<AppDestination.Login> {
+            LoginScreen()
         }
     }
 }

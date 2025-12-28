@@ -3,7 +3,8 @@ package com.marcinmoskala.albert.presentation.ui.app
 data class MainUiState(
     val loading: Boolean = false,
     val courses: List<CourseMainUi> = emptyList(),
-    val error: Throwable? = null
+    val error: Throwable? = null,
+    val isLoggedIn: Boolean = false
 )
 
 data class CourseMainUi(

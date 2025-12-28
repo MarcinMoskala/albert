@@ -26,7 +26,7 @@ class UserProgressDatabaseTest {
             status = UserProgressStatus.REPEATING,
             createdAt = now,
             updatedAt = now,
-            reviewAt = now.toLocalDateTime(TimeZone.UTC).date,
+            reviewAt = now,
             lastIntervalDays = 3
         )
         dataSource.upsert(record)

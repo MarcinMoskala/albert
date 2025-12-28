@@ -2,6 +2,8 @@ You are a Senior Kotlin programmer with experience in Compose Multiplatform and 
 
 Generate code, corrections, and refactorings that comply with the basic principles and nomenclature. 
 
+DO NOT CREATE DOCUMENTS OF WHAT WAS ACCOMPLISHED. Check out docs in `/docs` folder, and update them if needed. Make minimal number of updates, keep those docs minimal. 
+
 Make sure you only complete once the project builds, and tests are passing. ALWAYS BUILD PROJECT BEFORE FINISHING to see if it builds without errors.
 
 # Project structure

@@ -1,46 +1,68 @@
 package com.marcinmoskala.albert.di
 
+import com.marcinmoskala.database.AlbertDatabase
+import com.marcinmoskala.database.DriverFactory
+import com.marcinmoskala.database.SqlDelightUserProgressLocalClient
 import com.marcinmoskala.database.UserProgressLocalClient
-import com.marcinmoskala.database.UserProgressRecord
+import com.marcinmoskala.database.createUserProgressDatabase
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.dsl.module
 
-// Temporary in-memory implementation for Web platform
-// TODO: Implement proper SQLDelight Web Worker driver initialization
-class InMemoryUserProgressLocalClient : UserProgressLocalClient {
-    private val records = mutableListOf<UserProgressRecord>()
+// Lazy database holder for JS platform
+private var albertDatabase: AlbertDatabase? = null
 
-    override suspend fun upsert(record: UserProgressRecord) {
-        records.removeAll {
-            it.userId == record.userId &&
-                    it.stepId == record.stepId
-        }
-        records.add(record)
+@OptIn(DelicateCoroutinesApi::class)
+private suspend fun getOrCreateDatabase(driverFactory: DriverFactory): AlbertDatabase {
+    if (albertDatabase == null) {
+        val driver = driverFactory.createDriver()
+        albertDatabase = createUserProgressDatabase(driver)
     }
-
-    override suspend fun get(
-        userId: String,
-        stepId: String
-    ): UserProgressRecord? = records.firstOrNull {
-        it.userId == userId &&
-                it.stepId == stepId
-    }
-
-    override suspend fun getAll(): List<UserProgressRecord> = records.toList()
-
-    override suspend fun getAllForUser(userId: String): List<UserProgressRecord> =
-        records.filter { it.userId == userId }
-
-    override suspend fun delete(
-        userId: String,
-        stepId: String
-    ) {
-        records.removeAll {
-            it.userId == userId &&
-                    it.stepId == stepId
-        }
-    }
+    return albertDatabase!!
 }
 
 val platformModule = module {
-    single<UserProgressLocalClient> { InMemoryUserProgressLocalClient() }
+    single { DriverFactory() }
+
+    single<UserProgressLocalClient> {
+        val driverFactory = get<DriverFactory>()
+
+        // Eagerly initialize database in background
+        @OptIn(DelicateCoroutinesApi::class)
+        GlobalScope.launch {
+            getOrCreateDatabase(driverFactory)
+        }
+
+        // Return a client that will lazily await database initialization
+        object : UserProgressLocalClient {
+            override suspend fun upsert(record: com.marcinmoskala.database.UserProgressRecord) {
+                val db = getOrCreateDatabase(driverFactory)
+                SqlDelightUserProgressLocalClient(db).upsert(record)
+            }
+
+            override suspend fun get(
+                userId: String,
+                stepId: String
+            ): com.marcinmoskala.database.UserProgressRecord? {
+                val db = getOrCreateDatabase(driverFactory)
+                return SqlDelightUserProgressLocalClient(db).get(userId, stepId)
+            }
+
+            override suspend fun getAllForUser(userId: String): List<com.marcinmoskala.database.UserProgressRecord> {
+                val db = getOrCreateDatabase(driverFactory)
+                return SqlDelightUserProgressLocalClient(db).getAllForUser(userId)
+            }
+
+            override suspend fun getAll(): List<com.marcinmoskala.database.UserProgressRecord> {
+                val db = getOrCreateDatabase(driverFactory)
+                return SqlDelightUserProgressLocalClient(db).getAll()
+            }
+
+            override suspend fun delete(userId: String, stepId: String) {
+                val db = getOrCreateDatabase(driverFactory)
+                SqlDelightUserProgressLocalClient(db).delete(userId, stepId)
+            }
+        }
+    }
 }

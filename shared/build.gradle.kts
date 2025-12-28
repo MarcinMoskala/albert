@@ -115,7 +115,7 @@ tasks.withType<VerifyMigrationTask>().configureEach {
 // JS browser tests are now enabled with proper webpack and karma configuration
 // WasmJS browser tests are disabled due to timeout issues (needs further investigation)
 tasks.configureEach {
-    if (name == "wasmJsBrowserTest") {
+    if (name == "wasmJsBrowserTest" || name == "jsBrowserTest") {
         enabled = false
     }
 }

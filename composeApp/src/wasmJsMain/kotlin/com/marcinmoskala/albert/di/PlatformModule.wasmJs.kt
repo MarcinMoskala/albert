@@ -5,7 +5,8 @@ import com.marcinmoskala.database.UserProgressRecord
 import org.koin.dsl.module
 
 // Temporary in-memory implementation for WasmJs platform
-// Same as web implementation since wasmJs database support is still experimental
+// TODO: Implement full SQLite support for WASM
+// See: https://github.com/dellisd/sqldelight-sqlite-wasm for implementation examples
 class InMemoryUserProgressLocalClient : UserProgressLocalClient {
     private val records = mutableListOf<UserProgressRecord>()
 

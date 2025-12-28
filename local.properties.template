@@ -1,0 +1,18 @@
+## This file must *NOT* be checked into Version Control Systems,
+# as it contains information specific to your local configuration.
+#
+# Copy this file to 'local.properties' and fill in your actual values.
+
+# Android SDK location (auto-filled by Android Studio)
+sdk.dir=/path/to/android/sdk
+
+# Firebase Configuration (for server)
+# Properties are automatically converted to UPPER_SNAKE_CASE environment variables:
+# firebase.project.id -> FIREBASE_PROJECT_ID
+# firebase.service.account.json -> FIREBASE_SERVICE_ACCOUNT_JSON
+
+firebase.project.id=albert-8091e
+firebase.service.account.json={"type":"service_account","project_id":"albert-8091e",...}
+
+# You can add any custom properties here and they will be available as environment variables
+# Example: my.custom.property=value becomes MY_CUSTOM_PROPERTY=value

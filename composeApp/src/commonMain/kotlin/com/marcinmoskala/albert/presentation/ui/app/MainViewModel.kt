@@ -2,6 +2,7 @@ package com.marcinmoskala.albert.presentation.ui.app
 
 import com.marcinmoskala.albert.domain.model.Course
 import com.marcinmoskala.albert.domain.repository.CourseRepository
+import com.marcinmoskala.albert.domain.repository.UserRepository
 import com.marcinmoskala.albert.presentation.common.ErrorHandler
 import com.marcinmoskala.albert.presentation.common.viewmodels.BaseViewModel
 import com.marcinmoskala.albert.presentation.navigation.AppDestination
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val courseRepository: CourseRepository,
+    private val userRepository: UserRepository,
     private val navigator: Navigator,
     errorHandler: ErrorHandler
 ) : BaseViewModel(errorHandler) {
@@ -34,12 +36,36 @@ class MainViewModel(
                 }
             }
             .launchIn(viewModelScope)
+
+        userRepository.isLoggedIn
+            .onEach { isLoggedIn ->
+                _uiState.update { it.copy(isLoggedIn = isLoggedIn) }
+            }
+            .launchIn(viewModelScope)
+
         refresh()
     }
 
     fun refresh() {
         viewModelScope.launch {
             courseRepository.refresh()
+        }
+    }
+
+    fun onSyncClick() {
+        viewModelScope.launch {
+            val isLoggedIn = userRepository.isLoggedIn.value
+            if (!isLoggedIn) {
+                navigator.navigateTo(AppDestination.Login)
+            } else {
+                // TODO: Trigger sync when already logged in
+            }
+        }
+    }
+
+    fun onSignOutClick() {
+        viewModelScope.launch {
+            userRepository.logout()
         }
     }
 

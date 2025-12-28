@@ -12,4 +12,7 @@ sealed interface AppDestination {
         val courseId: String? = null,
         val lessonId: String? = null
     ) : AppDestination
+
+    @Serializable
+    data object Login : AppDestination
 }

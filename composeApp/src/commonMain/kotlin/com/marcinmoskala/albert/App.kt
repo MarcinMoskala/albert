@@ -11,6 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.AppTheme
 import com.marcinmoskala.albert.presentation.common.SnackbarController
 import com.marcinmoskala.albert.presentation.navigation.AppNavHost
 import com.marcinmoskala.albert.presentation.navigation.Navigator
@@ -22,7 +23,7 @@ import org.koin.compose.koinInject
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    AppTheme {
         val navController = rememberNavController()
         val snackbarHostState = remember { SnackbarHostState() }
         val snackbarController: SnackbarController = koinInject()

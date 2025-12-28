@@ -3,6 +3,9 @@ package com.marcinmoskala.albert.presentation.ui.app
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.CloudSync
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
@@ -21,21 +25,42 @@ fun MainScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CoursesList(
-            courses = uiState.courses,
-            onCourseClick = viewModel::onCourseClick,
-            onLessonClick = viewModel::onLessonClick,
-            onReviewAllClick = viewModel::onReviewAllClick
-        )
-        if (uiState.loading) CircularProgressIndicator()
-        if (uiState.error != null) ErrorView(
-            message = uiState.error?.message ?: "Unknown error",
-            onRetry = viewModel::refresh
-        )
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            TopAppBar(
+                title = { Text("Albert") },
+                actions = {
+                    IconButton(onClick = viewModel::onSyncClick) {
+                        Icon(Icons.Default.CloudSync, contentDescription = "Sync/Login")
+                    }
+                    if (uiState.isLoggedIn) {
+                        IconButton(onClick = viewModel::onSignOutClick) {
+                            Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Sign Out")
+                        }
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentAlignment = Alignment.Center
+        ) {
+            CoursesList(
+                courses = uiState.courses,
+                onCourseClick = viewModel::onCourseClick,
+                onLessonClick = viewModel::onLessonClick,
+                onReviewAllClick = viewModel::onReviewAllClick
+            )
+            if (uiState.loading) CircularProgressIndicator()
+            if (uiState.error != null) ErrorView(
+                message = uiState.error?.message ?: "Unknown error",
+                onRetry = viewModel::refresh
+            )
+        }
     }
 }
 

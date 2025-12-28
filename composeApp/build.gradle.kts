@@ -1,5 +1,4 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -9,6 +8,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.googleServices)
 }
 
 kotlin {
@@ -34,19 +34,16 @@ kotlin {
         browser()
         binaries.executable()
     }
-    
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-        binaries.executable()
-    }
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
             implementation(libs.koin.core)
+            implementation(libs.kmpauth.google)
+            implementation(libs.kmpauth.firebase)
+            implementation(libs.kmpauth.uihelper)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -70,6 +67,9 @@ kotlin {
             implementation(libs.androidx.navigation.compose)
             implementation(libs.multiplatform.markdown.renderer)
             implementation(libs.multiplatform.markdown.renderer.m3)
+            implementation(libs.kmpauth.google)
+            implementation(libs.kmpauth.firebase)
+            implementation(libs.kmpauth.uihelper)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -92,10 +92,7 @@ kotlin {
         jsMain.dependencies {
             implementation(libs.ktor.client.js)
             implementation(libs.koin.core)
-        }
-        wasmJsMain.dependencies {
-            implementation(libs.ktor.client.js)
-            implementation(libs.koin.core)
+            implementation(npm("copy-webpack-plugin", "12.0.2"))
         }
     }
 }
@@ -129,6 +126,8 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
 }
 
 tasks.register<JavaExec>("jvmRun") {
@@ -136,7 +135,7 @@ tasks.register<JavaExec>("jvmRun") {
     mainClass.set("com.marcinmoskala.albert.MainKt")
     val jvmTarget = kotlin.targets.getByName("jvm")
     val compilation = jvmTarget.compilations.getByName("main")
-    classpath = compilation.output.allOutputs + compilation.runtimeDependencyFiles
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
     dependsOn(compilation.compileTaskProvider)
 }
 

@@ -27,9 +27,9 @@ class UserProgressRepositoryImpl(
     }
 
     override suspend fun upsert(record: UserProgressRecord) = mutex.withLock {
-        localClient.upsert(record)
         val key = makeKey(record.userId, record.stepId)
         _progress.value += (key to record)
+        localClient.upsert(record)
     }
 
     override suspend fun get(

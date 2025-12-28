@@ -20,3 +20,13 @@ node_modules/
 .server-pid.txt
 server.log
 /composeApp/albert.db
+/kotlin-js-store/yarn.lock
+/kotlin-js-store/wasm/yarn.lock
+/books/**
+/books
+
+# Firebase configuration files (contain sensitive API keys)
+composeApp/google-services.json
+iosApp/iosApp/GoogleService-Info.plist
+*firebase-adminsdk*.json
+firebase-service-account.json
