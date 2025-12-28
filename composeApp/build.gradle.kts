@@ -1,21 +1,32 @@
+import com.android.build.gradle.AppExtension
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+val isProductionBuild: Boolean = providers.gradleProperty("production").isPresent
+val enableAndroidTargets: Boolean = !project.hasProperty("skipAndroidTargets")
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    // Keeps existing AGP plugin for local/dev builds. Not used in production builds on Railway because module is excluded via settings.gradle.kts when -Pproduction is set.
-    alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.googleServices)
+    alias(libs.plugins.googleServices) apply false
+    // Apply Android plugin only when Android targets are enabled (local/dev).
+    alias(libs.plugins.androidApplication) apply false
+}
+
+if (enableAndroidTargets) {
+    pluginManager.apply("com.android.application")
+    pluginManager.apply("com.google.gms.google-services")
 }
 
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+    if (enableAndroidTargets) {
+        androidTarget {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_11)
+            }
         }
     }
     
@@ -37,15 +48,17 @@ kotlin {
     }
 
     sourceSets {
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.ktor.client.android)
-            implementation(libs.koin.core)
-            implementation(libs.kmpauth.google)
-            implementation(libs.kmpauth.firebase)
-            implementation(libs.kmpauth.uihelper)
-            implementation(libs.slf4jAndroid)
+        if (enableAndroidTargets) {
+            androidMain.dependencies {
+                implementation(compose.preview)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.ktor.client.android)
+                implementation(libs.koin.core)
+                implementation(libs.kmpauth.google)
+                implementation(libs.kmpauth.firebase)
+                implementation(libs.kmpauth.uihelper)
+                implementation(libs.slf4jAndroid)
+            }
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -98,40 +111,47 @@ kotlin {
             implementation(libs.koin.core)
             implementation(npm("copy-webpack-plugin", "12.0.2"))
         }
+        jsTest.dependencies {
+            implementation(libs.kotlinx.datetime)
+        }
     }
 }
 
-android {
-    namespace = "com.marcinmoskala.albert"
-    compileSdk = 36
+if (enableAndroidTargets) {
+    extensions.configure<AppExtension> {
+        namespace = "com.marcinmoskala.albert"
+        compileSdkVersion(36)
 
-    defaultConfig {
-        applicationId = "com.marcinmoskala.albert"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        defaultConfig {
+            applicationId = "com.marcinmoskala.albert"
+            minSdk = libs.versions.android.minSdk.get().toInt()
+            targetSdk = libs.versions.android.targetSdk.get().toInt()
+            versionCode = 1
+            versionName = "1.0"
         }
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
+        packagingOptions {
+            resources {
+                excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            }
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        buildTypes {
+            getByName("release") {
+                isMinifyEnabled = false
+            }
+        }
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_11
+            targetCompatibility = JavaVersion.VERSION_11
+        }
     }
 }
 
 dependencies {
-    debugImplementation(compose.uiTooling)
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
+    if (enableAndroidTargets) {
+        add("debugImplementation", compose.uiTooling)
+        add("implementation", platform(libs.firebase.bom))
+        add("implementation", libs.firebase.auth)
+    }
 }
 
 tasks.register<JavaExec>("jvmRun") {

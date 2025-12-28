@@ -202,7 +202,8 @@ backend.
 
 ### Notes for Deployment
 
-- **Build command**: `./gradlew :server:installDist -Pproduction`
+- **Build command**: `./gradlew clean :server:installDist -x check -x test -Pproduction`
+  (builds optimized JS client and bundles it into `server/static`)
 
 Notes:
 
@@ -210,3 +211,5 @@ Notes:
 - The server listens on `0.0.0.0` and honors Railway's `PORT` automatically.
 - `-Pproduction` builds the JS client (production bundle) and ships it with the server. Pass
   `-PskipComposeStatic` only if you host the frontend elsewhere.
+  If Railway lacks Android SDK, add `-PskipAndroidTargets` to skip Android tooling while still
+  building JS/JVM targets.
