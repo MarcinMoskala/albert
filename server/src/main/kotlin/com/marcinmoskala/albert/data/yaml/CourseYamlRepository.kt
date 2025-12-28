@@ -18,7 +18,7 @@ import java.util.stream.Collectors
 import kotlin.use
 
 class CourseYamlRepository(
-    private val resourcePaths: List<String> = listOf("courses.yaml", "course-kotlin-essentials.yaml"),
+    private val resourcePaths: List<String> = listOf("courses.yaml"),
     private val yaml: Yaml = Yaml(
         configuration = YamlConfiguration(
             polymorphismStyle = PolymorphismStyle.Property,

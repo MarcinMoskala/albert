@@ -153,6 +153,7 @@ The project uses Gradle to manage all build and execution tasks.
 | `./gradlew :server:run`                             | Starts the Ktor backend server         |
 | `./gradlew :server:startServer`                     | Starts the backend in the background   |
 | `./gradlew :server:stopServer`                      | Stops the background backend           |
+| `./gradlew dockerRun`                               | Deploy backend on Docker               |
 | `./gradlew :composeApp:run`                         | Launches the Desktop (JVM) application |
 | `./gradlew :composeApp:wasmJsBrowserDevelopmentRun` | Launches the Web application (Wasm)    |
 | `./gradlew :composeApp:jsBrowserDevelopmentRun`     | Launches the Web application (JS)      |

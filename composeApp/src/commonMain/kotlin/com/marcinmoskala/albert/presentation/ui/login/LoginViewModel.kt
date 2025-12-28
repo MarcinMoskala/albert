@@ -8,7 +8,11 @@ import com.marcinmoskala.albert.presentation.navigation.AppDestination
 import com.marcinmoskala.albert.presentation.navigation.Navigator
 import com.mmk.kmpauth.google.GoogleAuthCredentials
 import com.mmk.kmpauth.google.GoogleAuthProvider
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.FirebaseApp
+import dev.gitlive.firebase.auth.FirebaseAuth
 import dev.gitlive.firebase.auth.FirebaseUser
+import dev.gitlive.firebase.initialize
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,15 +25,8 @@ class LoginViewModel(
     errorHandler: ErrorHandler
 ) : BaseViewModel(errorHandler) {
 
-    private val _uiState = MutableStateFlow<LoginUiState>(LoginUiState.Loading)
+    private val _uiState = MutableStateFlow<LoginUiState>(LoginUiState.ReadyToLogin)
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            GoogleAuthProvider.create(credentials = GoogleAuthCredentials(serverId = "1:215669576873:web:f0ecd6d22356ffde6145b8"))
-            _uiState.value = LoginUiState.ReadyToLogin
-        }
-    }
 
     fun onFirebaseResult(idToken: Result<FirebaseUser?>) {
         viewModelScope.launch {

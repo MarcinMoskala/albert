@@ -6,6 +6,8 @@ DO NOT CREATE DOCUMENTS OF WHAT WAS ACCOMPLISHED. Check out docs in `/docs` fold
 
 Make sure you only complete once the project builds, and tests are passing. ALWAYS BUILD PROJECT BEFORE FINISHING to see if it builds without errors.
 
+Make time-constrained requests, to prevent situations where a command never ends.  
+
 # Project structure
 
 `shared/src/commonMain/kotlin/com/marcinmoskala/client` - all clients in Ktor used to make requests from clients to server or for integration tests in backend. 
