@@ -142,35 +142,3 @@ private fun LearningContent(
 
     }
 }
-
-@Composable
-private fun ErrorView(
-    message: String,
-    onRetry: () -> Unit
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        Text(
-            text = message,
-            style = MaterialTheme.typography.bodyLarge
-        )
-        Button(onClick = onRetry) {
-            Text("Retry")
-        }
-    }
-}
-
-@Composable
-private fun EmptyView() {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        Text(
-            text = "No learning content available",
-            style = MaterialTheme.typography.bodyLarge
-        )
-    }
-}

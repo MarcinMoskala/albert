@@ -10,6 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.marcinmoskala.albert.domain.model.MultipleAnswerStep
+import com.mikepenz.markdown.m3.Markdown
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -31,10 +32,9 @@ fun MultipleAnswerStepView(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = step.question,
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold
+        Markdown(
+            content = step.question,
+            modifier = Modifier.fillMaxWidth()
         )
 
         Column(
@@ -74,13 +74,9 @@ fun MultipleAnswerStepView(
                         else
                             MaterialTheme.colorScheme.onErrorContainer
                     )
-                    Text(
-                        text = step.explanation,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = if (uiState.isCorrect)
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        else
-                            MaterialTheme.colorScheme.onErrorContainer
+                    Markdown(
+                        content = step.explanation,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             }
@@ -149,9 +145,9 @@ private fun MultipleAnswerOption(
                 onCheckedChange = null,
                 enabled = enabled
             )
-            Text(
-                text = answer,
-                style = MaterialTheme.typography.bodyLarge
+            Markdown(
+                content = answer,
+                modifier = Modifier.weight(1f)
             )
         }
     }

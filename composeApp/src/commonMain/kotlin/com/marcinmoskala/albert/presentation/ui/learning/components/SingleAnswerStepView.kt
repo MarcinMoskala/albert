@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.marcinmoskala.albert.domain.model.SingleAnswerStep
+import com.mikepenz.markdown.m3.Markdown
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -34,10 +35,9 @@ fun SingleAnswerStepView(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = step.question,
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold
+        Markdown(
+            content = step.question,
+            modifier = Modifier.fillMaxWidth()
         )
 
         Column(
@@ -63,7 +63,11 @@ fun SingleAnswerStepView(
                     containerColor = if (uiState.isCorrect)
                         MaterialTheme.colorScheme.primaryContainer
                     else
-                        MaterialTheme.colorScheme.errorContainer
+                        MaterialTheme.colorScheme.errorContainer,
+                    contentColor = if (uiState.isCorrect)
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    else
+                        MaterialTheme.colorScheme.onErrorContainer
                 )
             ) {
                 Column(
@@ -73,19 +77,11 @@ fun SingleAnswerStepView(
                     Text(
                         text = if (uiState.isCorrect) "Correct!" else "Incorrect",
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = if (uiState.isCorrect)
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        else
-                            MaterialTheme.colorScheme.onErrorContainer
+                        fontWeight = FontWeight.Bold
                     )
-                    Text(
-                        text = step.explanation,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = if (uiState.isCorrect)
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        else
-                            MaterialTheme.colorScheme.onErrorContainer
+                    Markdown(
+                        content = step.explanation,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             }
@@ -157,9 +153,9 @@ private fun AnswerOption(
                 onClick = null,
                 enabled = enabled
             )
-            Text(
-                text = answer,
-                style = MaterialTheme.typography.bodyLarge
+            Markdown(
+                content = answer,
+                modifier = Modifier.weight(1f)
             )
         }
     }
