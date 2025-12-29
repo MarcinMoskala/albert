@@ -15,6 +15,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.ktor.plugin.Koin
@@ -93,6 +94,14 @@ fun Application.module(extraModules: List<Module> = emptyList()) {
         configureCourseRouting()
         configureAuthRouting()
         configureProgressRouting()
+
+        // Runtime config for the browser bundle (Railway env vars are available to the server at runtime,
+        // but not to the already-built JS bundle).
+        get("/app/env.js") {
+            val serverUrl = System.getenv("SERVER_URL")?.trim().orEmpty()
+            val body = "globalThis.SERVER_URL = ${Json.encodeToString(serverUrl)};"
+            call.respondText(body, ContentType.parse("application/javascript"), HttpStatusCode.OK)
+        }
 
         staticResources("/app/", "static") {
             default("index.html")
