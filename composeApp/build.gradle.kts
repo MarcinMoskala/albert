@@ -73,6 +73,7 @@ kotlin {
             implementation(libs.androidx.navigation.compose)
             implementation(libs.multiplatform.markdown.renderer)
             implementation(libs.multiplatform.markdown.renderer.m3)
+            implementation(libs.multiplatform.markdown.renderer.coil3)
             implementation(libs.kmpauth.google)
             implementation(libs.kmpauth.firebase)
             implementation(libs.kmpauth.uihelper)
@@ -176,4 +177,17 @@ tasks.named("jsBrowserProductionWebpack") {
 
 tasks.named("jsBrowserDevelopmentWebpack") {
     dependsOn("jsProductionExecutableCompileSync")
+}
+
+// Convenience task: run unit tests on all platforms that are available on the current host OS.
+tasks.register("unitTestsAllPlatforms") {
+    group = "verification"
+    description = "Runs unit tests for JVM + JS on all hosts, and iOS simulator tests on macOS."
+
+    dependsOn("jvmTest", "jsTest")
+
+    val osName = System.getProperty("os.name").lowercase()
+    if (osName.contains("mac")) {
+        dependsOn("iosSimulatorArm64Test")
+    }
 }

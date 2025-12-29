@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.marcinmoskala.albert.domain.model.SingleAnswerStep
-import com.mikepenz.markdown.m3.Markdown
+import com.marcinmoskala.albert.presentation.markdown.AlbertMarkdown
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -35,7 +35,7 @@ fun SingleAnswerStepView(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Markdown(
+        AlbertMarkdown(
             content = step.question,
             modifier = Modifier.fillMaxWidth()
         )
@@ -79,7 +79,7 @@ fun SingleAnswerStepView(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    Markdown(
+                    AlbertMarkdown(
                         content = step.explanation,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -153,7 +153,7 @@ private fun AnswerOption(
                 onClick = null,
                 enabled = enabled
             )
-            Markdown(
+            AlbertMarkdown(
                 content = answer,
                 modifier = Modifier.weight(1f)
             )

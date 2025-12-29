@@ -67,6 +67,10 @@ class MainViewModel(
         }
     }
 
+    fun onResetProgressClick() {
+        navigator.navigateTo(AppDestination.ResetProgressDialog)
+    }
+
     fun onSignOutClick() {
         viewModelScope.launch {
             userRepository.logout()

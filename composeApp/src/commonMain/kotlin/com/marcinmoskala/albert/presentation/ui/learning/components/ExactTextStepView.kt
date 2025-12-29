@@ -9,7 +9,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.marcinmoskala.albert.domain.model.ExactTextStep
-import com.mikepenz.markdown.m3.Markdown
+import com.marcinmoskala.albert.presentation.markdown.AlbertMarkdown
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -31,7 +31,7 @@ fun ExactTextStepView(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Markdown(
+        AlbertMarkdown(
             content = step.question,
             modifier = Modifier.fillMaxWidth(),
         )

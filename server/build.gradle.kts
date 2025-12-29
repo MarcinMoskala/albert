@@ -81,6 +81,11 @@ jib {
 }
 
 tasks.named<ProcessResources>("processResources") {
+    // Include repo assets from `server/static` into the server JAR under `server-static/`
+    from(projectDir.resolve("static")) {
+        into("server-static")
+    }
+
     if (includeComposeStaticResources) {
         // Build JS client in production using optimized distribution; dev builds can override via -PskipComposeStatic
         val jsTask = if (isProductionBuild) {

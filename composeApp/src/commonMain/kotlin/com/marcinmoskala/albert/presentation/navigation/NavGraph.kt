@@ -5,8 +5,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.toRoute
 import com.marcinmoskala.albert.presentation.ui.app.MainScreen
+import com.marcinmoskala.albert.presentation.ui.app.ResetProgressDialog
 import com.marcinmoskala.albert.presentation.ui.learning.LearningScreen
 import com.marcinmoskala.albert.presentation.ui.login.LoginScreen
 
@@ -34,6 +36,10 @@ fun AppNavHost(
 
         composable<AppDestination.Login> {
             LoginScreen()
+        }
+
+        dialog<AppDestination.ResetProgressDialog> {
+            ResetProgressDialog()
         }
     }
 }

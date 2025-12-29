@@ -11,6 +11,7 @@ interface UserProgressRepository {
     suspend fun getAll(): List<UserProgressRecord>
     suspend fun getAllForUser(userId: String): List<UserProgressRecord>
     suspend fun delete(userId: String, stepId: String)
+    suspend fun deleteAllForUser(userId: String)
     suspend fun loadAllForUser(userId: String)
     suspend fun getProgress(userId: String, stepId: String): UserProgressRecord?
     suspend fun migrateProgress(fromUserId: String, toUserId: String)

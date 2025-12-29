@@ -78,6 +78,18 @@ class UserProgressRepositoryImpl(
         recomputeProgressForCurrentUser()
     }
 
+    override suspend fun deleteAllForUser(userId: String) {
+        loadedJob.join()
+        mutex.withLock {
+            val records = _allProgress.value.values.filter { it.userId == userId }
+            records.forEach { record ->
+                localClient.delete(userId, record.stepId)
+            }
+            _allProgress.value = _allProgress.value.filterValues { it.userId != userId }
+            recomputeProgressForCurrentUser()
+        }
+    }
+
     override suspend fun loadAllForUser(userId: String) = mutex.withLock {
         val records = localClient.getAllForUser(userId)
         val newMap = records.associateBy { record ->

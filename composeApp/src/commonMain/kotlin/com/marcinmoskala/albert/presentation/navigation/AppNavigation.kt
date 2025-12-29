@@ -15,4 +15,7 @@ sealed interface AppDestination {
 
     @Serializable
     data object Login : AppDestination
+
+    @Serializable
+    data object ResetProgressDialog : AppDestination
 }

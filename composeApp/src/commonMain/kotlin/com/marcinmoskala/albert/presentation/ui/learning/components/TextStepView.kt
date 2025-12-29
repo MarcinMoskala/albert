@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.marcinmoskala.albert.domain.model.TextStep
-import com.mikepenz.markdown.m3.Markdown
+import com.marcinmoskala.albert.presentation.markdown.AlbertMarkdown
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -47,7 +47,7 @@ fun TextStepView(
                 .weight(1f)
                 .fillMaxWidth()
         ) {
-            Markdown(
+            AlbertMarkdown(
                 content = step.text,
                 modifier = Modifier
                     .fillMaxSize()

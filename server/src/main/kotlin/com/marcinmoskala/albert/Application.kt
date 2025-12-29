@@ -19,6 +19,7 @@ import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
+import java.io.File
 
 private const val SERVER_PORT_SYSTEM_PROPERTY_NAME = "server.port"
 private const val PORT_ENVIRONMENT_VARIABLE_NAME = "PORT"
@@ -60,6 +61,8 @@ fun main() {
 }
 
 fun Application.module(extraModules: List<Module> = emptyList()) {
+    val log = environment.log
+
     install(Koin) {
         slf4jLogger()
         allowOverride(true)
@@ -94,9 +97,24 @@ fun Application.module(extraModules: List<Module> = emptyList()) {
         configureAuthRouting()
         configureProgressRouting()
 
+        // Static content serving
         staticResources("/app/", "static") {
             default("index.html")
         }
         get { call.respondRedirect("/app/") }
+
+        // Serve files from the repo's `server/static` directory under `/static/*`
+        val staticDir = listOf(
+            File("static"),        // when working directory is `server/`
+            File("server/static"), // when working directory is repo root
+        ).firstOrNull { it.exists() && it.isDirectory }
+
+        staticDir?.let { dir ->
+            staticFiles("/static", dir)
+        } ?: run {
+            // Fallback for packaged deployments (see `server/build.gradle.kts` -> processResources)
+            staticResources("/static", "server-static")
+            log.warn("Static directory not found; falling back to classpath resources `server-static/`.")
+        }
     }
 }

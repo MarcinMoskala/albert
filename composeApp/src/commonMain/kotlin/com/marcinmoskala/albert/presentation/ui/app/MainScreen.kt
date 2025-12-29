@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.CloudSync
+import androidx.compose.material.icons.filled.RestartAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,12 +32,36 @@ fun MainScreen(
             TopAppBar(
                 title = { Text("Albert") },
                 actions = {
-                    IconButton(onClick = viewModel::onSyncClick) {
-                        Icon(Icons.Default.CloudSync, contentDescription = "Sync/Login")
+                    val tooltipPositionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider()
+
+                    TooltipBox(
+                        positionProvider = tooltipPositionProvider,
+                        tooltip = { PlainTooltip { Text("Synchronize") } },
+                        state = rememberTooltipState()
+                    ) {
+                        IconButton(onClick = viewModel::onSyncClick) {
+                            Icon(Icons.Default.CloudSync, contentDescription = "Synchronize")
+                        }
+                    }
+
+                    TooltipBox(
+                        positionProvider = tooltipPositionProvider,
+                        tooltip = { PlainTooltip { Text("Reset progress") } },
+                        state = rememberTooltipState()
+                    ) {
+                        IconButton(onClick = viewModel::onResetProgressClick) {
+                            Icon(Icons.Default.RestartAlt, contentDescription = "Reset progress")
+                        }
                     }
                     if (uiState.isLoggedIn) {
-                        IconButton(onClick = viewModel::onSignOutClick) {
-                            Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Sign Out")
+                        TooltipBox(
+                            positionProvider = tooltipPositionProvider,
+                            tooltip = { PlainTooltip { Text("Logout") } },
+                            state = rememberTooltipState()
+                        ) {
+                            IconButton(onClick = viewModel::onSignOutClick) {
+                                Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Logout")
+                            }
                         }
                     }
                 }
