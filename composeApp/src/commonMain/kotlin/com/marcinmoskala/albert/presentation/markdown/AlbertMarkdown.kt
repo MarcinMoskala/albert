@@ -9,9 +9,11 @@ import com.mikepenz.markdown.model.ImageTransformer
 fun AlbertMarkdown(
     content: String,
     modifier: Modifier = Modifier,
+    imageTransformer: ImageTransformer = AlbertMarkdownImageTransformer,
 ) {
     Markdown(
         content = content.rewriteMarkdownImageUrls(),
         modifier = modifier,
+        imageTransformer = imageTransformer,
     )
 }

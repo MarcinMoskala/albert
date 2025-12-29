@@ -33,7 +33,6 @@ class MainViewModel(
         userProgressRepository.progress,
         userRepository.isLoggedIn
     ) { courses, progress, isLoggedIn ->
-        println("In database, I can see: $progress")
         MainUiState(
             loading = false,
             courses = createCoursesUi(courses, progress),

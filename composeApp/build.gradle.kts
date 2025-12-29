@@ -45,6 +45,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
+            implementation(libs.coil3.network.okhttp)
             implementation(libs.koin.core)
             implementation(libs.kmpauth.google)
             implementation(libs.kmpauth.firebase)
@@ -79,6 +80,8 @@ kotlin {
             implementation(libs.kmpauth.uihelper)
             implementation(libs.multiplatformSettings)
             implementation(libs.multiplatformSettingsNoArg)
+            implementation(libs.coil3.network.core)
+            implementation(libs.coil3.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
