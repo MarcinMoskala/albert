@@ -57,7 +57,7 @@ courses:
 
         Now that we understand the relationship between Kotlin and Java, it is time to fight some misconceptions. Many see Kotlin as a layer of syntactic sugar on top of Java, but this is not true. Kotlin is a different language than Java. It has its own conventions and practices, and it has features that Java does not have, like multiplatform capabilities and coroutines. You don’t need to know Java to understand Kotlin. In my opinion, Kotlin is a better first language than Java. Junior Kotlin developers do not need to know what the `equals` method is and how to override it. For them, it is enough to know the default class and data class equality. They don’t need to learn to write getters and setters, or how to implement a singleton or a builder pattern. Kotlin has a lower entry threshold than Java and does not need the JVM platform.
     - type: "text"
-      stepId: "lesson-01_what_is_kotlin-{sample:-true}-text"
+      stepId: "lesson-01_what_is_kotlin-text"
       repeatable: false
       text: |-
         # What is Kotlin?
@@ -71,7 +71,7 @@ courses:
 
         These descriptions might not be clear now, but you will see them all in action throughout the book. Let’s start by discussing Kotlin’s multiplatform capabilities.
     - type: "question-single-answer"
-      stepId: "lesson-01_what_is_kotlin-{sample:-true}-q1"
+      stepId: "lesson-01_what_is_kotlin-q1"
       question: "In Kotlin, what does “statically typed” mean?"
       explanation: "In a statically typed language, types are known and checked at\
         \ compile time. Kotlin still has type inference, but inferred types are resolved\
@@ -84,7 +84,7 @@ courses:
       - "The language doesn’t support generics"
       correct: "Types are known and checked at compile time"
     - type: "question-multiple-answer"
-      stepId: "lesson-01_what_is_kotlin-{sample:-true}-q2"
+      stepId: "lesson-01_what_is_kotlin-q2"
       question: "Which statements correctly reflect the text about Kotlin?"
       explanation: "The text states Kotlin is open-source (compiler sources available),\
         \ multi-paradigm (OOP and FP), and multiplatform (e.g., Android and iOS).\
@@ -290,7 +290,7 @@ courses:
 
         I also recommend you test this now. Open any Kotlin project (it is best if you have a dedicated project for playing with Kotlin), create a new file (you can name it "Test" or "Playground"), and create the `main` function with the live template “maina”. Use the `print` function with some text, and run the code with the Run button.
     - type: "text"
-      stepId: "lesson-02_first_program-{sample:-true}-text"
+      stepId: "lesson-02_first_program-text"
       repeatable: false
       text: |-
         # Your first program in Kotlin
@@ -350,7 +350,7 @@ courses:
 
         ![](main_run.png)
     - type: "question-multiple-answer"
-      stepId: "lesson-02_first_program-{sample:-true}-q1"
+      stepId: "lesson-02_first_program-q1"
       question: "Which of the following are valid Kotlin/JVM entry point declarations\
         \ (recognized as the program's main function) as shown in the section?"
       explanation: "Kotlin recognizes top-level `main` with no args, `Array<String>`,\
@@ -544,7 +544,7 @@ courses:
       - "Analyze > Infer nullity annotations"
       correct: "Tools > Kotlin > Show Kotlin Bytecode, then Decompile"
     - type: "question-single-answer"
-      stepId: "lesson-02_first_program-{sample:-true}-q2"
+      stepId: "lesson-02_first_program-q2"
       question: "You decide to place `main` inside a class's companion object. What\
         \ is required for the JVM to recognize it as the entry point?"
       explanation: "Inside a companion object, `main` must be exposed as a static\
@@ -581,12 +581,12 @@ courses:
 
         We can name variables using characters, underscore `_`, and numbers (but numbers are not allowed at the first position). By convention, we name variables with the camelCase convention; this means the variable name starts with a lowercase letter, then (instead of using spaces) each next word starts with a capital letter.
 
-        {width: 50%}
+        
         ![In Kotlin, we name variables using camelCase.](camelCase.png)
 
         Variables don’t need to specify their type explicitly, but this doesn't mean that variables are not typed. Kotlin is a statically typed language, therefore every variable needs its type specified. The point is that Kotlin is smart enough to infer the type from the value that is set. `10` is of type `Int`, so the type of `a` in the above example is `Int`. `"ABC"` is of type `String`, so the type of `b` is `String`.
 
-        {width: 60%}
+        
         ![](104_inference.png)
 
         We can also specify a variable type explicitly using a colon and a type **after** the variable name.
@@ -3210,7 +3210,7 @@ courses:
         }
         ```
     - type: "text"
-      stepId: "lesson-06_functions-{sample:-true}-text"
+      stepId: "lesson-06_functions-text"
       repeatable: false
       text: |-
         # Functions
@@ -3229,7 +3229,7 @@ courses:
 
         By convention, we name functions using lower camelCase syntax. Formally, we can use characters, underscore `_`, and numbers (but not at the first position), but in general just characters should be used.
 
-        {width: 50%}
+        
         ![In Kotlin, we name functions with lowerCamelCase.](camelCase.png)
 
         This is what a typical function looks like:
@@ -3270,7 +3270,7 @@ courses:
         }
         ```
     - type: "question-multiple-answer"
-      stepId: "lesson-06_functions-{sample:-true}-q1"
+      stepId: "lesson-06_functions-q1"
       question: "Which of the following Kotlin snippets compile as-is? Assume they\
         \ appear in the same file at top level."
       explanation: "Identifiers cannot start with a digit and cannot be a reserved\
@@ -3943,7 +3943,7 @@ courses:
         \ we have one universal for-loop that can be expressively used to iterate\
         \ over a collection, a map, a range of numbers, and much more.\n\nIn general,\
         \ a for-loop is used in Kotlin to iterate over something that is iterable.\n\
-        \n{width: 60%}\n![](for_described.jpg)\n\nWe can iterate over lists or sets.\n\
+        \n\n![](for_described.jpg)\n\nWe can iterate over lists or sets.\n\
         \n```kotlin\nfun main() {\n    val list = listOf(\"A\", \"B\", \"C\")\n  \
         \  for (letter in list) {\n        print(letter)\n    }\n\n    // Variable\
         \ type can be explicit\n    for (str: String in setOf(\"D\", \"E\", \"F\"\
@@ -5295,7 +5295,7 @@ courses:
 
         We need to be careful with destructuring. It is useful to use the same names as data class primary constructor properties. In the case of an incorrect order, an IntelliJ/Android Studio warning will be shown. It might even be useful to upgrade this warning to an error.
 
-        {width: 84%}
+        
         ![](data_fullname.png)
 
         Destructuring a single value in lambda is very confusing, especially since parentheses around arguments in lambda expressions are either optional or required in some languages.
@@ -5493,10 +5493,10 @@ courses:
         \   val id: Int,\n   val name: String,\n   val points: Int\n)\n\nfun main()\
         \ {\n   val player = Player(0, \"Gecko\", 9999)\n   println(player) \n   //\
         \ Player(id=0, name=Gecko, points=9999)\n   println(\"Player: $player\")\n\
-        \   // Player: Player(id=0, name=Gecko, points=9999)\n}\n```\n\n{width: 84%}\n\
+        \   // Player: Player(id=0, name=Gecko, points=9999)\n}\n```\n\n\n\
         ![](data_toString.png)"
     - type: "text"
-      stepId: "lesson-11_data_classes-{sample:-true}-text"
+      stepId: "lesson-11_data_classes-text"
       repeatable: false
       text: |-
         # Data classes
@@ -5604,7 +5604,7 @@ courses:
 
         Let's discuss the aforementioned implicit data class methods and the differences between regular class behavior and data class behavior.
     - type: "question-multiple-answer"
-      stepId: "lesson-11_data_classes-{sample:-true}-q1"
+      stepId: "lesson-11_data_classes-q1"
       question: "Select all correct statements about Kotlin data classes and Any."
       explanation: "Data classes override equals/hashCode/toString and generate copy/componentN\
         \ that are not inherited and cannot be modified. Methods from Any are available\
@@ -5625,7 +5625,7 @@ courses:
         \ and cannot be overridden."
       - "Methods from Any (equals, hashCode, toString) can be called on any object."
     - type: "question-single-answer"
-      stepId: "lesson-11_data_classes-{sample:-true}-q2"
+      stepId: "lesson-11_data_classes-q2"
       question: |-
         Given:
 
@@ -10876,6 +10876,237 @@ courses:
     name: "Collections"
     steps:
     - type: "text"
+      stepId: "lesson-18_collections-summary-text"
+      repeatable: false
+      text: |-
+        In this chapter we've seen the most important kinds of Kotlin collections and their typical use-cases:
+
+        * `List` represents an ordered collection of elements. It is the most basic way to keep a collection of elements.
+        * `Set` represents a collection of unique elements. We use it when we want to make sure that elements in our collection are unique, or when we often need to look for a certain element.
+        * `Map` is a set of key-value pairs. We use it to keep associations from keys to values.
+
+        Arrays are rarely used directly in Kotlin as we prefer to use other kinds of collections.
+    - type: "text"
+      stepId: "lesson-18_collections-vararg-parameters-and-array-functions-text"
+      repeatable: false
+      text: |-
+        As mentioned in the chapter *Functions*, we can use the `vararg` modifier for a parameter to make it accept any number of arguments. This modifier turns a parameter into an array. Consider the `markdownList` function from the example below. Its `lines` parameter has `String` type specified, but since it has the modifier `vararg`, the actual type of `lines` is `Array<String>`. This is why we can iterate over it using a for loop.
+
+        ```kotlin
+        fun markdownList(vararg lines: String): String {
+            // the type of lines is Array<String>
+            var str = ""
+            for ((i, line) in lines.withIndex()) {
+                str += " * $line"
+                if (i != lines.size) {
+                    str += "\n"
+                }
+            }
+            return str
+        }
+
+        fun main() {
+            print(markdownList("A", "B", "C"))
+            // * A
+            // * B
+            // * C
+        }
+        ```
+
+        The basic functions used to create collections, like `listOf` or `setOf`, can have any number of arguments because they use the `vararg` modifier.
+
+        ```kotlin
+        fun <T> listOf(vararg elements: T): List<T> =
+            if (elements.size > 0) elements.asList() else emptyList()
+
+        fun <T> setOf(vararg elements: T): Set<T> =
+            if (elements.size > 0) elements.toSet() else emptySet()
+        ```
+
+        You can also spread an array into vararg arguments using the `*` symbol.
+
+        ```kotlin
+        fun main() {
+            val arr = arrayOf("B", "C")
+            print(markdownList("A", *arr, "D"))
+            // * A
+            // * B
+            // * C
+            // * D
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-18_collections-arrays-of-primitives-text"
+      repeatable: false
+      text: |-
+        Some kinds of Kotlin value types, like `Int` or `Char`, can be represented in a more basic way than a regular object. This form is known as a primitive and is a Kotlin optimization that does not affect the usage of values; however, it makes primitive values take less memory and their use more efficient. The problem is that primitives cannot be kept in regular collections, but we can store them in special arrays. For each value that has a primitive form, there is a dedicated array type. These are:
+        * `IntArray`, which represents an array of primitive `Int` values.
+        * `LongArray`, which represents an array of primitive `Long` values.
+        * `DoubleArray`, which represents an array of primitive `Double` values.
+        * `FloatArray`, which represents an array of primitive `Float` values.
+        * `CharArray`, which represents an array of primitive `Char` values.
+        * `BooleanArray`, which represents an array of primitive `Boolean` values.
+        * `ShortArray`, which represents an array of primitive `Short` values.
+        * `ByteArray`, which represents an array of primitive `Byte` values.
+
+        Each of these arrays can be created in two ways:
+        * Using the `xxxOf` function and initial elements as arguments, where `xxx` is the decapitalized name of the array. For example, to create `DoubleArray`, you can use the `doubleArrayOf` function with arguments of type `Double`.
+        * By transforming another kind of collection into an array of primitives using the `toXXX` method, where `XXX` is the name of the array. For instance, you can transform `List<Boolean>` into `BooleanArray` using the `toBooleanArray` method.
+
+        ```kotlin
+        fun main() {
+            val doubles: DoubleArray = doubleArrayOf(2.71, 3.14, 9.8)
+            val chars: CharArray = charArrayOf('X', 'Y', 'Z')
+
+            val accepts: List<Boolean> = listOf(true, false, true)
+            val acceptsArr: BooleanArray = accepts.toBooleanArray()
+
+            val ints: Set<Int> = setOf(2, 4, 8, 10)
+            val intsArr: IntArray = ints.toIntArray()
+        }
+        ```
+
+        Arrays of primitives are not used often in most real-life projects. They are generally treated as low-level performance or memory use optimizations.
+    - type: "text"
+      stepId: "lesson-18_collections-using-arrays-in-practice-text"
+      repeatable: false
+      text: |-
+        **Array** is a very basic data structure that strongly relates to how memory is organized. Our computer's memory is like a big parking lot, where each place has a sequential number. An array is like a reservation for a number of adherent spaces. With such a reservation, it is really easy to iterate over the cars you own. It is also easy to find a car with a specific index.
+
+        Let's say that an array starts at position 1024 in your memory, and you need to find the element at index 100 in the array. You also know that each element takes 4 positions (an array reserves constant space for its elements, which in most cases is the size of the memory reference). This is an easy problem: our element starts at the position 1024 + 100 * 4 = 1424. Accessing an element at a certain position is a very simple and efficient operation, which is a big advantage of using arrays.
+
+        Using arrays directly is harder than using other kinds of collections. They have a constant size, a limited number of operations, they do not implement any interface, and they do not override the `toString`, `equals` or `hashCode` methods. However, arrays are used by many other data structures under the hood. For instance, when you use `mutableListOf` on Kotlin/JVM, the result object is `ArrayList`, which keeps elements in an array. This is why finding an element at an index in the default list is so efficient. So, `ArrayList` has the advantages of arrays, but it offers much more. Arrays have a constant size, so you cannot add more elements than their size allows. When you add an element to an `ArrayList` and its internal array is full already, it creates a bigger one and fills it with the previous values. We consider lists a preferred option to arrays, and we restrict the usage of arrays to performance-critical parts of our applications.
+
+        Arrays are also used by the default `Set` and `Map` that we use in Kotlin. Both are based on a hash table algorithm that needs to use an array to work efficiently.
+
+        Nevertheless, let's see how arrays can be used directly. We create an array using the `arrayOf` function. This creates an instance of class `Array` and of type `Array<T>`, where `T` is the type of the elements. To get an element at a certain index, we can use box brackets or the `get` method. To modify an element at a certain position, you can use box brackets or the `set` method. You can also get an array’s size using the `size` property or by iterating over the array using a for-loop.
+
+        ```kotlin
+        fun main() {
+            val arr: Array<String> = arrayOf("A", "B", "C")
+            println(arr[0]) // A
+            println(arr.get(0)) // A
+            println(arr[1]) // B
+            arr[1] = "D"
+            println(arr[1]) // D
+            arr.set(2, "E")
+            println(arr[2]) // E
+            println(arr.size) // 3
+            for (e in arr) {
+                print(e)
+            }
+            // ADE
+        }
+        ```
+
+        All the above operations are the same as for `MutableList`, but this is where the list of basic array operations ends. Arrays do not support equality, so two arrays with the same elements are not considered equal. Another problem with arrays is that their `toString` method, which is used to transform an object into a `String`, does not print elements. It only prints the array type and the hash of its memory reference.
+
+        ```kotlin
+        fun main() {
+            val arr1 = arrayOf("A", "B", "C")
+            val arr2 = arrayOf("A", "B", "C")
+            println(arr1 == arr2) // false
+            println(arr1) // [Ljava.lang.String;@4f023edb
+            println(arr2) // [Ljava.lang.String;@3a71f4dd
+        }
+        ```
+
+        To cheer up those who like using arrays, the Kotlin standard library offers a number of extension functions that allow many kinds of array transformations.
+
+        ![](array_operations.png)
+
+        Notice that there is a `plus` method that allows a new element to be added to an array. Just like the `plus` method on a list, it does not modify the array but creates a new one with a larger size.
+
+        ```kotlin
+        // JVM implementation
+        operator fun <T> Array<T>.plus(element: T): Array<T> {
+            val index = size
+            val result = java.util.Arrays.copyOf(this, index + 1)
+            result[index] = element
+            return result
+        }
+
+        fun main() {
+            val arr = arrayOf("A", "B", "C")
+            println(arr.size) // 3
+            val arr2 = arr + "D"
+            println(arr.size) // 3
+            println(arr2.size) // 4
+        }
+        ```
+
+        You can transform an array to a list or a set using the `toList` and `toSet` methods. To transfer the other way around, use `toTypedArray`.
+
+        ```kotlin
+        fun main() {
+            val arr1: Array<String> = arrayOf("A", "B", "C")
+            val list: List<String> = arr1.toList()
+            val arr2: Array<String> = list.toTypedArray()
+            val set: Set<String> = arr2.toSet()
+            val arr3: Array<String> = set.toTypedArray()
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-18_collections-mutable-maps-text"
+      repeatable: false
+      text: |-
+        You can create a mutable map using `mutableMapOf`. The result type is `MutableMap`, which supports methods that modify this object. Using it we can:
+        * add new entries to the map using the `put` method, or box brackets and assignment,
+        * remove an entry by key using the `remove` method.
+
+        ```kotlin
+        fun main() {
+            val map: MutableMap<Char, String> =
+                mutableMapOf('A' to "Alex", 'B' to "Bob")
+            map.put('C', "Celina")
+            map['D'] = "Daria"
+            println(map) // {A=Alex, B=Bob, D=Daria, C=Celina}
+            map.remove('B')
+            println(map) // {A=Alex, D=Daria, C=Celina}
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-18_collections-iterating-over-maps-text"
+      repeatable: false
+      text: |-
+        You can iterate over a map using a for-loop. You iterate over entries that contain `key` and `value` properties.
+
+        ```kotlin
+        fun main() {
+            val map = mapOf('A' to "Alex", 'B' to "Bob")
+            for (entry in map) {
+                println("${entry.key} is for ${entry.value}")
+            }
+        }
+        // A is for Alex
+        // B is for Bob
+        ```
+
+        You can also destructure each entry into two variables. Kotlin supports destructuring in a for-loop. Take a look at the example below.
+
+        ```kotlin
+        fun main() {
+            val map = mapOf('A' to "Alex", 'B' to "Bob")
+            for ((letter, name) in map) {
+                println("$letter is for $name")
+            }
+        }
+        // A is for Alex
+        // B is for Bob
+        ```
+    - type: "text"
+      stepId: "lesson-18_collections-checking-map-size-text"
+      repeatable: false
+      text: |-
+        You can check how many entries you have in a map using the `size` property.
+
+        ```kotlin
+        fun main() {
+            val map = mapOf('A' to "Alex", 'B' to "Bob")
+            println(map.size) // 2
+        }
+        ```
+    - type: "text"
       stepId: "lesson-18_collections-checking-if-a-map-contains-a-key-text"
       repeatable: false
       text: |-
@@ -12273,3 +12504,3027 @@ courses:
       - "map.containsKey(1)"
       - "\"one\" in map.values"
       - "map.containsValue(\"two\")"
+    - type: "question-single-answer"
+      stepId: "lesson-18_collections-checking-map-size-q1"
+      question: |-
+        What does this program print?
+
+        ```kotlin
+        fun main() {
+            val map = mapOf(
+                'A' to "Alex",
+                'A' to "Alice",
+                'B' to "Bob"
+            )
+            println(map.size)
+        }
+        ```
+      explanation: "A Map holds unique keys. The second 'A' overwrites the first,\
+        \ so there are 2 entries: 'A' and 'B'. The size property reports the number\
+        \ of entries."
+      repeatable: false
+      answers:
+      - "1"
+      - "2"
+      - "3"
+      - "Compilation error"
+      correct: "2"
+    - type: "question-single-answer"
+      stepId: "lesson-18_collections-iterating-over-maps-q1"
+      question: "Which loop correctly destructures map entries into key and value\
+        \ in Kotlin?"
+      explanation: "Iterating a Map yields Map.Entry<K, V>. Destructuring in a for-loop\
+        \ uses parentheses around the variables: `for ((k, v) in map)`. It’s not `for\
+        \ (k, v in map)`, and entries aren’t `Pair`."
+      repeatable: false
+      answers:
+      - "for ((k, v) in map) println(\"$k is for $v\")"
+      - "for (k, v in map) println(\"$k is for $v\")"
+      - "for (k to v in map) println(\"$k is for $v\")"
+      - "for (entry: Pair<Char, String> in map) println(\"${entry.first} is for ${entry.second}\"\
+        )"
+      correct: "for ((k, v) in map) println(\"$k is for $v\")"
+    - type: "question-single-answer"
+      stepId: "lesson-18_collections-iterating-over-maps-q2"
+      question: "In `for (entry in mapOf('A' to \"Alex\"))`, what is the type of `entry`\
+        \ and which properties does it expose?"
+      explanation: "A `Map` iteration yields `Map.Entry<K, V>` with `key` and `value`\
+        \ properties. It is not a `Pair`, which would have `first` and `second`."
+      repeatable: false
+      answers:
+      - "Map.Entry<Char, String>, properties: key and value"
+      - "Pair<Char, String>, properties: first and second"
+      - "Char, property: code"
+      - "Entry<Char, String>, properties: left and right"
+      correct: "Map.Entry<Char, String>, properties: key and value"
+    - type: "question-multiple-answer"
+      stepId: "lesson-18_collections-mutable-maps-q1"
+      question: |-
+        Given:
+
+        ```kotlin
+        val map: MutableMap<Char, String> = mutableMapOf('A' to "Alex")
+        ```
+        Which lines both compile and mutate the same map instance (do not create a new map)? Choose all that apply.
+      explanation: "`MutableMap.put`, bracket assignment `map[key] = value`, and `remove(key)`\
+        \ mutate the map. The `+` operator creates a new map, and `add` doesn't exist\
+        \ on `MutableMap`."
+      repeatable: true
+      answers:
+      - "map.put('B', \"Bob\")"
+      - "map['C'] = \"Celina\""
+      - "map.remove('A')"
+      - "val newMap = map + ('D' to \"Daria\")"
+      - "map.add('E', \"Eva\")"
+      correct:
+      - "map.put('B', \"Bob\")"
+      - "map['C'] = \"Celina\""
+      - "map.remove('A')"
+    - type: "question-single-answer"
+      stepId: "lesson-18_collections-mutable-maps-q2"
+      question: "Which expression is idiomatic Kotlin and equivalent to calling `map.put('X',\
+        \ \"Y\")` on a `MutableMap`?"
+      explanation: "`map[key] = value` uses the `set` operator on `MutableMap` and\
+        \ is equivalent to `put`. The other forms are invalid for this purpose."
+      repeatable: false
+      answers:
+      - "map['X'] = \"Y\""
+      - "map('X') = \"Y\""
+      - "map.set('X' to \"Y\")"
+      - "map.add('X', \"Y\")"
+      correct: "map['X'] = \"Y\""
+    - type: "question-multiple-answer"
+      stepId: "lesson-18_collections-using-arrays-in-practice-q1"
+      question: |-
+        Given:
+
+        ```kotlin
+        val arr = arrayOf("A", "B", "C")
+        val arr2 = arr + "D"
+        ```
+        Which statements are correct?
+      explanation: "The plus operator creates a new array by copying and appending.\
+        \ Arrays do not override equals and their toString prints the type and hash,\
+        \ not elements."
+      repeatable: false
+      answers:
+      - "arr.size == 3 and arr2.size == 4"
+      - "arr2[3] == \"D\""
+      - "Changing arr[1] later will not change arr2[1]"
+      - "arr == arrayOf(\"A\", \"B\", \"C\")"
+      - "println(arr) prints: [A, B, C]"
+      correct:
+      - "arr.size == 3 and arr2.size == 4"
+      - "arr2[3] == \"D\""
+      - "Changing arr[1] later will not change arr2[1]"
+    - type: "question-single-answer"
+      stepId: "lesson-18_collections-using-arrays-in-practice-q2"
+      question: "On Kotlin/JVM, what is the time complexity of `arr + element` for\
+        \ `Array<T>`?"
+      explanation: "It copies the entire array using `Arrays.copyOf`, which is linear\
+        \ in the array size."
+      repeatable: true
+      answers:
+      - "O(1)"
+      - "O(log n)"
+      - "O(n)"
+      - "Amortized O(1)"
+      correct: "O(n)"
+    - type: "question-single-answer"
+      stepId: "lesson-18_collections-arrays-of-primitives-q1"
+      question: "Which snippet creates a primitive DoubleArray containing 2.71, 3.14,\
+        \ and 9.8?"
+      explanation: "`doubleArrayOf(...)` constructs a primitive DoubleArray. `arrayOf`/`toTypedArray`\
+        \ create Array<Double> (boxed), not a primitive array."
+      repeatable: false
+      answers:
+      - "val a: DoubleArray = doubleArrayOf(2.71, 3.14, 9.8)"
+      - "val a = arrayOf(2.71, 3.14, 9.8)"
+      - "val a: Array<Double> = arrayOf(2.71, 3.14, 9.8)"
+      - "val a: DoubleArray = listOf(2.71, 3.14, 9.8).toTypedArray()"
+      correct: "val a: DoubleArray = doubleArrayOf(2.71, 3.14, 9.8)"
+    - type: "question-multiple-answer"
+      stepId: "lesson-18_collections-arrays-of-primitives-q2"
+      question: "Which calls convert a Kotlin collection into a primitive array (no\
+        \ boxing)?"
+      explanation: "`toXXXArray()` (e.g., `toIntArray`, `toLongArray`, `toBooleanArray`)\
+        \ on collections builds primitive arrays. `toTypedArray()` creates boxed `Array<T>`,\
+        \ and `Array<Int>` has no `toIntArray()`."
+      repeatable: true
+      answers:
+      - "listOf(true, false).toBooleanArray()"
+      - "setOf(1, 2, 3).toIntArray()"
+      - "listOf(1.0, 2.0).toTypedArray()"
+      - "mutableListOf(1L, 2L).toLongArray()"
+      - "arrayOf(1, 2).toIntArray()"
+      correct:
+      - "listOf(true, false).toBooleanArray()"
+      - "setOf(1, 2, 3).toIntArray()"
+      - "mutableListOf(1L, 2L).toLongArray()"
+    - type: "question-single-answer"
+      stepId: "lesson-18_collections-vararg-parameters-and-array-functions-q1"
+      question: |-
+        In the snippet below, what are the inferred types of r1 and r2?
+
+        ```kotlin
+        val arr = arrayOf("B", "C")
+        val r1 = listOf(arr)
+        val r2 = listOf(*arr)
+        ```
+      explanation: "listOf uses a vararg. Without spread, the array is a single element\
+        \ (T = Array<String>). With spread, elements are unpacked (T = String)."
+      repeatable: true
+      answers:
+      - "r1: List<Array<String>>, r2: List<String>"
+      - "r1: List<String>, r2: List<String>"
+      - "r1: Array<List<String>>, r2: List<String>"
+      - "r1: List<String>, r2: List<Array<String>>"
+      correct: "r1: List<Array<String>>, r2: List<String>"
+    - type: "question-multiple-answer"
+      stepId: "lesson-18_collections-vararg-parameters-and-array-functions-q2"
+      question: "Given `fun markdownList(vararg lines: String): String` and `val arr\
+        \ = arrayOf(\"B\", \"C\")`, which calls both compile and produce the order\
+        \ A, B, C, D?"
+      explanation: "Use the spread operator `*` to unpack arrays into vararg. Without\
+        \ spread (`arr`) it's a single element. The order of vararg arguments matters\
+        \ for the resulting sequence."
+      repeatable: false
+      answers:
+      - "markdownList(\"A\", *arr, \"D\")"
+      - "markdownList(*arrayOf(\"A\", *arr, \"D\"))"
+      - "markdownList(\"A\", arr, \"D\")"
+      - "markdownList(*arr, \"A\", \"D\")"
+      - "markdownList(\"A\", *arr + \"D\")"
+      correct:
+      - "markdownList(\"A\", *arr, \"D\")"
+      - "markdownList(*arrayOf(\"A\", *arr, \"D\"))"
+    - type: "question-multiple-answer"
+      stepId: "lesson-18_collections-summary-q1"
+      question: "In which scenarios is a Kotlin Set the most appropriate choice?"
+      explanation: "Set keeps unique elements and is ideal when you often need to\
+        \ check membership. It’s not for ordered sequences with duplicates or key–\
+        value associations."
+      repeatable: true
+      answers:
+      - "Deduplicating a list of email addresses before sending a newsletter"
+      - "Repeatedly checking if an incoming SKU appears on a blacklist"
+      - "Keeping todos in the order they were added and allowing duplicates"
+      - "Mapping airport IATA codes to airport names"
+      - "Maintaining a history of user actions with possible repeats"
+      correct:
+      - "Deduplicating a list of email addresses before sending a newsletter"
+      - "Repeatedly checking if an incoming SKU appears on a blacklist"
+    - type: "question-single-answer"
+      stepId: "lesson-18_collections-summary-q2"
+      question: "You need to store language code → display name associations and look\
+        \ them up by code. Which Kotlin collection should you choose?"
+      explanation: "Map stores key–value pairs and is the idiomatic choice for associations\
+        \ from keys to values."
+      repeatable: false
+      answers:
+      - "List"
+      - "Set"
+      - "Map"
+      - "Array"
+      correct: "Map"
+  - lessonId: "lesson-operator-overloading"
+    name: "Operator overloading"
+    steps:
+    - type: "text"
+      stepId: "lesson-19_operators-summary-text"
+      repeatable: false
+      text: "We use a lot of operators in Kotlin, many of which can be overloaded.\
+        \ This can be used to improve our code’s readability. From the cognitive standpoint,\
+        \ using an intuitive operator can be a huge improvement over using methods\
+        \ everywhere. Therefore, iit’s good to know what options are available and\
+        \ to be open to using operators defined by Kotlin stdlib, but it’s also good\
+        \ to be able to define our own operators."
+    - type: "text"
+      stepId: "lesson-19_operators-precedence-text"
+      repeatable: false
+      text: |-
+        What is the result of the expression `1 + 2 * 3`? The answer is `7`, not `9`, because in mathematics we multiply before adding. We say that multiplication has higher precedence than addition.
+
+        Precedence is also extremely important in programming because when the compiler evaluates an expression such as `1 + 2 == 3`, it needs to know if it should first add `1` to `2`, or compare `2` and `3`. The following table compares the precedence of all the operators, including those that can be overloaded and those that cannot.
+
+        | Precedence | Title           | Symbols                                  |
+        |------------|-----------------|------------------------------------------|
+        | Highest    | Postfix         | ++, --, . (regular call), ?. (safe call) |
+        |            | Prefix          | -, +, ++, --, !                          |
+        |            | Type casting    | as, as?                                  |
+        |            | Multiplicative  | *, /, %                                  |
+        |            | Additive        | +, -                                     |
+        |            | Range           | ..                                       |
+        |            | Infix function  | simpleIdentifier                         |
+        |            | Elvis           | ?:                                       |
+        |            | Named checks    | in, !in, is, !is                         |
+        |            | Comparison      | <, >, <=, >=                             |
+        |            | Equality        | ==, !=, ===, !==                         |
+        |            | Conjunction     | &&                                       |
+        |            | Disjunction     | \                                        |\|                  |
+        |            | Spread operator | *                                        |
+        | Lowest     | Assignment      | =, +=, -=, *=, /=, %=                    |
+
+        On the basis of this table, can you predict what the following code will print?
+
+        ```kotlin
+        fun main() {
+            println(-1.plus(1))
+        }
+        ```
+
+        This is a popular Kotlin puzzle. The answer is `-2`, not `0`, because a single minus in front of a function is an operator whose precedence is lower than an explicit `plus` method call. So, we first call the method and then call `unaryMinus` on the result, therefore we change from `2` to `-2`. To use `-1` literally, wrap it with parentheses.
+
+        ```kotlin
+        fun main() {
+            println((-1).plus(1)) // 0
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-19_operators-the-invoke-operator-text"
+      repeatable: false
+      text: |-
+        Objects with the `invoke` operator can be called like functions, so with parentheses straight after the variable representing this object. Calling an object translates to the `invoke` method call with the same arguments.
+
+        | Expression         | Translates to             |
+        |--------------------|---------------------------|
+        | `a()`              | `a.invoke()`              |
+        | `a(i)`             | `a.invoke(i)`             |
+        | `a(i, j)`          | `a.invoke(i, j)`          |
+        | `a(i_1, ..., i_n)` | `a.invoke(i_1, ..., i_n)` |
+
+        The `invoke` operator is used for objects that represent functions, such as lambda expressions or UseCases objects from Clean Architecture.
+
+        ```kotlin
+        class CheerUseCase {
+            operator fun invoke(who: String) {
+                println("Hello, $who")
+            }
+        }
+
+        fun main() {
+            val hello = {
+                println("Hello")
+            }
+            hello() // Hello
+
+            val cheerUseCase = CheerUseCase()
+            cheerUseCase("Reader") // Hello, Reader
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-19_operators-increment-and-decrement-text"
+      repeatable: false
+      text: |-
+        As part of many algorithms used in older languages, we often needed to add or subtract the value `1` from a variable, which is why increment and decrement were invented. The `++` operator is used to add `1` to a variable; so, if `a` is an integer, then `a++` translates to `a = a + 1`. The `--` operator is used to subtract `1` from a variable; so, if `a` is an integer, then `a--` translates to `a = a - 1`.
+
+        Both increment and decrement can be used before or after a variable, and this determines the value returned by this operation.
+        * If you use `++` **before** a variable, it is called **pre-increment**; it increments the variable and then returns the result of this operation.
+        * If you use `++` **after** a variable, it is called **post-increment**; it increments the variable but then returns the value before the operation.
+        * If you use `--` **before** a variable, it is called **pre-decrement**; it decrements the variable and then returns the result of this operation.
+        * If you use `--` **after** a variable, it is called **post-decrement**; it decrements the variable but then returns the value before the operation.
+
+        ```kotlin
+        fun main() {
+            var i = 10
+            println(i++) // 10
+            println(i) // 11
+            println(++i) // 12
+            println(i) // 12
+
+            i = 10
+            println(i--) // 10
+            println(i) // 9
+            println(--i) // 8
+            println(i) // 8
+        }
+        ```
+
+        Based on the `inc` and `dec` methods, Kotlin supports increment and decrement overloading, which should increment or decrement a custom object. I have never seen this capability used in practice, so I think it is enough to know that it exists.
+
+        | Expression | Translates to (simplified)      |
+        |------------|---------------------------------|
+        | `++a`      | `a = a.inc(); a`                |
+        | `a++`      | `val tmp = a; a = a.inc(); tmp` |
+        | `--a`      | `a = a.dec(); a`                |
+        | `a--`      | `val tmp = a; a = a.dec(); tmp` |
+    - type: "text"
+      stepId: "lesson-19_operators-unary-prefix-operators-text"
+      repeatable: false
+      text: |-
+        A plus, minus, or negation in front of a single value is also an operator. Operators that are used with only a single value are called **unary operators**. Kotlin supports operator overloading for the following unary operators:
+
+        | Expression | Translates to    |
+        |------------|------------------|
+        | `+a`       | `a.unaryPlus()`  |
+        | `-a`       | `a.unaryMinus()` |
+        | `!a`       | `a.not()`        |
+
+        Here is an example of overloading the `unaryMinus` operator.
+
+        ```kotlin
+        data class Point(val x: Int, val y: Int)
+
+        operator fun Point.unaryMinus() = Point(-x, -y)
+
+        fun main() {
+            val point = Point(10, 20)
+            println(-point)  // Point(x=-10, y=-20)
+        }
+        ```
+
+        The `unaryPlus` operator is often used as part of Kotlin DSLs, which are described in detail in the next book of this series, *Functional Kotlin*.
+    - type: "text"
+      stepId: "lesson-19_operators-augmented-assignments-text"
+      repeatable: false
+      text: |-
+        When we set a new value for a variable, this new value is often based on its previous value. For instance, we might want to add a value to the previous one. For this, augmented assignments were introduced. For example, `a += b` is a shorter notation of `a = a + b`. There are similar notations for other arithmetic operations.
+
+        | Expression | Translates to |
+        |------------|---------------|
+        | `a += b`   | `a = a + b`   |
+        | `a -= b`   | `a = a - b`   |
+        | `a *= b`   | `a = a * b`   |
+        | `a /= b`   | `a = a / b`   |
+        | `a %= b`   | `a = a % b`   |
+
+        Notice that augmented assignments can be used for all types that support the appropriate arithmetic operation, including lists or strings. Such augmented assignments need a variable to be read-write, namely `var`, and the result of the mathematical operation must have a proper type (to translate `a += b` to `a = a + b`, the variable `a` needs to be `var`, and `a + b` needs to be a subtype of type `a`).
+
+        ```kotlin
+        fun main() {
+            var str = "ABC"
+            str += "D" // translates to str = str + "D"
+            println(str) // ABCD
+
+            var l = listOf("A", "B", "C")
+            l += "D" // translates to l = l + "D"
+            println(l) // [A, B, C, D]
+        }
+        ```
+
+        Augmented assignments can be used in another way: to modify a mutable object. For instance, we can use `+=` to add an element to a mutable list. In such a case, `a += b` translates to `a.plusAssign(b)`.
+
+        | Expression | Translates to      |
+        |------------|--------------------|
+        | `a += b`   | `a.plusAssign(b)`  |
+        | `a -= b`   | `a.minusAssign(b)` |
+        | `a *= b`   | `a.timesAssign(b)` |
+        | `a /= b`   | `a.divAssign(b)`   |
+        | `a %= b`   | `a.remAssign(b)`   |
+
+        ```kotlin
+        fun main() {
+            val names = mutableListOf("Jake", "Ben")
+            names += "Jon"
+            names -= "Ben"
+            println(names) // [Jake, Jon]
+
+            val tools = mutableMapOf(
+                "Grass" to "Lawnmower",
+                "Nail" to "Hammer"
+            )
+            tools += "Screw" to "Screwdriver"
+            tools -= "Grass"
+            println(tools) // {Nail=Hammer, Screw=Screwdriver}
+        }
+        ```
+
+        If both kinds of augmented assignment can be applied, Kotlin chooses to modify a mutable object by default.
+    - type: "text"
+      stepId: "lesson-19_operators-the-indexed-access-operator-text"
+      repeatable: false
+      text: |-
+        In programming, there are two popular conventions for getting or setting elements in collections. The first uses box brackets, while the second uses the `get` and `set` methods. In Java, we use the first convention for arrays and the second one for other kinds of collections. In Kotlin, both conventions can be used interchangeably because the `get` and `set` methods are operators that can be used with box brackets.
+
+        | Expression             | Translates to             |
+        |------------------------|---------------------------|
+        | `a[i]`                 | `a.get(i)`                |
+        | `a[i, j]`              | `a.get(i, j)`             |
+        | `a[i_1, ..., i_n]`     | `a.get(i_1, ..., i_n)`    |
+        | `a[i] = b`             | `a.set(i, b)`             |
+        | `a[i, j] = b`          | `a.set(i, j, b)`          |
+        | `a[i_1, ..., i_n] = b` | `a.set(i_1, ..., i_n, b)` |
+
+        ```kotlin
+        fun main() {
+            val mutableList = mutableListOf("A", "B", "C")
+            println(mutableList[1]) // B
+            mutableList[2] = "D"
+            println(mutableList) // [A, B, D]
+
+            val animalFood = mutableMapOf(
+                "Dog" to "Meat",
+                "Goat" to "Grass"
+            )
+            println(animalFood["Dog"]) // Meat
+            animalFood["Cat"] = "Meat"
+            println(animalFood["Cat"]) // Meat
+        }
+        ```
+
+        Square brackets are translated to `get` and `set` calls with appropriate numbers of arguments. Variants of `get` and `set` functions with more arguments might be used by data processing libraries. For instance, you could have an object that represents a table and use box brackets with two arguments: `x` and `y` coordinates.
+    - type: "text"
+      stepId: "lesson-19_operators-comparison-operators-text"
+      repeatable: false
+      text: |-
+        Some classes have natural order, which is the order that is used by default when we compare two instances of a given class. Numbers are a good example: 10 is a smaller number than 100. There is a popular Java convention that classes with natural order should implement a `Comparable` interface, which requires the `compareTo` method, which is used to compare two objects.
+
+        ```kotlin
+        public interface Comparable<in T> {
+            /**
+             * Compares this object with the specified object for
+             * order. Returns zero if this object is equal to the
+             * specified [other] object, a negative number if it's
+             * less than [other], or a positive number if it's
+             * greater than [other].
+             */
+            public operator fun compareTo(other: T): Int
+        }
+        ```
+
+        As a result, there is a convention that we should compare two objects using the `compareTo` method. However, using the `compareTo` method directly is not very intuitive. Let's say that you see `a.compareTo(b) > 0` in code. What does it mean? Kotlin simplifies this by making `compareTo` an operator that can be replaced with intuitive mathematical comparison operators: `>`, `<`, `>=`, and `<=`.
+
+        | Expression | Translates to         |
+        |------------|-----------------------|
+        | `a > b`    | `a.compareTo(b) > 0`  |
+        | `a < b`    | `a.compareTo(b) < 0`  |
+        | `a >= b`   | `a.compareTo(b) >= 0` |
+        | `a <= b`   | `a.compareTo(b) <= 0` |
+
+        I often use comparison operators to compare amounts kept in objects of type `BigDecimal` or `BigInteger`.
+
+        ```kotlin
+        import java.math.BigDecimal
+
+        fun main() {
+            val amount1 = BigDecimal("42.80")
+            val amount2 = BigDecimal("5.00")
+            println(amount1 > amount2) // true
+            println(amount1 >= amount2) // true
+            println(amount1 < amount2) // false
+            println(amount1 <= amount2) // false
+            println(amount1 > amount1) // false
+            println(amount1 >= amount1) // true
+            println(amount1 < amount2) // false
+            println(amount1 <= amount2) // false
+        }
+        ```
+
+        I also like to compare time references the same way.
+
+        ```kotlin
+        import java.time.LocalDateTime
+
+        fun main() {
+            val now = LocalDateTime.now()
+            val actionStarts = LocalDateTime.of(2010, 10, 20, 0, 0)
+            val actionEnds = actionStarts.plusDays(1)
+            println(now > actionStarts) // true
+            println(now <= actionStarts) // false
+            println(now < actionEnds) // false
+            println(now >= actionEnds) // true
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-19_operators-the-equality-and-inequality-operators-text"
+      repeatable: false
+      text: |-
+        In Kotlin, there are two types of equality:
+
+        * Structural equality - checked with the `equals` method or the `==` operator (and its negated counterpart `!=`). `a == b` translates to `a.equals(b)` when `a` is not nullable, otherwise it translates to `a?.equals(b) ?: (b === null)`. Structural equality is generally preferred over referential equality. The `equals` method can be overridden in custom class.
+
+        * Referential equality - checked with the `===` operator (and its negated counterpart `!==`); returns `true` when both sides point to the same object. `===` and `!==` (identity checks) are not overloadable.
+
+        Since `equals` is implemented in `Any`, which is the superclass of every class, we can check the equality of any two objects.
+
+        | Expression | Translates to                     |
+        |------------|-----------------------------------|
+        | `a == b`   | `a?.equals(b) ?: (b === null)`    |
+        | `a != b`   | `!(a?.equals(b) ?: (b === null))` |
+    - type: "text"
+      stepId: "lesson-19_operators-the-iterator-operator-text"
+      repeatable: false
+      text: "You can use for-loop to iterate over any object that has an `iterator`\
+        \ operator method. Every object that implements an `Iterable` interface must\
+        \ support the `iterator` method. \n\n```kotlin\npublic interface Iterable<out\
+        \ T> {\n    /**\n     * Returns an iterator over the elements of this object.\n\
+        \     */\n    public operator fun iterator(): Iterator<T>\n}\n```\n\nYou can\
+        \ define objects that can be iterated over, but do not implement `Iterable`\
+        \ interface. `Map` is a great example. It does not implement the `Iterable`\
+        \ interface, yet you can iterate over it using a for-loop. How so? It is thanks\
+        \ to the `iterator` operator, which is defined as an extension function in\
+        \ Kotlin stdlib.\n\n```kotlin\n// Part of Kotlin standard library\ninline\
+        \ operator fun <K, V>\nMap<out K, V>.iterator(): Iterator<Map.Entry<K, V>>\
+        \ =\n    entries.iterator()\n\nfun main() {\n    val map = mapOf('a' to \"\
+        Alex\", 'b' to \"Bob\")\n    for ((letter, name) in map) {\n        println(\"\
+        $letter like in $name\")\n    }\n}\n// a like in Alex\n// b like in Bob\n\
+        ```\n\nTo better understand how a for-loop works, consider the code below.\n\
+        \n```kotlin\nfun main() {\n    for (e in Tree()) {\n        // body\n    }\n\
+        }\n\nclass Tree {\n    operator fun iterator(): Iterator<String> = ...\n}\n\
+        ```\n\nUnder the hood, a for-loop is compiled into bytecode that uses a while-loop\
+        \ to iterate over the object's iterator, as presented in the snippet below.\n\
+        \n```kotlin\nfun main() {\n    val iterator = Tree().iterator()\n    while\
+        \ (iterator.hasNext()) {\n        val e = iterator.next()\n        // body\n\
+        \    }\n}\n```"
+    - type: "text"
+      stepId: "lesson-19_operators-the-`in`-operator-text"
+      repeatable: false
+      text: |-
+        One of my favorite operators is `in`. The expression `a in b` translates to `b.contains(a)`. There is also `!in`, which translates to negation.
+
+        | Expression | Translates to    |
+        |------------|------------------|
+        | `a in b`   | `b.contains(a)`  |
+        | `a !in b`  | `!b.contains(a)` |
+
+        There are a few ways to use this operator. Firstly, for collections, instead of checking if a list contains an element, you can check if the element is in the list.
+
+        ```kotlin
+        fun main() {
+            val letters = setOf("A", "B", "C")
+            println("A" in letters) // true
+            println("D" in letters) // false
+            println(letters.contains("A")) // true
+            println(letters.contains("D")) // false
+        }
+        ```
+
+        Why would you do that? Primarily for readability. Would you ask "Does the fridge contain a beer?" or "Is there a beer in the fridge?"? Using the `in` operator gives us the possibility to choose.
+
+        We also often use the `in` operator together with ranges. The expression `1..10` produces an object of type `IntRange`, which has a `contains` method. This is why you can use `in` and a range to check if a number is in this range.
+
+        ```kotlin
+        fun main() {
+            println(5 in 1..10) // true
+            println(11 in 1..10) // false
+        }
+        ```
+
+        You can make a range from any objects that are comparable, and the result `ClosedRange` also has a `contains` method. This is why you can use a range check for any objects that are comparable, such as big numbers or objects representing time.
+
+        ```kotlin
+        import java.math.BigDecimal
+        import java.time.LocalDateTime
+
+        fun main() {
+            val amount = BigDecimal("42.80")
+            val minPrice = BigDecimal("5.00")
+            val maxPrice = BigDecimal("100.00")
+            val correctPrice = amount in minPrice..maxPrice
+            println(correctPrice) // true
+
+            val now = LocalDateTime.now()
+            val actionStarts = LocalDateTime.of(1410, 7, 15, 0, 0)
+            val actionEnds = actionStarts.plusDays(1)
+            println(now in actionStarts..actionEnds) // false
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-19_operators-arithmetic-operators-text"
+      repeatable: false
+      text: |-
+        Let's start with arithmetic operators, like plus or times. These are easiest for the Kotlin compiler because it just needs to transform the left column to the right.
+
+        | Expression | Translates to     |
+        |------------|-------------------|
+        | `a + b`    | `a.plus(b)`       |
+        | `a - b`    | `a.minus(b)`      |
+        | `a * b`    | `a.times(b)`      |
+        | `a / b`    | `a.div(b)`        |
+        | `a % b`    | `a.rem(b)`        |
+        | `a..b `    | `a.rangeTo(b)`    |
+        | `a..<b `   | `a.rangeUntil(b)` |
+
+        Notice that `%` translates to `rem`, which is a short form of "remainder". This operator returns the remainder left over when one operand is divided by a second operand, so it is similar to the modulo operation.
+
+        ```kotlin
+        fun main() {
+            println(13 % 4) // 1
+            println(7 % 4)  // 3
+            println(1 % 4)  // 1
+            println(0 % 4)  // 0
+            println(-1 % 4) // -1
+            println(-5 % 4) // -1
+            println(-7 % 4) // -3
+        }
+        ```
+
+        It is also worth mentioning `..` and `..<` operators, that are used to create ranges. We can use them between integers to create `IntRange`, over which we can iterate in for-loop. We can also use those operators between any values that implement `Comparable` interface, to define a range by extremes of this range.
+
+        ```kotlin
+        fun main() {
+            val intRange: IntRange = 1..10
+            val comparableRange: ClosedRange<String> = "A".."Z"
+            val openEndRange: OpenEndRange<Double> = 1.0..<2.0
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-19_operators-an-example-of-operator-overloading-text"
+      repeatable: false
+      text: |-
+        Let's say that you need to represent complex numbers in your application. These are special kinds of numbers in mathematics that are represented by two parts: real and imaginary. Complex numbers are useful for a variety of kinds of calculations in physics and engineering.
+
+        ```kotlin
+        data class Complex(val real: Double, val imaginary: Double)
+        ```
+
+        In mathematics, there is a range of operations that we can do on complex numbers. For instance, you can add two complex numbers or subtract a complex number from another complex number. This is done using the `+` and `-` operators. Therefore, it is reasonable that we should support these operators for our `Complex` class. To support the `+` operator, we need to define a method that has an `operator` modifier that is called `plus` and a single parameter. To support the `-` operator, we need to define a method that has an `operator` modifier called `minus` and a single parameter.
+
+        ```kotlin
+        data class Complex(val real: Double, val imaginary: Double) {
+
+            operator fun plus(another: Complex) = Complex(
+                real + another.real,
+                imaginary + another.imaginary
+            )
+
+            operator fun minus(another: Complex) = Complex(
+                real = real - another.real,
+                imaginary = imaginary - another.imaginary
+            )
+        }
+
+        // example usage
+        fun main() {
+            val c1 = Complex(1.0, 2.0)
+            val c2 = Complex(2.0, 3.0)
+            println(c1 + c2) // Complex(real=3.0, imaginary=5.0)
+            println(c2 - c1) // Complex(real=1.0, imaginary=1.0)
+        }
+        ```
+
+        Using the `+` and `-` operators is equivalent to calling the `plus` and `minus` functions. These two can be used interchangeably.
+
+        ```kotlin
+        c1 + c2 // under the hood is c1.plus(c2)
+        c1 - c2 // under the hood is c1.minus(c2)
+        ```
+
+        Kotlin defines a concrete set of operators, for each of which there is a specific name and a number of supported arguments. Additionally, all operators need to be a method (so, either a member function or an extension function), and these methods need the `operator` modifier.
+
+        Well-used operators can help us improve our code readability as much as poorly used operators can harm it. Let's discuss all the Kotlin operators.
+    - type: "text"
+      stepId: "lesson-19_operators-#-operator-overloading-text"
+      repeatable: false
+      text: |-
+        In Kotlin, we can add an element to a list using the `+` operator. In the same way, we can add two strings together. We can check if a collection contains an element using the `in` operator. We can also add, subtract or multiply elements of type `BigDecimal`, which is a JVM class that is used to represent possibly big numbers with unlimited precision.
+
+        ```kotlin
+        import java.math.BigDecimal
+
+        fun main() {
+            val list: List<String> = listOf("A", "B")
+            val newList: List<String> = list + "C"
+            println(newList) // [A, B, C]
+
+            val str1: String = "AB"
+            val str2: String = "CD"
+            val str3: String = str1 + str2
+            println(str3) // ABCD
+
+            println("A" in list) // true
+            println("C" in list) // false
+
+            val money1: BigDecimal = BigDecimal("12.50")
+            val money2: BigDecimal = BigDecimal("3.50")
+            val money3: BigDecimal = money1 * money2
+            println(money3) // 43.7500
+        }
+        ```
+
+        Using operators between objects is possible thanks to the Kotlin feature called *operator overloading*, which allows special kinds of methods to be defined that can be used as operators. Let's see this in a custom class example.
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-#-operator-overloading-q1"
+      question: "In Kotlin operator overloading, which rewrites are correct? Select\
+        \ all that apply."
+      explanation: "`a + b` calls `a.plus(b)`, `a * b` calls `a.times(b)`, and `x\
+        \ in coll` calls `coll.contains(x)`. The other options reverse receiver/argument\
+        \ and are incorrect."
+      repeatable: true
+      answers:
+      - "`a + b`  ->  `a.plus(b)`"
+      - "`a * b`  ->  `a.times(b)`"
+      - "`x in coll`  ->  `coll.contains(x)`"
+      - "`a + b`  ->  `b.plus(a)`"
+      - "`x in coll`  ->  `x.contains(coll)`"
+      correct:
+      - "`a + b`  ->  `a.plus(b)`"
+      - "`a * b`  ->  `a.times(b)`"
+      - "`x in coll`  ->  `coll.contains(x)`"
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-#-operator-overloading-q2"
+      question: |-
+        Given:
+
+        ```kotlin
+        val list = listOf("A", "B")
+        val newList = list + "C"
+        ```
+        Which statement is true?
+      explanation: "`+` on `List` returns a new list and does not mutate the original\
+        \ immutable `List`."
+      repeatable: false
+      answers:
+      - "`list` is unchanged; `newList` is [A, B, C]."
+      - "`list` becomes [A, B, C] and `newList` is the same instance."
+      - "Compilation error: `+` cannot be used with `List`."
+      - "`+` works only with `MutableList`, not `List`."
+      correct: "`list` is unchanged; `newList` is [A, B, C]."
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-an-example-of-operator-overloading-q1"
+      question: "You cannot modify the `Complex` class, but you want `c1 + c2` to\
+        \ work for two `Complex` values. Which declaration enables this?"
+      explanation: "Operator overloading must be provided by a member or an extension\
+        \ function marked with `operator`. Since the class cannot be modified, an\
+        \ extension operator with a `Complex` receiver and one `Complex` parameter\
+        \ is required."
+      repeatable: false
+      answers:
+      - "operator fun Complex.plus(other: Complex): Complex"
+      - "operator fun plus(a: Complex, b: Complex): Complex"
+      - "infix fun Complex.plus(other: Complex): Complex"
+      - "operator fun Complex.plus(): Complex"
+      correct: "operator fun Complex.plus(other: Complex): Complex"
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-an-example-of-operator-overloading-q2"
+      question: "Which statements about Kotlin operator overloading are true?"
+      explanation: "In Kotlin, `a + b` desugars to `a.plus(b)` when an applicable\
+        \ operator function exists. Such functions must be marked with `operator`,\
+        \ and can be either member or extension functions. You cannot back `+` with\
+        \ a non-operator function, nor define arbitrary operator names/arity."
+      repeatable: true
+      answers:
+      - "The expression `a + b` translates to `a.plus(b)` if an applicable operator\
+        \ function exists."
+      - "Operator functions must be marked with the `operator` modifier."
+      - "Any function named `plus` (even without `operator`) can back the `+` operator."
+      - "You can define operators with arbitrary names and arity."
+      - "Operator overloads can be declared as member functions or as extension functions."
+      correct:
+      - "The expression `a + b` translates to `a.plus(b)` if an applicable operator\
+        \ function exists."
+      - "Operator functions must be marked with the `operator` modifier."
+      - "Operator overloads can be declared as member functions or as extension functions."
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-arithmetic-operators-q1"
+      question: "Which translations are correct for Kotlin arithmetic/range operators?"
+      explanation: "`%` desugars to `rem`, `/` to `div`, `*` to `times`. `..` maps\
+        \ to `rangeTo`, while `..<` maps to `rangeUntil`."
+      repeatable: true
+      answers:
+      - "`a % b` -> `a.rem(b)`"
+      - "`a ..< b` -> `a.rangeTo(b)`"
+      - "`a / b` -> `a.div(b)`"
+      - "`a * b` -> `a.times(b)`"
+      - "`a .. b` -> `a.rangeUntil(b)`"
+      correct:
+      - "`a % b` -> `a.rem(b)`"
+      - "`a / b` -> `a.div(b)`"
+      - "`a * b` -> `a.times(b)`"
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-arithmetic-operators-q2"
+      question: "Which declarations compile as written?"
+      explanation: "`..` creates a closed range: `IntRange` for ints and `ClosedRange<T>`\
+        \ for `Comparable<T>`. `..<` creates an `OpenEndRange<T>`, so `1..<10` is\
+        \ not an `IntRange` nor a `ClosedRange<Int>`."
+      repeatable: true
+      answers:
+      - "val r1: IntRange = 1..10"
+      - "val r2: OpenEndRange<Double> = 1.0..<2.0"
+      - "val r3: ClosedRange<String> = \"A\"..\"Z\""
+      - "val r4: IntRange = 1..<10"
+      - "val r5: ClosedRange<Int> = 1..<10"
+      correct:
+      - "val r1: IntRange = 1..10"
+      - "val r2: OpenEndRange<Double> = 1.0..<2.0"
+      - "val r3: ClosedRange<String> = \"A\"..\"Z\""
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-the-`in`-operator-q1"
+      question: |-
+        Given a generic container class:
+
+        ```kotlin
+        data class Bag<T>(val items: Set<T>)
+        ```
+
+        To enable type-safe usage of `e in bag` (where `e` must be of type `T`) as a member function, which declaration should you add to `Bag`?
+      explanation: "`a in b` translates to `b.contains(a)`. For a custom right-hand\
+        \ type, implement `operator fun contains(element: T): Boolean` as a member\
+        \ (or extension) to enable type-safe membership tests."
+      repeatable: true
+      answers:
+      - "operator fun contains(element: T): Boolean"
+      - "operator fun contains(element: Bag<T>): Boolean"
+      - "fun contains(element: T): Boolean"
+      - "operator fun T.contains(bag: Bag<T>): Boolean"
+      correct: "operator fun contains(element: T): Boolean"
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-the-`in`-operator-q2"
+      question: |-
+        Consider the following code:
+
+        ```kotlin
+        val letters = setOf("A", "B", "C")
+        val nums = 1..3
+        val start = java.time.LocalDateTime.of(2020, 1, 1, 0, 0)
+        val end = start.plusDays(1)
+        val mid = java.time.LocalDateTime.of(2020, 1, 1, 12, 0)
+        ```
+
+        Which expressions evaluate to true?
+      explanation: |-
+        - `in` calls `contains` on the right-hand side.
+        - `IntRange` (`1..3`) includes both ends → `3 in nums` is true, so `3 !in nums` is false; `4 !in nums` is true.
+        - `LocalDateTime` is `Comparable`, so `start..end` forms a `ClosedRange` inclusive of endpoints, and `mid` lies within it.
+      repeatable: true
+      answers:
+      - "\"B\" in letters"
+      - "\"D\" in letters"
+      - "3 !in nums"
+      - "4 !in nums"
+      - "mid in start..end"
+      correct:
+      - "\"B\" in letters"
+      - "4 !in nums"
+      - "mid in start..end"
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-the-iterator-operator-q1"
+      question: "In Kotlin, what element type does `for ((k, v) in map)` iterate over\
+        \ for a `Map<K, V>`?"
+      explanation: "Kotlin stdlib defines `operator fun Map<out K, V>.iterator():\
+        \ Iterator<Map.Entry<K, V>> = entries.iterator()`. Destructuring then unwraps\
+        \ each Map.Entry into key and value."
+      repeatable: false
+      answers:
+      - "Map.Entry<K, V>"
+      - "Pair<K, V>"
+      - "K"
+      - "V"
+      correct: "Map.Entry<K, V>"
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-the-iterator-operator-q2"
+      question: "Given `class Bag { /* no Iterable */ }`, which declarations make\
+        \ `for (x in Bag())` compile without changing the loop site?"
+      explanation: "A for-loop requires an operator `iterator()` on the receiver (member\
+        \ or extension) returning an iterator (with `hasNext`/`next`). Non-operator\
+        \ `iterator()` isn’t used by the loop, returning `Sequence` is the wrong return\
+        \ type, and `asIterable()` isn’t invoked implicitly."
+      repeatable: true
+      answers:
+      - "Add member: `operator fun iterator(): Iterator<String>`"
+      - "Add top-level extension: `operator fun Bag.iterator(): Iterator<String>`"
+      - "Add member: `fun iterator(): Iterator<String>`"
+      - "Add member: `operator fun iterator(): Sequence<String>`"
+      - "Add extension: `fun Bag.asIterable(): Iterable<String>`"
+      correct:
+      - "Add member: `operator fun iterator(): Iterator<String>`"
+      - "Add top-level extension: `operator fun Bag.iterator(): Iterator<String>`"
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-the-equality-and-inequality-operators-q1"
+      question: "For a nullable receiver `a` (any type), which rewrite matches Kotlin’\
+        s translation of `a != b`?"
+      explanation: "`a != b` is negation of the `==` translation: `a?.equals(b) ?:\
+        \ (b === null)`, so it becomes `!(...)`."
+      repeatable: true
+      answers:
+      - "!(a?.equals(b) ?: (b === null))"
+      - "a?.equals(b) == false || (b === null)"
+      - "a?.equals(b) ?: (b !== null)"
+      - "a == null && b == null"
+      correct: "!(a?.equals(b) ?: (b === null))"
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-the-equality-and-inequality-operators-q2"
+      question: |-
+        Given:
+
+        ```kotlin
+        class Box(val id: Int) {
+            override fun equals(other: Any?): Boolean =
+                other is Box && other.id == id
+        }
+
+        val b1 = Box(1)
+        val b2 = Box(1)
+        ```
+        Which expressions evaluate to true?
+      explanation: "Overridden equals makes structural equality true for same id (`b1\
+        \ == b2`). Referential equality requires the same object (`b1 === b2` is false;\
+        \ `b1 === b1` is true). `b1 == null` is false."
+      repeatable: false
+      answers:
+      - "b1 == b2"
+      - "b1 === b2"
+      - "b1 != b2"
+      - "b1 === b1"
+      - "b1 == null"
+      correct:
+      - "b1 == b2"
+      - "b1 === b1"
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-comparison-operators-q1"
+      question: "In Kotlin, what does the expression `a <= b` translate to (assuming\
+        \ `a`'s type provides a valid `compareTo`)?"
+      explanation: "`<=` is desugared to `compareTo(other) <= 0`. The other options\
+        \ either flip the operands or change the relation."
+      repeatable: false
+      answers:
+      - "a.compareTo(b) <= 0"
+      - "a.compareTo(b) < 0"
+      - "b.compareTo(a) >= 0"
+      - "a.compareTo(b) == 0"
+      correct: "a.compareTo(b) <= 0"
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-comparison-operators-q2"
+      question: "Which declaration correctly enables using `>` between two `Money`\
+        \ instances?"
+      explanation: "Comparison operators require an `operator` `compareTo` returning\
+        \ `Int`. Overriding `Comparable.compareTo` (already marked operator) suffices.\
+        \ Boolean/Long return types or a non-operator member won't enable `>`."
+      repeatable: true
+      answers:
+      - "class Money : Comparable<Money> { override fun compareTo(other: Money): Int\
+        \ = /* ... */ }"
+      - "class Money { operator fun compareTo(other: Money): Boolean = /* ... */ }"
+      - "class Money : Comparable<Money> { operator fun compareTo(other: Money): Long\
+        \ = /* ... */ }"
+      - "class Money { fun compareTo(other: Money): Int = /* ... */ }"
+      correct: "class Money : Comparable<Money> { override fun compareTo(other: Money):\
+        \ Int = /* ... */ }"
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-the-indexed-access-operator-q1"
+      question: |-
+        Given the following code, which expressions compile?
+
+        ```kotlin
+        class Matrix {
+            operator fun get(x: Int, y: Int): Int = 0
+            operator fun set(x: Int, y: Int, value: Int) {}
+            operator fun get(index: Int): Int = 0
+        }
+
+        val m = Matrix()
+        ```
+      explanation: "`a[i, j]` maps to `get(i, j)` and `a[i, j] = v` maps to `set(i,\
+        \ j, v)`. `a[i]` maps to `get(i)`. There is no `set(i, v)` and no 3-argument\
+        \ `get`."
+      repeatable: true
+      answers:
+      - "m[1, 2]"
+      - "m[1, 2] = 3"
+      - "m[0]"
+      - "m[0] = 1"
+      - "m[1, 2, 3]"
+      correct:
+      - "m[1, 2]"
+      - "m[1, 2] = 3"
+      - "m[0]"
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-the-indexed-access-operator-q2"
+      question: "You are implementing a generic grid `class Grid<T>`. To support writing\
+        \ `grid[x, y] = value`, which function signature must you add?"
+      explanation: "`a[i, j] = v` translates to `a.set(i, j, v)`. It must be an `operator`\
+        \ function with the indices first and the value last, returning `Unit`."
+      repeatable: false
+      answers:
+      - "operator fun set(x: Int, y: Int, value: T): Unit"
+      - "operator fun get(x: Int, y: Int, value: T): Unit"
+      - "fun set(x: Int, y: Int, value: T): Unit"
+      - "operator fun set(value: T, x: Int, y: Int): Unit"
+      correct: "operator fun set(x: Int, y: Int, value: T): Unit"
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-augmented-assignments-q1"
+      question: "Which of the following Kotlin snippets compile as-is?"
+      explanation: "If no plusAssign is available, A += B desugars to A = A + B and\
+        \ requires A to be var. If plusAssign exists (e.g., MutableList, MutableMap),\
+        \ it’s used and A can be val."
+      repeatable: false
+      answers:
+      - "val s = \"ABC\"; s += \"D\""
+      - "var s = \"ABC\"; s += \"D\""
+      - "val l = listOf(\"A\"); l += \"B\""
+      - "var l = listOf(\"A\"); l += \"B\""
+      - "val ml = mutableListOf(\"A\"); ml += \"B\""
+      - "val tools = mutableMapOf(\"Nail\" to \"Hammer\"); tools += \"Screw\" to \"\
+        Screwdriver\""
+      correct:
+      - "var s = \"ABC\"; s += \"D\""
+      - "var l = listOf(\"A\"); l += \"B\""
+      - "val ml = mutableListOf(\"A\"); ml += \"B\""
+      - "val tools = mutableMapOf(\"Nail\" to \"Hammer\"); tools += \"Screw\" to \"\
+        Screwdriver\""
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-augmented-assignments-q2"
+      question: "When both operator functions plus and plusAssign are applicable for\
+        \ an expression A += B, what does Kotlin choose?"
+      explanation: "Kotlin prefers the in-place modification form: A += B resolves\
+        \ to A.plusAssign(B) if available; otherwise it desugars to A = A + B."
+      repeatable: true
+      answers:
+      - "It always uses plusAssign to modify the receiver."
+      - "It always translates to A = A + B."
+      - "It prefers plus if A is var and plusAssign otherwise."
+      - "It is ambiguous and does not compile."
+      correct: "It always uses plusAssign to modify the receiver."
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-unary-prefix-operators-q1"
+      question: |-
+        Given:
+
+        ```kotlin
+        data class Point(val x: Int, val y: Int)
+        ```
+        Which declarations would make the expression `-point` valid? Choose all that apply.
+      explanation: "`-a` maps to `a.unaryMinus()`. It must be named `unaryMinus`,\
+        \ take no parameters, and be marked `operator`. It can be either a member\
+        \ or an extension."
+      repeatable: true
+      answers:
+      - "Top-level extension: `operator fun Point.unaryMinus() = Point(-x, -y)`"
+      - "Member inside Point: `operator fun unaryMinus() = Point(-x, -y)`"
+      - "Top-level extension: `fun Point.unaryMinus() = Point(-x, -y)`"
+      - "Top-level extension: `operator fun Point.minus() = Point(-x, -y)`"
+      - "Top-level extension: `operator fun Point.unaryMinus(other: Int) = Point(-x,\
+        \ -y)`"
+      correct:
+      - "Top-level extension: `operator fun Point.unaryMinus() = Point(-x, -y)`"
+      - "Member inside Point: `operator fun unaryMinus() = Point(-x, -y)`"
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-unary-prefix-operators-q2"
+      question: "You want to support `!user` as an extension operator on class `User`.\
+        \ Which signature is correct?"
+      explanation: "`!a` maps to `a.not()`; for operator overloading it must be named\
+        \ `not`, be marked `operator`, be an extension in this case, take no parameters,\
+        \ and return `Boolean`."
+      repeatable: false
+      answers:
+      - "operator fun User.not(): Boolean"
+      - "operator fun User.not(): User"
+      - "fun User.not(): Boolean"
+      - "operator fun not(): Boolean"
+      - "operator fun User.unaryNot(): Boolean"
+      correct: "operator fun User.not(): Boolean"
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-increment-and-decrement-q1"
+      question: |-
+        What does this program print?
+
+        ```kotlin
+        fun main() {
+            var i = 5
+            val a = i++
+            val b = ++i
+            val c = i--
+            val d = --i
+            println("$a $b $c $d $i")
+        }
+        ```
+      explanation: "Post-increment returns the old value and then increments; pre-increment\
+        \ increments first and returns the new value. Same for decrement. So: a=5\
+        \ (i→6), b=7 (i→7), c=7 (i→6), d=5 (i→5)."
+      repeatable: false
+      answers:
+      - "5 7 7 5 5"
+      - "6 7 7 6 6"
+      - "6 6 7 6 5"
+      - "5 6 7 5 5"
+      correct: "5 7 7 5 5"
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-increment-and-decrement-q2"
+      question: |-
+        Given operator overloading via `inc/dec`, what is the output?
+
+        ```kotlin
+        data class Box(val n: Int) {
+            operator fun inc() = Box(n + 1)
+            operator fun dec() = Box(n - 1)
+        }
+
+        fun main() {
+            var b = Box(10)
+            val p = b++
+            val q = ++b
+            val r = b--
+            val s = --b
+            println(listOf(p.n, q.n, r.n, s.n, b.n))
+        }
+        ```
+      explanation: "For custom types, `++a` translates to `a = a.inc(); a` and `a++`\
+        \ to `val tmp = a; a = a.inc(); tmp`. Tracking values: p=10, b=11; q=12, b=12;\
+        \ r=12, b=11; s=10, b=10 ⇒ [10, 12, 12, 10, 10]."
+      repeatable: false
+      answers:
+      - "[10, 12, 12, 10, 10]"
+      - "[11, 12, 12, 11, 10]"
+      - "[10, 11, 12, 11, 10]"
+      - "[10, 12, 11, 10, 10]"
+      correct: "[10, 12, 12, 10, 10]"
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-the-invoke-operator-q1"
+      question: "Which statements about Kotlin's invoke operator are true?"
+      explanation: "Calling with parentheses desugars to `.invoke(...)`. Lambdas are\
+        \ function objects whose `invoke` is callable directly. Any class can define\
+        \ `operator fun invoke(...)` to be callable; it doesn't have to return Unit."
+      repeatable: true
+      answers:
+      - "`a(i, j)` is syntax sugar for `a.invoke(i, j)`."
+      - "Only lambdas and function types can be called with parentheses."
+      - "Defining `operator fun invoke(who: String)` inside a class lets its instances\
+        \ be called like `obj(\"Alice\")`."
+      - "The invoke operator must return `Unit`."
+      - "For `val hello = { println(\"Hello\") }`, `hello()` and `hello.invoke()`\
+        \ are equivalent."
+      correct:
+      - "`a(i, j)` is syntax sugar for `a.invoke(i, j)`."
+      - "Defining `operator fun invoke(who: String)` inside a class lets its instances\
+        \ be called like `obj(\"Alice\")`."
+      - "For `val hello = { println(\"Hello\") }`, `hello()` and `hello.invoke()`\
+        \ are equivalent."
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-the-invoke-operator-q2"
+      question: |-
+        Which implementation makes all the calls compile and print exactly as annotated?
+
+        ```kotlin
+        class Counter { /* choose one implementation */ }
+
+        fun main() {
+            val c = Counter()
+            c()           // prints: 0
+            c(5)          // prints: 5
+            c(2, 3)       // prints: 2 3
+        }
+        ```
+      explanation: "Only option A defines member operator overloads matching each\
+        \ arity and prints the required formats. Option B lacks the `operator` modifier,\
+        \ C defines invoke on the companion (not instance), and D prints with a comma\
+        \ and space."
+      repeatable: false
+      answers:
+      - |-
+        ```kotlin
+        class Counter {
+            operator fun invoke() = println("0")
+            operator fun invoke(x: Int) = println(x)
+            operator fun invoke(x: Int, y: Int) = println("$x $y")
+        }
+        ```
+      - |-
+        ```kotlin
+        class Counter {
+            fun invoke() = println("0")
+            fun invoke(x: Int) = println(x)
+            fun invoke(x: Int, y: Int) = println("$x $y")
+        }
+        ```
+      - |-
+        ```kotlin
+        class Counter {
+            companion object {
+                operator fun invoke() = println("0")
+                operator fun invoke(x: Int) = println(x)
+                operator fun invoke(x: Int, y: Int) = println("$x $y")
+            }
+        }
+        ```
+      - |-
+        ```kotlin
+        operator fun Counter.invoke(vararg xs: Int) {
+            if (xs.isEmpty()) println("0") else println(xs.joinToString(", "))
+        }
+        ```
+      correct: |-
+        ```kotlin
+        class Counter {
+            operator fun invoke() = println("0")
+            operator fun invoke(x: Int) = println(x)
+            operator fun invoke(x: Int, y: Int) = println("$x $y")
+        }
+        ```
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-precedence-q1"
+      question: |-
+        What does this program print?
+
+        ```kotlin
+        fun main() {
+            println(1..2 + 3)
+        }
+        ```
+      explanation: "`..` (Range) has higher precedence than `+` (Additive), so it\
+        \ is parsed as `1..(2 + 3)` → `1..5`."
+      repeatable: false
+      answers:
+      - "1..5"
+      - "1..2"
+      - "3..3"
+      - "Compile-time error"
+      correct: "1..5"
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-precedence-q2"
+      question: "Which of the following expressions evaluate to true given Kotlin\
+        \ operator precedence?"
+      explanation: |-
+        - Method call `.` (postfix) binds before unary `-` (prefix), so `-1.plus(1)` is `-(1.plus(1))` → `-2`.
+        - Parentheses force `(-1).plus(1)` → `0`.
+        - `..` (Range) binds before `+`, and `in` is lower than Range: `1 in 1..(2+2)` → `1 in 1..4` → true.
+        - `-1..1` is `(-1)..1`, which is not equal to `0..1`.
+        - `&&` binds before `||`: `(true && false) || true` → `false || true` → true.
+      repeatable: true
+      answers:
+      - "`-1.plus(1) == -2`"
+      - "`(-1).plus(1) == 0`"
+      - "`1 in 1..2 + 2`"
+      - "`-1..1 == 0..1`"
+      - "`(1 + 2 == 3) && false || true`"
+      correct:
+      - "`-1.plus(1) == -2`"
+      - "`(-1).plus(1) == 0`"
+      - "`1 in 1..2 + 2`"
+      - "`(1 + 2 == 3) && false || true`"
+    - type: "question-multiple-answer"
+      stepId: "lesson-19_operators-summary-q1"
+      question: "In Kotlin operator overloading, which statements are correct?"
+      explanation: |-
+        - Kotlin does not let you invent new symbols or change precedence.
+        - `==` translates to the member `equals(Any?)`; extension `equals` is ignored for `==`.
+        - `&&`/`||` are not overloadable (short-circuit semantics).
+        - `in` maps to `contains`, and `()` maps to `invoke`.
+      repeatable: true
+      answers:
+      - "You cannot introduce new operator symbols or change operator precedence."
+      - "`==` uses `equals(Any?)` and an extension `equals` is ignored for `==`."
+      - "Short-circuit logical operators `&&` and `||` can be overloaded via operator\
+        \ functions."
+      - "The `in` operator can be supported by defining `operator fun contains(...)`."
+      - "The call operator `()` can be supported by defining `operator fun invoke(...)`."
+      correct:
+      - "You cannot introduce new operator symbols or change operator precedence."
+      - "`==` uses `equals(Any?)` and an extension `equals` is ignored for `==`."
+      - "The `in` operator can be supported by defining `operator fun contains(...)`."
+      - "The call operator `()` can be supported by defining `operator fun invoke(...)`."
+    - type: "question-single-answer"
+      stepId: "lesson-19_operators-summary-q2"
+      question: |-
+        To support both reading and writing via bracket syntax with two indices:
+
+        ```
+        val x = matrix[1, 2]
+        matrix[1, 2] = 5
+        ```
+        Which operator function signatures must `Matrix` provide?
+      explanation: "`[]` maps to `get(...)` and `set(..., value)`. Two indices mean\
+        \ two parameters; `set` adds the value as the last parameter."
+      repeatable: true
+      answers:
+      - "operator fun get(row: Int, col: Int): Int and operator fun set(row: Int,\
+        \ col: Int, value: Int)"
+      - "operator fun get(index: Pair<Int, Int>): Int and operator fun set(index:\
+        \ Pair<Int, Int>, value: Int)"
+      - "operator fun invoke(row: Int, col: Int): Int and operator fun invokeAssign(row:\
+        \ Int, col: Int, value: Int)"
+      - "operator var get(row: Int, col: Int): Int"
+      correct: "operator fun get(row: Int, col: Int): Int and operator fun set(row:\
+        \ Int, col: Int, value: Int)"
+  - lessonId: "lesson-the-beauty-of-kotlin’s-type-system"
+    name: "The beauty of Kotlin’s type system"
+    steps:
+    - type: "text"
+      stepId: "lesson-20_type_system-summary-text"
+      repeatable: false
+      text: |-
+        In this chapter, we've learned the following:
+        * A class is a template for creating objects. A type defines expectations and functionalities.
+        * Every class generates a nullable and a non-nullable type.
+        * A nullable type is a supertype of the non-nullable variant of this type.
+        * The supertype of all types is `Any?`.
+        * The supertype of non-nullable types is `Any`.
+        * The subtype of all types is `Nothing`.
+        * When a function declares `Nothing` as a return type, this means that it will throw an error or run infinitely.
+        * Both `throw` and `return` declare `Nothing` as their result type.
+        * The Kotlin compiler understands that when an expression declares `Nothing` as a result type, everything after that is unreachable.
+        * The type of `null` is `Nothing?`, which is the subtype of all nullable types.
+
+        In the next chapter, we are going to discuss generics, and we’ll see how they are important for our type system.
+    - type: "text"
+      stepId: "lesson-20_type_system-the-type-of-null-text"
+      repeatable: false
+      text: |-
+        Let's see another peculiar thing. Did you know that you can assign `null` to a variable without setting an explicit type? What’s more, such a variable can be used wherever `null` is accepted.
+
+        ```kotlin
+        fun main() {
+            val n = null
+            val i: Int? = n
+            val d: Double? = n
+            val str: String? = n
+        }
+        ```
+
+        This means that `null` has its type, which is a subtype of all nullable types. Take a look at the type hierarchy and guess what type this is.
+
+        
+        ![](typing_system_A_B_nullability_Any_Nothing.png)
+
+        I hope you guessed that the type of `null` is `Nothing?`. Now think about the inferred type of `a` and `b` in the example below.
+
+        ```kotlin
+        val a = if (predicate) "A" else null
+
+        val b = when {
+            predicate2 -> "B"
+            predicate3 -> "C"
+            else -> null
+        }
+        ```
+
+        In the if-expression, we search for the closest supertype of the types from both branches. The closest supertype of `String` and `Nothing?` is `String?`. The same is true about the when-expression: the closest supertype of `String`, `String`, and `Nothing?` is `String?`. Everything makes sense.
+
+        For the same reason, whenever we require `String?`, we can pass either `String` or `null`, whose type is `Nothing?`. This is clear when you take a look at the type hierarchy. `String` and `Nothing?` are the only non-empty subtypes of `String?`.
+
+        ![](Socrates.png)
+    - type: "text"
+      stepId: "lesson-20_type_system-when-is-some-code-not-reachable?-text"
+      repeatable: false
+      text: |-
+        When an element declares `Nothing` as a return type, it means that everything after its call is not reachable. This is reasonable: there are no instances of `Nothing`, so it cannot be returned. This means a statement that declares `Nothing` as its result type will never complete in a normal way, so the next statements are not reachable. This is why everything after either `fail` or `throw` will be unreachable.
+
+        
+        ![](typing_system_fail_throw.png)
+
+        It’s the same with `return`, `TODO`, `error`, etc. If a non-optional expression declares `Nothing` as its result type, everything after that is unreachable. This is a simple rule, but it’s useful for the compiler. It’s also useful for us since it gives us more possibilities. Thanks to this rule, we can use `TODO()` in a function instead of returning a value. Anything that declares `Nothing` as a result type ends the function (or runs forever), so this function will not end without returning or throwing first.
+
+        ```kotlin
+        fun fizzBuzz(): String {
+            TODO()
+        }
+        ```
+
+        I would like to end this topic with a more advanced example that comes from the Kotlin Coroutines library. There is a `MutableStateFlow` class, which represents a mutable value whose state changes can be observed using the `collect` method. The thing is that `collect` suspends the current coroutine until whatever it observes is closed, but a StateFlow cannot be closed. This is why this `collect` function declares `Nothing` as its result type.
+
+        ```kotlin
+        public interface SharedFlow<out T> : Flow<T> {
+            public val replayCache: List<T>
+            override suspend fun collect(
+                collector: FlowCollector<T>
+            ): Nothing
+        }
+        ```
+
+        That is very useful for developers who are not aware of how `collect` works. Thanks to the result type, IntelliJ informs them that the code they place after `collect` is unreachable.
+
+        ![SharedFlow cannot be closed, so its `collect` function will never return, therefore it declares `Nothing` as its result type.](stateflow_unreachable.png)
+    - type: "text"
+      stepId: "lesson-20_type_system-the-result-type-from-return-and-throw-text"
+      repeatable: false
+      text: |-
+        I will start this subchapter with something strange: did you know that you can place `return` or `throw` on the right side of a variable assignment?
+
+        ```kotlin
+        fun main() {
+            val a = return
+            val b = throw Error()
+        }
+        ```
+
+        This doesn’t make any sense as both `return` and `throw` end the function, so we will never assign anything to such variables (like `a` and `b` in the example above). This assignment is an unreachable piece of code. In Kotlin, it just causes a warning.
+
+        ![](typing_system_return_return_type.png)
+
+        The code above is correct from the language point of view because both `return` and `throw` are expressions, which means they declare a result type. This type is `Nothing`.
+
+        ```kotlin
+        fun main() {
+            val a: Nothing = return
+            val b: Nothing = throw Error()
+        }
+        ```
+
+        This explains why we can place `return` or `throw` on the right side of the Elvis operator or in a when-expression.
+
+        ```kotlin
+        fun processPerson(person: Person?) {
+            val name = person?.name ?: return
+            val fullName = when {
+                !person.middleName.isNullOrBlank() ->
+                    "$name ${person.middleName} ${person.surname}"
+                !person.surname.isNullOrBlank() ->
+                    "$name ${person.surname}"
+                else -> return
+            }
+            // ...
+        }
+        ```
+
+        ```kotlin
+        fun processPerson(person: Person?) {
+            val name = person?.name ?: throw Error("Name is required")
+            val fullName = when {
+                !person.middleName.isNullOrBlank() ->
+                    "$name ${person.middleName} ${person.surname}"
+                !person.surname.isNullOrBlank() ->
+                    "$name ${person.surname}"
+                else -> throw Error("Surname is required")
+            }
+            // ...
+        }
+        ```
+
+        Both `return` and `throw` declare `Nothing` as their result type. As a consequence, Kotlin will infer `String` as the type of both `name` and `fullName` because `String` is the closest supertype of both `String` and `Nothing`.
+
+        So, now you can say that you know `Nothing`. Just like John Snow.
+
+        ![](Nothing_John_Snow.png)
+    - type: "text"
+      stepId: "lesson-20_type_system-the-subtype-of-all-the-types:-nothing-text"
+      repeatable: false
+      text: |-
+        `Nothing` is a subtype of all the types in Kotlin. If we had an instance of this type, it could be used instead of everything else (like a Joker in the card game Rummy). It’s no wonder that such an instance does not exist. `Nothing` is an empty type (also known as a bottom type, zero type, uninhabited type, or never type), which means it has no values. It is literally impossible to make an instance of type `Nothing`, but this type is still really useful. I will tell you more: some functions declare `Nothing` as their result type. You've likely used such functions many times already. What functions are those? They declare `Nothing` as a result type, but they cannot return it because this type has no instances. But what can these functions do? Three things: they either need to run forever, end the program, or throw an exception. In all cases, they never return, so the `Nothing` type is not only valid but also really useful.
+
+        ```kotlin
+        fun runForever(): Nothing {
+            while (true) {
+                // no-op
+            }
+        }
+
+        fun endProgram(): Nothing {
+            exitProcess(0)
+        }
+
+        fun fail(): Nothing {
+            throw Error("Some error")
+        }
+        ```
+
+        I have never found a good use case for a function that runs forever, and ending a program is not very common, but we often use functions that throw exceptions. Who hasn't ever used `TODO()`? This function throws a `NotImplementedError` exception. There is also the `error` function from the standard library, which throws an `IllegalStateException`.
+
+        ```kotlin
+        inline fun TODO(): Nothing = throw NotImplementedError()
+
+        inline fun error(message: Any): Nothing =
+            throw IllegalStateException(message.toString())
+        ```
+
+        `TODO` is used as a placeholder in a place where we plan to implement some code.
+
+        ```kotlin
+        fun fib(n: Int): Int = TODO()
+        ```
+
+        `error` is used to signal an illegal situation:
+
+        ```kotlin
+        fun get(): T = when {
+            left != null -> left
+            right != null -> right
+            else -> error("Must have either left or right")
+        }
+        ```
+
+        This result type is significant. Let’s say that you have an if-condition that returns either `Int` or `Nothing`. What should the inferred type be? The closest supertype of both `Int` and `Nothing` is `Int`. This is why the inferred type will be `Int`.
+
+        ```kotlin
+        // the inferred type of answer is Int
+        val answer = if (timeHasPassed) 42 else TODO()
+        ```
+
+        The same rule applies when we use the Elvis operator, a when-expression, etc. In the example below, the type of both `name` and `fullName` is `String` because both `fail` and `error` declare `Nothing` as their result type. This is a huge convenience.
+
+        ```kotlin
+        fun processPerson(person: Person?) {
+            // the inferred type of name is String
+            val name = person?.name ?: fail()
+            // the inferred type of fullName is String
+            val fullName = when {
+                !person.middleName.isNullOrBlank() ->
+                    "$name ${person.middleName} ${person.surname}"
+                !person.surname.isNullOrBlank() ->
+                    "$name ${person.surname}"
+                else ->
+                    error("Person must have a surname")
+            }
+            // ...
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-20_type_system-the-relationship-between-types-text"
+      repeatable: false
+      text: |-
+        Let's say that we have a class `Dog` and its superclass `Animal`.
+
+        ```kotlin
+        open class Animal
+        class Dog : Animal()
+        ```
+
+        Wherever an `Animal` type is expected, you can use a `Dog`, but not the other way around.
+
+        ```kotlin
+        fun petAnimal(animal: Animal) {}
+        fun petDog(dog: Dog) {}
+
+        fun main() {
+            val dog: Dog = Dog()
+            val dogAnimal: Animal = dog // works
+            petAnimal(dog) // works
+            val animal: Animal = Animal()
+            val animalDog: Dog = animal // compilation error
+            petDog(animal) // compilation error
+        }
+        ```
+
+        Why? Because there is a concrete relationship between these types: `Dog` is a subtype of `Animal`. By rule, when A is a subtype of B, we can use A where B is expected. We might also say that `Animal` is a supertype of `Dog`, and a subtype can be used where a supertype is expected.
+
+        ![](typing_system_A_B.png)
+
+        There is also a relationship between nullable and non-nullable types. A non-nullable can be used wherever a nullable is expected.
+
+        ```kotlin
+        fun petDogIfPresent(dog: Dog?) {}
+        fun petDog(dog: Dog) {}
+
+        fun main() {
+            val dog: Dog = Dog()
+            val dogNullable: Dog? = dog
+            petDogIfPresent(dog) // works
+            petDogIfPresent(dogNullable) // works
+            petDog(dog) // works
+            petDog(dogNullable) // compilation error
+        }
+        ```
+
+        This is because the non-nullable variant of each type is a subtype of the nullable variant.
+
+        
+        ![](typing_system_A_B_nullability.png)
+
+        The superclass of all the classes in Kotlin is `Any`, which is similar to `Object` in Java. The supertype of all the types is not `Any`, it is `Any?`. `Any` is a supertype of all non-nullable types. We also have something that is not present in Java and most other mainstream languages: the subtype of all the types, which is called `Nothing`. We will talk about it soon.
+
+        
+        ![](typing_system_A_B_nullability_Any_Nothing.png)
+
+        `Any` is only a supertype of non-nullable types. So, wherever `Any` is expected, nullable types will not be accepted. This fact is also used to set a type parameter’s upper boundary to accept only non-nullable types.
+
+        ```kotlin
+        fun <T : Any> String.parseJson(): T = ...
+        ```
+
+        `Unit` does not have any special place in the type hierarchy. It is just an object declaration that is used when a function does not specify a result type.
+
+        ```kotlin
+        object Unit {
+            override fun toString() = "kotlin.Unit"
+        }
+        ```
+
+        Let's talk about a concept that has a very special place in the typing hierarchy: let's talk about `Nothing`.
+    - type: "text"
+      stepId: "lesson-20_type_system-class-vs-type-in-practice-text"
+      repeatable: false
+      text: |-
+        This discussion might sound very theoretical, but it already has some practical implications. Note that classes cannot be nullable, but types can. Consider the initial example, where I asked you to point out where `User` is a type. Only in positions that represent types can you use `User?` instead of `User`.
+
+        ![](typing_system_type_vs_class_nullable.png)
+
+        Member functions are defined on classes, so their receiver cannot be nullable or have type arguments. Extension functions are defined on types, so they can be nullable or defined on a concrete generic type. Consider the `sum` function,, which is an extension of `Iterable<Int>`, or the `isNullOrBlank` function, which is an extension of `String?`.
+
+        ```kotlin
+        fun Iterable<Int>.sum(): Int {
+            var sum: Int = 0
+            for (element in this) {
+                sum += element
+            }
+            return sum
+        }
+
+        @OptIn(ExperimentalContracts::class)
+        inline fun CharSequence?.isNullOrBlank(): Boolean {
+            // (skipped contract definition)
+            return this == null || this.isBlank()
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-20_type_system-the-relation-between-classes-and-types-text"
+      repeatable: false
+      text: |-
+        We say that classes generate types. Think of the class `User`. It generates two types. Can you name them both? One is `User`, but the second is not `Any` (`Any` is already in the type hierarchy). The second new type generated by the class `User` is `User?`. Yes, the nullable variant is a separate type.
+
+        There are classes that generate many more types: generic classes. The `Box<T>` class theoretically generates an infinite number of types.
+
+        ![](typing_system_type_class_relation.png)
+    - type: "text"
+      stepId: "lesson-20_type_system-why-do-we-have-types?-text"
+      repeatable: false
+      text: |-
+        Let's do a thought experiment for a moment. Kotlin is a statically typed language, so all variables and functions must be typed. If we do not specify their types explicitly, they will be inferred. But let's take a step back and imagine that you are a language designer who is deciding what Kotlin should look like. It is possible to drop all these requirements and eliminate all types completely. The compiler does not really need them. It has classes that define how objects should be created, and it has objects that are used during execution. What do we lose if we get rid of types? Mostly safety and developers' convenience.
+
+        ![](typing_system_type_vs_class_crossed.png)
+
+        It is worth mentioning that many languages do support classes and objects but not types. Among them, there is JavaScript and (not long ago) Python - two of the most popular languages in the world. However, types do offer us value, which is why in the JavaScript community more and more people use TypeScript (which is basically JavaScript plus types), and Python has introduced support for types.
+
+        So why do we have types? They are mainly for us, developers. A type tells us what methods or properties we can use on an object. A type tells us what kind of value can be used as an argument. Types prevent the use of incorrect objects, methods, or properties. They give us safety, and suggestions are provided by the IDE. The compiler also benefits from types as they are used to better optimize our code or to decide which function should be chosen when its name is overloaded. Still, it is developers who are the most important beneficent of types.
+
+        So what is a type? **It can be considered as a set of things we can do with an object**. Typically, it is a set of methods and properties.
+    - type: "text"
+      stepId: "lesson-20_type_system-what-is-a-type?-text"
+      repeatable: false
+      text: |-
+        Before we start talking about the type system, we should first explain what a type is. Do you know the answer? Think about it for a moment.
+
+        Types are commonly confused with classes, but these two terms represent totally different concepts. Take a look at the example below. You can see `User` used four times. Can you tell me which usages are classes, which are types, and which are something else?
+
+        ![](typing_system_type_vs_class_question.png)
+
+        After the `class` keyword, you define a class name. A class is a template for objects that defines a set of properties and methods. When we call a constructor, we create an object. Types are used here to specify what kind of objects we expect to have in the variables.
+
+        ![](typing_system_type_vs_class.png)
+    - type: "text"
+      stepId: "lesson-20_type_system-text"
+      repeatable: false
+      text: |-
+        # The beauty of Kotlin’s type system
+
+        The Kotlin type system is amazingly designed. Many features that look like special cases are just a natural consequence of how the type system is designed. For instance, thanks to the type system, in the example below the type of `surname` is `String`, the type of `age` is `Int`, and we can use `return` and `throw` on the right side of the Elvis operator.
+
+        ```kotlin
+        fun processPerson(person: Person?) {
+            val name = person?.name ?: "unknown"
+
+            val surname = person?.surname ?: return
+
+            val age = person?.age ?: throw Error("Person must have age")
+
+            // ...
+        }
+        ```
+
+        The typing system also gives us very convenient nullability support, smart type inference, and much more. In this chapter, we will reveal a lot of Kotlin magic. I always love talking about this in my workshops because I see the stunning beauty of how Kotlin’s type system is so well designed that all these pieces fit perfectly together and give us a great programming experience. I find this topic fascinating, but I will also try to add some useful hints that show where this knowledge can be useful in practice. I hope you will enjoy discovering it as much as I did.
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-q1"
+      question: |-
+        Why does this compile?
+
+        ```kotlin
+        fun process(person: Person?) {
+            val surname = person?.surname ?: return
+        }
+        ```
+      explanation: "In Kotlin, return and throw have type Nothing, which is a subtype\
+        \ of all types. Thus they are valid RHS for ?: when a non-null value of any\
+        \ type is expected."
+      repeatable: true
+      answers:
+      - "Because return has type Nothing, a subtype of every type, so it fits the\
+        \ expected non-null type."
+      - "Because the Elvis operator treats any statement as a valid alternative."
+      - "Because Kotlin automatically converts Unit to the expected type on the right\
+        \ of ?:."
+      - "Because smart cast rewrites return into a String at compile time."
+      correct: "Because return has type Nothing, a subtype of every type, so it fits\
+        \ the expected non-null type."
+    - type: "question-multiple-answer"
+      stepId: "lesson-20_type_system-q2"
+      question: |-
+        Which lines compile? Assume this function:
+
+        ```kotlin
+        fun f(s: String?): String {
+            // Choose all compiling lines (independent statements)
+        }
+        ```
+      explanation: "RHS of ?: must be compatible with the expected type or be Nothing.\
+        \ A String literal matches String. return and throw are Nothing, so they also\
+        \ fit. println returns Unit (mismatch), and 0 is Int (mismatch)."
+      repeatable: false
+      answers:
+      - "val a: String = s ?: \"unknown\""
+      - "val b: String = s ?: return \"fallback\""
+      - "val c: String = s ?: throw IllegalStateException()"
+      - "val d: String = s ?: println(\"missing\")"
+      - "val e: Int = s ?: 0"
+      correct:
+      - "val a: String = s ?: \"unknown\""
+      - "val b: String = s ?: return \"fallback\""
+      - "val c: String = s ?: throw IllegalStateException()"
+    - type: "question-multiple-answer"
+      stepId: "lesson-20_type_system-what-is-a-type?-q1"
+      question: |-
+        Given the code:
+
+        ```kotlin
+        class User(val name: String)
+
+        val u: User = User("Ana")
+        fun send(u: User) {}
+
+        val users: List<User> = listOf(User("A"))
+        val ctor = ::User
+        ```
+        Select all places where `User` is used as a type.
+      explanation: "`class User` declares a class (a template). `User` in `val u:\
+        \ User`, in parameter `u: User`, and as `List<User>` is a type annotation.\
+        \ `::User` is a constructor reference, not a type."
+      repeatable: true
+      answers:
+      - "In `class User(val name: String)`"
+      - "In `val u: User = ...`"
+      - "In `fun send(u: User) {}`"
+      - "In `val users: List<User> = ...`"
+      - "In `val ctor = ::User`"
+      correct:
+      - "In `val u: User = ...`"
+      - "In `fun send(u: User) {}`"
+      - "In `val users: List<User> = ...`"
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-why-do-we-have-types?-q1"
+      question: "In Kotlin, what is a \"type\" best understood as?"
+      explanation: "In this chapter, a type is described as the set of things you\
+        \ can do with a value—typically its accessible methods and properties."
+      repeatable: true
+      answers:
+      - "A set of methods and properties you can use on a value"
+      - "The concrete class used to allocate objects"
+      - "The JVM memory layout of the value"
+      - "The module or package a class belongs to"
+      correct: "A set of methods and properties you can use on a value"
+    - type: "question-multiple-answer"
+      stepId: "lesson-20_type_system-why-do-we-have-types?-q2"
+      question: "Which benefits do Kotlin’s types provide? Select all that apply."
+      explanation: "Types give developer safety and IDE assistance, and they help\
+        \ the compiler with overload resolution. They do not remove the need for classes\
+        \ or guarantee resource reductions."
+      repeatable: false
+      answers:
+      - "Compile-time prevention of using incorrect methods/properties"
+      - "Better IDE suggestions and autocompletion"
+      - "Helping the compiler choose between overloaded functions"
+      - "Eliminating the need for classes and objects"
+      - "Guaranteed lower memory usage in all programs"
+      correct:
+      - "Compile-time prevention of using incorrect methods/properties"
+      - "Better IDE suggestions and autocompletion"
+      - "Helping the compiler choose between overloaded functions"
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-the-relation-between-classes-and-types-q1"
+      question: "Declaring `class User` introduces which new types to the Kotlin type\
+        \ system?"
+      explanation: "Each class generates its non-nullable and nullable types. `Any`\
+        \ is not introduced by the class; it already exists."
+      repeatable: false
+      answers:
+      - "User and User?"
+      - "Only User"
+      - "User and Any"
+      - "User, Any, and User?"
+      correct: "User and User?"
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-the-relation-between-classes-and-types-q2"
+      question: "How many distinct types can `class Box<T>` represent in Kotlin?"
+      explanation: "A generic class yields a type for every admissible type argument\
+        \ (and its nullable variant), so the set is unbounded."
+      repeatable: false
+      answers:
+      - "Exactly two: Box<T> and Box<T>?"
+      - "Finitely many, depending on T's bounds"
+      - "Infinitely many, depending on type arguments and nullability"
+      - "None until instantiated at runtime"
+      correct: "Infinitely many, depending on type arguments and nullability"
+    - type: "question-multiple-answer"
+      stepId: "lesson-20_type_system-class-vs-type-in-practice-q1"
+      question: "Which of the following declarations compile in Kotlin? (Select all\
+        \ that apply.)"
+      explanation: "Extension functions are defined on types, so their receivers can\
+        \ be nullable or concrete generic types (e.g., Iterable<Int>). Classes cannot\
+        \ be nullable, and type parameters in class declarations cannot carry nullability\
+        \ (no class Box<T?>)."
+      repeatable: true
+      answers:
+      - "fun String?.isNullOrBlankEx(): Boolean = this == null || this.isBlank()"
+      - "fun Iterable<Int>.sumEx(): Int = fold(0) { acc, e -> acc + e }"
+      - "class User?"
+      - "class Box<T?>"
+      correct:
+      - "fun String?.isNullOrBlankEx(): Boolean = this == null || this.isBlank()"
+      - "fun Iterable<Int>.sumEx(): Int = fold(0) { acc, e -> acc + e }"
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-class-vs-type-in-practice-q2"
+      question: "Which receivers in Kotlin can be nullable (e.g., String?)?"
+      explanation: "Member functions are defined on classes (not nullable, no type\
+        \ arguments), whereas extension receivers are types and may be nullable or\
+        \ concrete generics."
+      repeatable: false
+      answers:
+      - "Only extension function receivers."
+      - "Only member function receivers."
+      - "Both member and extension receivers."
+      - "Neither."
+      correct: "Only extension function receivers."
+    - type: "question-multiple-answer"
+      stepId: "lesson-20_type_system-the-relationship-between-types-q1"
+      question: |-
+        Given:
+
+        ```kotlin
+        open class Animal
+        class Dog : Animal()
+
+        fun takesAnimal(a: Animal) {}
+        fun takesDog(d: Dog) {}
+        fun takesAny(a: Any) {}
+        fun takesAnyQ(a: Any?) {}
+
+        val dog: Dog = Dog()
+        val animal: Animal = Animal()
+        val dogQ: Dog? = dog
+        val animalQ: Animal? = animal
+        ```
+
+        Which calls compile? Choose all that apply.
+      explanation: "Subtype can be used where a supertype is expected. Non-nullable\
+        \ is a subtype of its nullable variant. Any is the supertype of all non-nullable\
+        \ types; Any? is the supertype of all types."
+      repeatable: true
+      answers:
+      - "takesAnimal(dog)"
+      - "takesDog(animal)"
+      - "takesAny(dog)"
+      - "takesAny(dogQ)"
+      - "takesAnyQ(animalQ)"
+      correct:
+      - "takesAnimal(dog)"
+      - "takesAny(dog)"
+      - "takesAnyQ(animalQ)"
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-the-relationship-between-types-q2"
+      question: |-
+        Given the bound `T : Any`:
+
+        ```kotlin
+        fun <T : Any> String.parseJson(): T = TODO()
+        ```
+        Which invocation compiles?
+      explanation: "`T : Any` forbids nullable type arguments. Only non-nullable types\
+        \ (e.g., Boolean, Int, String, Any) are allowed; `Any?` and `T?` are not."
+      repeatable: false
+      answers:
+      - "`\"true\".parseJson<Boolean>()`"
+      - "`\"42\".parseJson<Int?>()`"
+      - "`\"null\".parseJson<String?>()`"
+      - "`\"dog\".parseJson<Any?>()`"
+      correct: "`\"true\".parseJson<Boolean>()`"
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-the-subtype-of-all-the-types:-nothing-q1"
+      question: |-
+        What is the inferred type of x?
+
+        ```kotlin
+        val x = listOf(1, 2).firstOrNull() ?: error("No elements")
+        ```
+      explanation: "`error(...)` returns `Nothing`, which is a subtype of all types.\
+        \ The Elvis operator with `Int?` on the left and `Nothing` on the right yields\
+        \ the non-nullable `Int`."
+      repeatable: true
+      answers:
+      - "Int"
+      - "Int?"
+      - "Any"
+      - "Nothing"
+      correct: "Int"
+    - type: "question-multiple-answer"
+      stepId: "lesson-20_type_system-the-subtype-of-all-the-types:-nothing-q2"
+      question: "Which functions can correctly declare return type `Nothing`?"
+      explanation: "`Nothing` means the function never returns normally. Throwing,\
+        \ exiting the process, or looping forever fit. Functions returning `Unit`\
+        \ or `Int` do return, so they cannot be `Nothing`."
+      repeatable: true
+      answers:
+      - "A function that always throws an exception."
+      - "A function that calls `exitProcess(0)` unconditionally."
+      - "A function that runs an infinite loop without breaking or returning."
+      - "A function that returns `Unit` to indicate no meaningful value."
+      - "A `suspend` function that computes and returns `Int` after a delay."
+      correct:
+      - "A function that always throws an exception."
+      - "A function that calls `exitProcess(0)` unconditionally."
+      - "A function that runs an infinite loop without breaking or returning."
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-the-result-type-from-return-and-throw-q1"
+      question: "In Kotlin, what is the result type of both `return` and `throw` expressions?"
+      explanation: "`return` and `throw` are expressions with the type `Nothing`—\
+        a bottom type that is a subtype of every type. This allows them to appear\
+        \ in places like the right side of `?:` and inside `when` branches."
+      repeatable: true
+      answers:
+      - "Nothing"
+      - "Unit"
+      - "Any"
+      - "Nothing?"
+      correct: "Nothing"
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-the-result-type-from-return-and-throw-q2"
+      question: |-
+        Given:
+
+        ```kotlin
+        data class Person(val name: String)
+
+        fun process(person: Person?) {
+            val name = person?.name ?: return
+            // What is the inferred type of `name`?
+        }
+        ```
+        What is the inferred type of `name`?
+      explanation: "The right side of `?:` is `return` (type `Nothing`), so the Elvis\
+        \ expression refines the left side to non-null. Thus `name` is inferred as\
+        \ `String`."
+      repeatable: false
+      answers:
+      - "String"
+      - "String?"
+      - "Nothing"
+      - "Any"
+      correct: "String"
+    - type: "question-multiple-answer"
+      stepId: "lesson-20_type_system-when-is-some-code-not-reachable?-q1"
+      question: "Select all correct statements about Kotlin's Nothing type and reachability:"
+      explanation: "Nothing has no instances and is a subtype of all types; any non-null\
+        \ expression of type Nothing never completes normally, so following code is\
+        \ unreachable; SharedFlow.collect never returns (StateFlow/SharedFlow cannot\
+        \ be closed), hence it declares Nothing."
+      repeatable: true
+      answers:
+      - "Nothing has no instances and is a subtype of every other type."
+      - "After a non-null expression of type Nothing, subsequent statements are considered\
+        \ unreachable."
+      - "TODO() returns Unit, so using it in a function returning String requires\
+        \ an explicit return."
+      - "A function declared to return Nothing must always return null."
+      - "SharedFlow.collect returns Nothing because it suspends until the flow is\
+        \ closed, and SharedFlow cannot be closed."
+      correct:
+      - "Nothing has no instances and is a subtype of every other type."
+      - "After a non-null expression of type Nothing, subsequent statements are considered\
+        \ unreachable."
+      - "SharedFlow.collect returns Nothing because it suspends until the flow is\
+        \ closed, and SharedFlow cannot be closed."
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-when-is-some-code-not-reachable?-q2"
+      question: |-
+        Given the code:
+
+        ```kotlin
+        suspend fun consume(flow: SharedFlow<Int>) {
+            println("start")
+            flow.collect { value -> println(value) }
+            println("end")
+        }
+        ```
+        What does the compiler/IDE report about `println("end")`?
+      explanation: "`SharedFlow.collect` declares return type Nothing, meaning it\
+        \ never completes normally. Therefore, the statement after it is unreachable\
+        \ and flagged as such."
+      repeatable: false
+      answers:
+      - "It is reported as unreachable because collect returns Nothing."
+      - "It may execute if the flow completes normally, so no warning."
+      - "It is only unreachable if the collector throws an exception."
+      - "It is unreachable only on JVM; on JS/Native it may run."
+      correct: "It is reported as unreachable because collect returns Nothing."
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-the-type-of-null-q1"
+      question: |-
+        What is the inferred type of `n` in Kotlin?
+
+        ```kotlin
+        val n = null
+        ```
+      explanation: "`null` has type `Nothing?`, which is a subtype of all nullable\
+        \ types. `Any?` includes null but is not the type of `null`. `Nothing` is\
+        \ non-null and uninhabited. `Null` is not a Kotlin type."
+      repeatable: true
+      answers:
+      - "Nothing?"
+      - "Any?"
+      - "Nothing"
+      - "Null"
+      correct: "Nothing?"
+    - type: "question-multiple-answer"
+      stepId: "lesson-20_type_system-the-type-of-null-q2"
+      question: |-
+        Given:
+
+        ```kotlin
+        val n = null
+        ```
+        Which assignments compile?
+      explanation: "`null` is `Nothing?`, a subtype of every `T?`, so it can be assigned\
+        \ to `String?`, `List<Int>?`, and `Nothing?`. It cannot be assigned to non-null\
+        \ types like `Any` or `String`."
+      repeatable: false
+      answers:
+      - "val s: String? = n"
+      - "val a: Any = n"
+      - "val l: List<Int>? = n"
+      - "val nn: Nothing? = n"
+      - "val str: String = n"
+      correct:
+      - "val s: String? = n"
+      - "val l: List<Int>? = n"
+      - "val nn: Nothing? = n"
+    - type: "question-multiple-answer"
+      stepId: "lesson-20_type_system-summary-q1"
+      question: "Which of the following Kotlin declarations compile? Choose all that\
+        \ apply."
+      explanation: |-
+        - `String?` can hold `null`.
+        - `Nothing?`'s only value is `null`.
+        - `throw` has type `Nothing`, which is a subtype of every type, so it can appear where any type is expected.
+        - A function returning `Nothing` may always throw.
+        - `String` cannot hold `null`.
+      repeatable: true
+      answers:
+      - "A) val a: String = null"
+      - "B) val b: String? = null"
+      - "C) val c: Nothing? = null"
+      - "D) val d: Int = throw IllegalStateException()"
+      - "E) fun never(): Nothing = throw IllegalStateException()"
+      correct:
+      - "B) val b: String? = null"
+      - "C) val c: Nothing? = null"
+      - "D) val d: Int = throw IllegalStateException()"
+      - "E) fun never(): Nothing = throw IllegalStateException()"
+    - type: "question-single-answer"
+      stepId: "lesson-20_type_system-summary-q2"
+      question: "What is the supertype of all non-nullable types in Kotlin?"
+      explanation: "`Any` is the supertype of all non-nullable types. `Any?` is the\
+        \ supertype of all types (including nullable ones)."
+      repeatable: true
+      answers:
+      - "Any"
+      - "Any?"
+      - "Nothing"
+      - "Nothing?"
+      - "Unit"
+      correct: "Any"
+  - lessonId: "lesson-generics"
+    name: "Generics"
+    steps:
+    - type: "text"
+      stepId: "lesson-21_generics-underscore-operator-for-type-arguments-text"
+      repeatable: false
+      text: |-
+        Type arguments can be either specified explicitly or inferred from the context. However, sometimes we want to specify one type argument and let the compiler infer the other. In such a case, we can use the underscore operator `_` as a type argument. This operator specifies that we want to infer a type argument.
+
+        ```kotlin
+        inline fun <K, reified V> Map<K, *>
+                .filterValueIsInstance(): Map<K, V> =
+            filter { it.value is V } as Map<K, V>
+
+        fun main() {
+            val props = mapOf(
+                "name" to "Alex",
+                "age" to 25,
+                "city" to "New York"
+            )
+            // One type argument inferred with _, one specified
+            val strProps = props.filterValueIsInstance<_, String>()
+            println(strProps) // {name=Alex, city=New York}
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-21_generics-star-projection-text"
+      repeatable: false
+      text: |-
+        In some cases, we don’t want to specify a concrete type argument for a type. In these scenarios, we can use a star projection `*`, which accepts any type. There are two situations where this is useful. The first is when you check if a variable is a list. In this case, you should use the `is List<*>` check. Star projection should be used in such a case because of type erasure. If you used `List<Int>`, it would be compiled to `List` under the hood anyway. This means a list of strings would pass the `is List<Int>` check. Such a check would be confusing and is illegal in Kotlin. You must use `is List<*>` instead.
+
+        ```kotlin
+        fun main() {
+            val list = listOf("A", "B")
+            println(list is List<*>) // true
+            println(list is List<Int>) // Compilation error
+        }
+        ```
+
+        Star projection can also be used for properties or parameters. You can use `List<*>` when you want to express that you want a list, no matter what the type of its elements. When you get elements from such a list, they are of type `Any?`, which is the supertype of all the types.
+
+        ```kotlin
+        fun printSize(list: List<*>) {
+            println(list.size)
+        }
+
+        fun printList(list: List<*>) {
+            for (e in list) { // the type of e is Any?
+                println(e)
+            }
+        }
+        ```
+
+        Star projection should not be confused with the `Any?` type argument. To see this, let's compare `MutableList<Any?>` and `MutableList<*>`. Both of these types declare `Any?` as generic result types. However, when elements are added, `MutableList<Any?>` accepts anything (`Any?`), but `MutableList<*>` accepts `Nothing`, so it does not accept any values.
+
+        ```kotlin
+        fun main() {
+            val l1: MutableList<Any?> = mutableListOf("A")
+            val r1 = l1.first() // the type of r1 is Any?
+            l1.add("B") // the expected argument type is Any?
+
+            val l2: MutableList<*> = mutableListOf("A")
+            val r2 = l2.first() // the type of r2 is Any?
+            l2.add("B") // ERROR,
+            // the expected argument type is Nothing,
+            // so there is no value that might be used as an argument
+        }
+        ```
+
+        When a star projection is used as an argument, it will be treated as `Any?` in all the out-positions (result types), and it will be treated as `Nothing` in all the in-positions (parameter types).
+    - type: "text"
+      stepId: "lesson-21_generics-generic-constraints-text"
+      repeatable: false
+      text: "An important feature of type parameters is that they can be constrained\
+        \ to be a subtype of a concrete type. We set a constraint by placing a supertype\
+        \ after a colon. For instance, let's say that you implement the `maxOf` function,\
+        \ which returns the biggest of its arguments. To find the biggest one, the\
+        \ arguments need to be comparable. So, next to the type parameter, we can\
+        \ specify that we accept only types that are a subtype of `Comparable<T>`.\n\
+        \n```kotlin\nimport java.math.BigDecimal\n\nfun <T : Comparable<T>> maxOf(a:\
+        \ T, b: T): T {\n    return if (a >= b) a else b\n}\n\nfun main() {\n    val\
+        \ m = maxOf(BigDecimal(\"10.00\"), BigDecimal(\"11.00\"))\n    println(m)\
+        \ // 11.00\n\n    class A\n    maxOf(A(), A()) // Compilation error, \n  \
+        \  // A is not Comparable<A>\n}\n```\n\nType parameter constraints are also\
+        \ used for generic classes. Consider the `ListAdapter` class below, which\
+        \ expects a type argument that is a subtype of `ItemAdapter`.\n\n```kotlin\n\
+        class ListAdapter<T : ItemAdapter>(/*...*/) { /*...*/ }\n```\n\nAn important\
+        \ result of having a constraint is that instances of this type can use all\
+        \ the methods offered by this type. In this way, when `T` is constrained as\
+        \ a subtype of `Iterable<Int>`, we know that we can iterate over an instance\
+        \ of type `T`, and that elements returned by the iterator will be of type\
+        \ `Int`. When we are constrained to `Comparable<T>`, we know that this type\
+        \ can be compared with another instance of the same type. Another popular\
+        \ choice for a constraint is `Any`, which means that a type can be any non-nullable\
+        \ type.\n\nIn rare cases in which we might need to set more than one upper\
+        \ bound, we can use `where` to set more constraints. We add it after the class\
+        \ or function name, and we use it to specify more than one generic constraint\
+        \ for a single type.\n\n```kotlin\ninterface Animal {\n    fun feed()\n}\n\
+        interface GoodTempered {\n    fun pet()\n}\n\nfun <T> pet(animal: T) where\
+        \ T : Animal, T : GoodTempered {\n    animal.pet()\n    animal.feed()\n}\n\
+        \nclass Cookie : Animal, GoodTempered {\n    override fun pet() {\n      \
+        \  // ...\n    }\n    override fun feed() {\n        // ...\n    }\n}\nclass\
+        \ Cujo : Animal {\n    override fun feed() {\n        // ...\n    }\n}\n\n\
+        fun main() {\n    pet(Cookie()) // OK\n    pet(Cujo()) //COMPILATION ERROR,\
+        \ Cujo is not GoodTempered\n}\n```"
+    - type: "text"
+      stepId: "lesson-21_generics-type-erasure-text"
+      repeatable: false
+      text: |-
+        Generic types were added to Java for developers' convenience, but they were never built into the JVM platform. All type arguments are lost when we compile Kotlin to JVM bytecode. Under the hood, this means that `List<String>`  becomes `List`, and `emptyList<Double>` becomes `emptyList`. The process of losing type arguments is known as **type erasure**. Due to this process, type parameters have some limitations compared to regular types. You cannot use them for `is` checks; you cannot reference them; and you cannot use them as reified type arguments.
+
+        ```kotlin
+        import kotlin.reflect.typeOf
+
+        fun <T> example(a: Any) {
+            val check = a is T // ERROR
+            val ref = T::class // ERROR
+            val type = typeOf<T>() // ERROR
+        }
+        ```
+
+        However, Kotlin can overcome these limitations thanks to the use of inline functions with reified type arguments. This topic is covered in depth in the chapter *Inline functions* in the book *Functional Kotlin*.
+
+        ```kotlin
+        import kotlin.reflect.typeOf
+
+        inline fun <reified T> example(a: Any) {
+            val check = a is T
+            val ref = T::class
+            val type = typeOf<T>()
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-21_generics-type-parameters-and-inheritance-text"
+      repeatable: false
+      text: |-
+        Classes can inherit from open generic classes or implement generic interfaces; however, in both cases they must explicitly specify the type argument. Consider the snippet below. Class `A` inherits from `C<Int>` and implements `I<String>`.
+
+        ```kotlin
+        open class C<T>
+        interface I<T>
+        class A : C<Int>(), I<String>
+
+        fun main() {
+            val a = A()
+            val c: C<Int> = a
+            val i: I<String> = a
+        }
+        ```
+
+        It is actually quite common that a non-generic class inherits from a generic one. Consider `MessageListAdapter` presented below, which inherits from `ArrayAdapter<String>`.
+
+        ```kotlin
+        class MessageListAdapter(
+            context: Context,
+            val values: List<ClaimMessage>
+        ) : ArrayAdapter<String>(
+            context,
+            R.layout.row_messages,
+            values.map { it.title }.toTypedArray()
+        ) {
+            fun getView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup?
+            ): View {
+                // ...
+            }
+        }
+        ```
+
+        An even more common case is when one generic class or interface inherits from another generic class or interface and uses its type parameter as a type argument of the class it inherits from. In the snippet below, the class `A` is generic and uses its type parameter `T` as an argument for both `C` and `I`. This means that if you create `A<Int>`, you will be able to up-cast it to `C<Int>` or `I<Int>`. However, if you create `A<String>`, you will be able to up-cast it to `C<String>` or to `I<String>`.
+
+        ```kotlin
+        open class C<T>
+        interface I<T>
+        class A<T> : C<T>(), I<T>
+
+        fun main() {
+            val a: A<Int> = A<Int>()
+            val c1: C<Int> = a
+            val i1: I<Int> = a
+
+            val a1: A<String> = A<String>()
+            val c2: C<String> = a1
+            val i2: I<String> = a1
+        }
+        ```
+
+        A good example is the collection hierarchy. An object of type `MutableList<Int>` implements `List<Int>`, which implements `Collection<Int>`, which implements `Iterable<Int>`.
+
+        ```kotlin
+        interface Iterable<out T> {
+            // ...
+        }
+        interface MutableIterable<out T> : Iterable<T> {
+            // ...
+        }
+        interface Collection<out E> : Iterable<E> {
+            /// ...
+        }
+        interface MutableCollection<E> : Collection<E>,MutableIterable<E>{
+            // ...
+        }
+        interface List<out E> : Collection<E> {
+            // ...
+        }
+        interface MutableList<E> : List<E>, MutableCollection<E> {
+            // ...
+        }
+        ```
+
+        However, a class does not need to use its type parameter when inheriting from a generic class or implementing a generic interface. Type parameters of parent and child classes are independent of one another and should not be confused, even if they have the same name.
+
+        ```kotlin
+        open class C<T>
+        interface I<T>
+        class A<T> : C<Int>(), I<String>
+
+        fun main() {
+            val a1: A<Double> = A<Double>()
+            val c1: C<Int> = a1
+            val i1: I<String> = a1
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-21_generics-generic-interfaces-text"
+      repeatable: false
+      text: |-
+        Interfaces can also be generic, which has similar consequences as for classes: the specified type parameters can be used inside the interface body as types for properties, parameters, and result types. A good example is the `List` interface.
+
+        ```kotlin
+        interface List<out E> : Collection<E> {
+            override val size: Int
+            override fun isEmpty(): Boolean
+            override fun contains(element: @UnsafeVariance E): Boolean
+            override fun iterator(): Iterator<E>
+            override fun containsAll(
+                elements: Collection<@UnsafeVariance E>
+            ): Boolean
+            operator fun get(index: Int): E
+            fun indexOf(element: @UnsafeVariance E): Int
+            fun lastIndexOf(element: @UnsafeVariance E): Int
+            fun listIterator(): ListIterator<E>
+            fun listIterator(index: Int): ListIterator<E>
+            fun subList(fromIndex: Int, toIndex: Int): List<E>
+        }
+        ```
+
+        > The `out` modifier and the `UnsafeVariance` annotation will be explained in the book *Advanced Kotlin*.
+
+        ![For `List<String>` type, methods like `contains` expect an argument of type `String`, and methods like `get` declare `String` as the result type.](list_str_suggestions.png)
+
+        ![For `List<String>`, methods like `filter` can infer `String` as a lambda parameter.](list_suggestions.png)
+
+        Generic interfaces are inherited by classes. Let's say that we have a class `Dog` that inherits from `Consumer<DogFood>`, as shown in the snippet below. The interface `Consumer` expects a method `consume` with the type parameter `T`. This means our `Dog` must override the `consume` method with an argument of type `DogFood`. It must be `DogFood` because we implement the `Consumer<DogFood>` type, and the parameter type in the interface `Consumer` must match the type argument `DogFood`. Now, when you have an instance of `Dog`, you can up-cast it to `Consumer<DogFood>`.
+
+        ```kotlin
+        interface Consumer<T> {
+            fun consume(value: T)
+        }
+        class DogFood
+
+        class Dog : Consumer<DogFood> {
+            override fun consume(value: DogFood) {
+                println("Mlask mlask")
+            }
+        }
+
+        fun main() {
+            val dog: Dog = Dog()
+            val consumer: Consumer<DogFood> = dog
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-21_generics-generic-classes-and-nullability-text"
+      repeatable: false
+      text: |-
+        Notice that type arguments can be nullable, so we could create `ValueWithHistory<String?>`. In such a case, the `null` value is a perfectly valid option.
+
+        ```kotlin
+        fun main() {
+            val letter = ValueWithHistory<String?>(null)
+            letter.setValue("A")
+            letter.setValue(null)
+            val l = letter.currentValue() // the type of l is String?
+            println(l) // null
+            val h = letter.history() // the type of h is List<String?>
+            println(h) // [null, A, null]
+
+            val letters = ArrayList<String?>()
+            letters.add("A")
+            letters.add(null)
+            println(letters) // [A, null]
+            val l2 = letters[1] // the type of l2 is String?
+            println(l2) // null
+        }
+        ```
+
+        Another thing is that when you use generic parameters inside classes or functions, you can make them nullable by adding a question mark. See the example below. The type `T` might or might not be nullable, depending on the type argument, but the type `T?` is always nullable. We can assign `null` to variables of the type `T?`. Nullable generic type parameter `T?` must be unpacked before using it as `T`.
+
+        ```kotlin
+        class Box<T> {
+            var value: T? = null
+
+            fun getOrThrow(): T = value!!
+        }
+        ```
+
+        The opposite can also be expressed. Since a generic type parameter might represent a nullable type (you can have `List<Int?>`), we might specify a definitely non-nullable variant of this type by adding `& Any` after the type parameter. In the example below, the method `orThrow` can be invoked on any value, but it unpacks nullable types into non-nullable ones.
+
+        ```kotlin
+        fun <T> T.orThrow(): T & Any = this ?: throw Error()
+
+        fun main() {
+            val a: Int? = if (Random.nextBoolean()) 42 else null
+            val b: Int = a.orThrow()
+            val c: Int = b.orThrow()
+            println(b)
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-21_generics-generic-classes-text"
+      repeatable: false
+      text: |-
+        We can make classes generic by adding a type parameter after the class name. Such a type parameter can be used all over the class body, especially to specify properties, parameters, and result types. A type parameter is specified when we define an instance, after which it remains unchanged. Thanks to that, when you declare `ValueWithHistory<String>` and then call `setValue` in the example below, you must use an object of type `String`; when you call `currentValue`, the result object will be typed as `String`; and when you call `history`, its result is of type `List<String>`. It’s the same for all other possible type arguments.
+
+        ```kotlin
+        class ValueWithHistory<T>(
+            private var value: T
+        ) {
+            private var history: List<T> = listOf(value)
+
+            fun setValue(value: T) {
+                this.value = value
+                this.history += value
+            }
+
+            fun currentValue(): T = value
+
+            fun history(): List<T> = history
+        }
+
+        fun main() {
+            val letter = ValueWithHistory<String>("A")
+            // The type of letter is ValueWithHistory<String>
+            letter.setValue("B")
+            // letter.setValue(123) <- this would not compile
+            val l = letter.currentValue() // the type of l is String
+            println(l) // B
+            val h = letter.history() // the type of h is List<String>
+            println(h) // [A, B]
+        }
+        ```
+
+        The constructor type argument can be inferred. In the above example, we specified it explicitly, but we did not need to. This type can be inferred from the argument type.
+
+        ```kotlin
+        val letter = ValueWithHistory("A")
+        // The type of letter is ValueWithHistory<String>
+        ```
+
+        Type arguments can also be inferred from variable types. Let's say that we want to use `Any` as a type argument. We can specify this by specifying the type of variable `letter` as `ValueWithHistory<Any>`.
+
+        ```kotlin
+        val letter: ValueWithHistory<Any> = ValueWithHistory("A")
+        // The type of letter is ValueWithHistory<Any>
+        ```
+
+        As I mentioned in the introduction to this chapter, the most important motivation for introducing generics was to make collections with certain types of elements. Consider the `ArrayList` class from the Standard Library (stdlib). It is generic, so when we create an instance from this class we need to specify the types of elements. Thanks to that, Kotlin protects us by expecting only values with accepted types to be added to the list, and Kotlin uses this type when we operate on the elements in the list.
+
+        ```kotlin
+        fun main() {
+            val letters = ArrayList<String>()
+            letters.add("A") // the argument must be of type String
+            letters.add("B") // the argument must be of type String
+            // The type of letters is List<String>
+            val a = letters[0] // the type of a is String
+            println(a) // A
+            for (l in letters) { // the type of l is String
+                println(l) // first A, then B
+            }
+        }
+        ```
+    - type: "text"
+      stepId: "lesson-21_generics-generic-functions-text"
+      repeatable: false
+      text: |-
+        Just as we can pass an argument value to a parameter, we can pass a type as a **type argument**. For this, a function needs to define one or more type parameters inside angle brackets immediately after the `fun` keyword. By convention, type parameter names are capitalized. When a function defines a type parameter, we have to specify the type arguments when calling this function. The type parameter is a placeholder for a concrete type; the type argument is the actual type that is used when a function is called. To specify type arguments explicitly, we also use angle brackets.
+
+        ```kotlin
+        fun <T> a() {} // T is type parameter
+        a<Int>() // Int is used here as a type argument
+        a<String>() // String is used here as a type argument
+        ```
+
+        There is a popular practice that a single type argument is called `T` (from "type"); if there are multiple type arguments, they are called `T` with consecutive numbers. However, this practice is not a fixed rule, and there are many other conventions for naming type parameters.
+
+        ```kotlin
+        fun <T> a() {}
+        fun <T1, T2> b() {}
+        ```
+
+        When we call a generic function, all its type arguments must be clear for the Kotlin compiler. We can either specify them explicitly, or their values can be inferred from the compiler.
+
+        ```kotlin
+        fun <T> a() {}
+        fun <T1, T2> b() {}
+        fun <T> c(t: T) {}
+        fun <T1, T2> d(a: T1, b: T2) {}
+        fun <T> e(): T = TODO()
+
+        fun main() {
+            // Type arguments specified explicitly
+            a<Int>()
+            a<String>()
+            b<Double, Char>()
+            b<Float, Long>()
+
+            // Inferred type arguments
+            c(10) // The inferred type of T is Int
+            d("AAA", 10.0)
+            // The inferred type of T1 is String, and of T2 is Double
+            val e: Boolean = e() // The inferred type of T is Boolean
+        }
+        ```
+
+        So, how are these type parameters useful? We use them primarily to specify the relationship between the arguments and the result type. For instance, we can express that the result type is the same as an argument type or that we expect two arguments of the same type.
+
+        ```kotlin
+        import kotlin.random.Random
+
+        // The result type is the same as the argument type
+        fun <T> id(value: T): T = value
+
+        // The result type is the closest supertype of arguments
+        fun <T> randomOf(a: T, b: T): T =
+            if (Random.nextBoolean()) a else b
+
+        fun main() {
+            val a = id(10) // Inferred a type is Int
+            val b = id("AAA") // Inferred b type is String
+            val c = randomOf("A", "B") // Inferred c type is String
+            val d = randomOf(1, 1.5) // Inferred d type is Number
+        }
+        ```
+
+        Type parameters for functions are useful for the compiler since they allow it to check and correctly infer types; this makes our programs safer and makes programming more pleasurable for developers. Better parameter types and type suggestions protect us from using illegal operations and let our IDE give us better suggestions.
+
+        In the next book, *Functional Kotlin*, you will see plenty of generic function examples, especially for collection processing. Such functions are really important and useful. But, for now, let's get back to the initial motivation for introducing generics: let's talk about generic classes.
+    - type: "text"
+      stepId: "lesson-21_generics-#-generics-text"
+      repeatable: false
+      text: |-
+        In the early days of Java, it was designed such that all lists had the same type `List`, instead of specific lists with specific parameter types, like `List<String>` or `List<Int>`. The `List` type in Java accepts all kinds of values; when you ask for a value at a certain position, the result type is `Object` (which, in Java, is the supertype of all the types).
+
+        ```
+        // Java
+        List names = new ArrayList();
+        names.add("Alex");
+        names.add("Ben");
+        names.add(123); // this is incorrect, but compiles
+        for(int i = 0; i < names.size(); i++){
+           String name= (String) names.get(i); // exception at i==2
+           System.out.println(name.toUpperCase());
+        }
+        ```
+
+        Such lists are hard to use. We much prefer to have a list with specified types of elements. Only then can we be sure that our list contains elements of the correct type, and only then do we not need to explicitly cast these elements when we get them from a list. This was one of the main reasons Java introduced generics in version 5. In Kotlin, we do not have this problem because it was designed with generics support from the beginning, and all lists are generic, so they must specify what kinds of elements they accept. Generics are an important feature of most modern programming languages; so, in this chapter, we will discuss what they are and how we use them in Kotlin.
+
+        In Kotlin, we have three kinds of generic elements:
+        * generic functions,
+        * generic classes,
+        * generic interfaces.
+
+        Let's discuss them one by one.
+    - type: "question-single-answer"
+      stepId: "lesson-21_generics-#-generics-q1"
+      question: |
+        What happens when compiling and running the following Kotlin code?
+
+        ```kotlin
+        val names = mutableListOf<String>()
+        names.add("Alex")
+        names.add("Ben")
+        names.add(123)
+        ```
+      explanation: "Kotlin enforces generic types at compile time. `MutableList<String>`\
+        \ cannot accept an `Int`, so the call `add(123)` is a compile-time type mismatch.\
+        \ Unlike early Java raw lists, no runtime cast is involved here."
+      repeatable: true
+      answers:
+      - "It fails to compile at `names.add(123)` due to type mismatch."
+      - "It compiles, but throws ClassCastException when reading the 3rd element as\
+        \ String."
+      - "It compiles; the list is inferred as MutableList<Any>."
+      - "It fails only at runtime when calling String-specific methods."
+      correct: "It fails to compile at `names.add(123)` due to type mismatch."
+    - type: "question-single-answer"
+      stepId: "lesson-21_generics-#-generics-q2"
+      question: "Which set lists all kinds of generic elements Kotlin supports?"
+      explanation: "Kotlin supports generic functions, generic classes, and generic\
+        \ interfaces."
+      repeatable: false
+      answers:
+      - "Functions, classes, interfaces"
+      - "Classes, interfaces, enums"
+      - "Functions, classes, annotations"
+      - "Packages, modules, classes"
+      correct: "Functions, classes, interfaces"
+    - type: "question-multiple-answer"
+      stepId: "lesson-21_generics-generic-functions-q1"
+      question: |-
+        Given these generic functions:
+
+        ```kotlin
+        fun <T> id(v: T): T = v
+        fun <T> randomOf(a: T, b: T): T = if (true) a else b
+        fun <T> make(): T = TODO()
+        ```
+        Which lines compile?
+      explanation: |-
+        - id returns the same type as its argument, so `id(42)` is Int; assigning it to Double fails.
+        - `randomOf(1, 2.0)` infers T as the closest common supertype Number, so both inferring to `val c` and assigning to `Number` compile.
+        - `make()` needs either an expected type or explicit type argument; without it, it doesn't compile; with `: String` it does.
+      repeatable: true
+      answers:
+      - "val a = id(42)"
+      - "val b: Double = id(42)"
+      - "val c = randomOf(1, 2.0)"
+      - "val d: Number = randomOf(1, 2.0)"
+      - "val e = make()"
+      - "val f: String = make()"
+      correct:
+      - "val a = id(42)"
+      - "val c = randomOf(1, 2.0)"
+      - "val d: Number = randomOf(1, 2.0)"
+      - "val f: String = make()"
+    - type: "question-single-answer"
+      stepId: "lesson-21_generics-generic-functions-q2"
+      question: "What is the inferred type of `val d = randomOf(1, 1.5)` given `fun\
+        \ <T> randomOf(a: T, b: T): T`?"
+      explanation: "Kotlin infers T as the closest common supertype (least upper bound)\
+        \ of Int and Double, which is Number."
+      repeatable: true
+      answers:
+      - "Int"
+      - "Double"
+      - "Number"
+      - "Any"
+      correct: "Number"
+    - type: "question-multiple-answer"
+      stepId: "lesson-21_generics-generic-classes-q1"
+      question: |-
+        Given the generic class:
+
+        ```kotlin
+        class ValueWithHistory<T>(private var value: T) {
+            private var history: List<T> = listOf(value)
+            fun setValue(value: T) { this.value = value; this.history += value }
+            fun currentValue(): T = value
+            fun history(): List<T> = history
+        }
+
+        val a = ValueWithHistory("A")
+        val b: ValueWithHistory<Any> = ValueWithHistory("A")
+        val c: ValueWithHistory<String> = ValueWithHistory("A")
+        ```
+        Which calls compile? Choose all that compile.
+      explanation: "For a and c, T is String, so only String values are allowed. For\
+        \ b, T is Any, so both String and Int are allowed."
+      repeatable: true
+      answers:
+      - "a.setValue(1)"
+      - "b.setValue(1)"
+      - "c.setValue(1)"
+      - "a.setValue(\"B\")"
+      - "b.setValue(\"B\")"
+      - "c.setValue(\"B\")"
+      correct:
+      - "b.setValue(1)"
+      - "a.setValue(\"B\")"
+      - "b.setValue(\"B\")"
+      - "c.setValue(\"B\")"
+    - type: "question-multiple-answer"
+      stepId: "lesson-21_generics-generic-classes-q2"
+      question: |-
+        Using the same declarations:
+
+        ```kotlin
+        val a = ValueWithHistory("A")        // T inferred as String
+        val b: ValueWithHistory<Any> = ValueWithHistory("A") // T is Any
+        ```
+        Which assignments compile? Choose all that compile.
+      explanation: "currentValue() returns T. For a it's String; for b it's Any. Assigning\
+        \ a String to Any is fine; assigning Any to String is not."
+      repeatable: false
+      answers:
+      - "val s1: String = a.currentValue()"
+      - "val s2: String = b.currentValue()"
+      - "val any1: Any = a.currentValue()"
+      - "val any2: Any = b.currentValue()"
+      correct:
+      - "val s1: String = a.currentValue()"
+      - "val any1: Any = a.currentValue()"
+      - "val any2: Any = b.currentValue()"
+    - type: "question-multiple-answer"
+      stepId: "lesson-21_generics-generic-classes-and-nullability-q1"
+      question: "Which of the following declarations compile as-is in Kotlin? Choose\
+        \ all that apply."
+      explanation: |-
+        - `T?` is always nullable, so you can assign `null` to it; `T` is not guaranteed to be nullable.
+        - Assigning a `T` value to a `T?` variable is always safe.
+        - From `List<T?>`, `first()` is `T?`, which cannot be returned as `T`.
+        - `T & Any` produces a definitely non-null type, so `orThrow` compiles.
+      repeatable: true
+      answers:
+      - "fun <T> a(t: T) { val x: T = null }"
+      - "fun <T> b(t: T?) { val x: T? = null }"
+      - "class Box<T>(var v: T?) { fun set(t: T) { v = t } }"
+      - "fun <T> d(list: List<T?>): T = list.first()"
+      - "fun <T> T.orThrow(): T & Any = this ?: error(\"Boom\")"
+      correct:
+      - "fun <T> b(t: T?) { val x: T? = null }"
+      - "class Box<T>(var v: T?) { fun set(t: T) { v = t } }"
+      - "fun <T> T.orThrow(): T & Any = this ?: error(\"Boom\")"
+    - type: "question-single-answer"
+      stepId: "lesson-21_generics-generic-classes-and-nullability-q2"
+      question: "Given `fun <T> T.orThrow(): T & Any = this ?: error(\"Boom\")` and\
+        \ `val a: String? = if (Random.nextBoolean()) \"K\" else null`, what is the\
+        \ static type of `val x = a.orThrow()`?"
+      explanation: "Here `T` is `String?`. The type `T & Any` is the definitely non-nullable\
+        \ variant of `T`, which collapses to `String`. So `x` is `String`."
+      repeatable: true
+      answers:
+      - "String"
+      - "String?"
+      - "String & Any"
+      - "Nothing"
+      correct: "String"
+    - type: "question-single-answer"
+      stepId: "lesson-21_generics-generic-interfaces-q1"
+      question: |-
+        Given:
+
+        ```kotlin
+        interface Consumer<T> { fun consume(value: T) }
+        open class Food
+        class DogFood : Food()
+
+        class Dog : Consumer<DogFood> {
+            // Which override is valid?
+        }
+        ```
+      explanation: "Implementing Consumer<DogFood> fixes T as DogFood, so the parameter\
+        \ type must be exactly DogFood (same nullability). You cannot widen to a supertype\
+        \ or change nullability."
+      repeatable: false
+      answers:
+      - "override fun consume(value: DogFood)"
+      - "override fun consume(value: Food)"
+      - "override fun consume(value: Any)"
+      - "override fun consume(value: DogFood?)"
+      correct: "override fun consume(value: DogFood)"
+    - type: "question-single-answer"
+      stepId: "lesson-21_generics-generic-interfaces-q2"
+      question: |-
+        Given:
+
+        ```kotlin
+        interface Consumer<T> { fun consume(value: T) }
+        class DogFood
+        class Dog : Consumer<DogFood> {
+            override fun consume(value: DogFood) { println("Mlask mlask") }
+        }
+        ```
+        Which declaration compiles?
+      explanation: "Dog implements Consumer<DogFood>, so it upcasts to that exact\
+        \ generic interface. Consumer<T> here is invariant, so Consumer<DogFood> is\
+        \ not a Consumer<Any>; and unrelated types don’t match."
+      repeatable: false
+      answers:
+      - "val c: Consumer<DogFood> = Dog()"
+      - "val c: Consumer<Any> = Dog()"
+      - "val d: Dog = object : Consumer<DogFood> { override fun consume(value: DogFood)\
+        \ {} }"
+      - "val c: Consumer<DogFood> = DogFood()"
+      correct: "val c: Consumer<DogFood> = Dog()"
+    - type: "question-multiple-answer"
+      stepId: "lesson-21_generics-type-parameters-and-inheritance-q1"
+      question: |-
+        Given:
+
+        ```kotlin
+        open class C<T>
+        interface I<T>
+        class A<T> : C<T>(), I<T>
+
+        val a: A<Int> = A<Int>()
+        ```
+        Which assignments compile?
+      explanation: "A<Int> inherits C<Int> and I<Int>. Kotlin generics are invariant\
+        \ by default, so C<Int> is not a subtype of C<Number>, and I<Int> is not a\
+        \ subtype of I<Any>. Any is always a valid supertype."
+      repeatable: true
+      answers:
+      - "val c: C<Int> = a"
+      - "val cNum: C<Number> = a"
+      - "val i: I<Int> = a"
+      - "val iAny: I<Any> = a"
+      - "val any: Any = a"
+      correct:
+      - "val c: C<Int> = a"
+      - "val i: I<Int> = a"
+      - "val any: Any = a"
+    - type: "question-multiple-answer"
+      stepId: "lesson-21_generics-type-parameters-and-inheritance-q2"
+      question: |-
+        Given:
+
+        ```kotlin
+        open class C<T>
+        interface I<T>
+        class A<T> : C<Int>(), I<String>
+
+        val a: A<Double> = A<Double>()
+        ```
+        Which assignments compile?
+      explanation: "The child type parameter T is independent of supertypes. A<T>\
+        \ always extends C<Int> and implements I<String>, regardless of T. Generics\
+        \ are invariant, so C<Double> and I<Double> don't match."
+      repeatable: true
+      answers:
+      - "val c: C<Int> = a"
+      - "val cDouble: C<Double> = a"
+      - "val i: I<String> = a"
+      - "val iDouble: I<Double> = a"
+      - "val any: Any = a"
+      correct:
+      - "val c: C<Int> = a"
+      - "val i: I<String> = a"
+      - "val any: Any = a"
+    - type: "question-multiple-answer"
+      stepId: "lesson-21_generics-type-erasure-q1"
+      question: "Which of the following Kotlin declarations compile on the JVM, given\
+        \ type erasure rules? Assume necessary imports for `kotlin.reflect.typeOf`."
+      explanation: "Due to type erasure, a non-reified type parameter `T` cannot be\
+        \ used in `is` checks, referenced as `T::class`, or used with `typeOf<T>()`.\
+        \ Marking the function `inline` with a `reified` `T` lifts these limitations."
+      repeatable: true
+      answers:
+      - |-
+        ```kotlin
+        fun <T> isOf(a: Any) = a is T
+        ```
+      - |-
+        ```kotlin
+        inline fun <reified T> isOf(a: Any) = a is T
+        ```
+      - |-
+        ```kotlin
+        fun <T> kClass() = T::class
+        ```
+      - |-
+        ```kotlin
+        inline fun <reified T> kClass() = T::class
+        ```
+      - |-
+        ```kotlin
+        inline fun <reified T> kType() = typeOf<T>()
+        ```
+      correct:
+      - |-
+        ```kotlin
+        inline fun <reified T> isOf(a: Any) = a is T
+        ```
+      - |-
+        ```kotlin
+        inline fun <reified T> kClass() = T::class
+        ```
+      - |-
+        ```kotlin
+        inline fun <reified T> kType() = typeOf<T>()
+        ```
+    - type: "question-single-answer"
+      stepId: "lesson-21_generics-type-erasure-q2"
+      question: |-
+        To make the following function compile and perform a real runtime check of `T`, what change is required?
+
+        ```kotlin
+        fun <T> describe(a: Any): Boolean {
+            return a is T || T::class == String::class
+        }
+        ```
+      explanation: "On the JVM, type erasure prevents using `T` in `is` checks or\
+        \ referencing `T::class` unless `T` is reified in an inline function. Variance\
+        \ or `typeOf<T>()` without reification does not help."
+      repeatable: false
+      answers:
+      - "Add inline and reified to T: `inline fun <reified T> describe(a: Any)`"
+      - "Add out variance to T: `fun <out T> describe(a: Any)`"
+      - "Replace `T::class` with `typeOf<T>()` without other changes"
+      - "No change needed on JVM; it already compiles"
+      correct: "Add inline and reified to T: `inline fun <reified T> describe(a: Any)`"
+    - type: "question-single-answer"
+      stepId: "lesson-21_generics-generic-constraints-q1"
+      question: "You want a generic `maxOf` that works for `BigDecimal` and uses `>=`\
+        \ inside. Which declaration is correct?"
+      explanation: "`BigDecimal` implements `Comparable<BigDecimal>`, so the correct\
+        \ bound is `T : Comparable<T>`. Other options either miss the bound or use\
+        \ incompatible bounds (e.g., `Comparable<T?>` or `Comparable<Any?>`)."
+      repeatable: true
+      answers:
+      - "fun <T : Comparable<T>> maxOf(a: T, b: T): T = if (a >= b) a else b"
+      - "fun <T> maxOf(a: T, b: T): T where T : Comparable<T?> = if (a >= b) a else\
+        \ b"
+      - "fun <T : Comparable<Any?>> maxOf(a: T, b: T): T = if (a >= b) a else b"
+      - "fun <T> maxOf(a: T, b: T): T = if (a >= b) a else b"
+      correct: "fun <T : Comparable<T>> maxOf(a: T, b: T): T = if (a >= b) a else\
+        \ b"
+    - type: "question-multiple-answer"
+      stepId: "lesson-21_generics-generic-constraints-q2"
+      question: "Which Kotlin declarations correctly constrain a type parameter to\
+        \ be both `Animal` and `GoodTempered` so that both `pet()` and `feed()` can\
+        \ be called?"
+      explanation: "Kotlin allows one upper bound in the angle brackets; additional\
+        \ bounds go in a `where` clause. Each constraint in `where` must repeat `T`.\
+        \ Intersection syntax with `&` or listing supertypes without `T` is invalid."
+      repeatable: true
+      answers:
+      - "fun <T> pet(animal: T) where T : Animal, T : GoodTempered { animal.pet();\
+        \ animal.feed() }"
+      - "fun <T : Animal> pet(animal: T) where T : GoodTempered { animal.pet(); animal.feed()\
+        \ }"
+      - "fun <T : Animal, GoodTempered> pet(animal: T) { animal.pet(); animal.feed()\
+        \ }"
+      - "fun <T : Animal & GoodTempered> pet(animal: T) { animal.pet(); animal.feed()\
+        \ }"
+      - "fun <T> pet(animal: T) where Animal, GoodTempered { animal.pet(); animal.feed()\
+        \ }"
+      correct:
+      - "fun <T> pet(animal: T) where T : Animal, T : GoodTempered { animal.pet();\
+        \ animal.feed() }"
+      - "fun <T : Animal> pet(animal: T) where T : GoodTempered { animal.pet(); animal.feed()\
+        \ }"
+    - type: "question-multiple-answer"
+      stepId: "lesson-21_generics-star-projection-q1"
+      question: |-
+        Given:
+
+        ```kotlin
+        val x: Any = listOf("A", "B")
+        ```
+        Which of the following `is` checks compile in Kotlin? Choose all that apply.
+      explanation: "Due to type erasure, you cannot check concrete type arguments\
+        \ at runtime. Only star-projected checks (e.g., `List<*>`, `MutableList<*>`,\
+        \ `Collection<*>`) are allowed."
+      repeatable: true
+      answers:
+      - "x is List<*>"
+      - "x is MutableList<*>"
+      - "x is List<Int>"
+      - "x is List<Any?>"
+      - "x is Collection<*>"
+      correct:
+      - "x is List<*>"
+      - "x is MutableList<*>"
+      - "x is Collection<*>"
+    - type: "question-exact-text"
+      stepId: "lesson-21_generics-star-projection-q2"
+      question: "In Kotlin, for a parameter of type `MutableList<*>`, what is the\
+        \ type expected by `add(...)`?"
+      explanation: "With star projection, all in-positions are treated as `Nothing`,\
+        \ so no value can be added."
+      repeatable: false
+      correct:
+      - "Nothing"
+    - type: "question-single-answer"
+      stepId: "lesson-21_generics-underscore-operator-for-type-arguments-q1"
+      question: |-
+        Given:
+
+        ```kotlin
+        inline fun <K, reified V> Map<K, *>.filterValueIsInstance(): Map<K, V> =
+            filter { it.value is V } as Map<K, V>
+
+        val m: Map<Long, Any?> = mapOf(1L to 2.0, 2L to "x")
+        ```
+
+        Which call correctly uses `_` to let the compiler infer the key type while filtering entries whose values are `Double`?
+      explanation: "`_` can be used as a placeholder in explicit type arguments at\
+        \ the call site to request inference for that position. Here we specify `V\
+        \ = Double` and infer `K = Long`. `Long, _` leaves the needed `V` unspecified;\
+        \ a single `Double` would bind to `K`; `*` is not allowed in explicit type\
+        \ arguments."
+      repeatable: false
+      answers:
+      - "m.filterValueIsInstance<_, Double>()"
+      - "m.filterValueIsInstance<Long, _>()"
+      - "m.filterValueIsInstance<Double>()"
+      - "m.filterValueIsInstance<*, Double>()"
+      correct: "m.filterValueIsInstance<_, Double>()"
+    - type: "question-multiple-answer"
+      stepId: "lesson-21_generics-underscore-operator-for-type-arguments-q2"
+      question: "Select all correct statements about the underscore `_` when used\
+        \ as a type argument in Kotlin."
+      explanation: "`_` is a call-site placeholder for a type argument to be inferred;\
+        \ it is not valid in type declarations. It is different from `*` (star projection),\
+        \ which is used in type positions like `Map<K, *>`."
+      repeatable: true
+      answers:
+      - "It can be used in explicit type arguments of a call to ask the compiler to\
+        \ infer that type."
+      - "It is allowed in type positions like property declarations: `val x: List<_>`."
+      - "It is interchangeable with `*` (star projection)."
+      - "It can appear together with other explicitly specified type arguments, e.g.\
+        \ `map.filterValueIsInstance<_, String>()`."
+      correct:
+      - "It can be used in explicit type arguments of a call to ask the compiler to\
+        \ infer that type."
+      - "It can appear together with other explicitly specified type arguments, e.g.\
+        \ `map.filterValueIsInstance<_, String>()`."
