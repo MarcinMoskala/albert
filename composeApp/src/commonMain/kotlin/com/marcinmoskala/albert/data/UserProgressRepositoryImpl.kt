@@ -109,24 +109,37 @@ class UserProgressRepositoryImpl(
             }
             if (recordsToMigrate.isEmpty()) return@withLock
 
-            val migratedRecords = recordsToMigrate.map { record ->
-                record.copy(userId = toUserId)
-            }
-
-            for (record in migratedRecords) {
-                localClient.delete(fromUserId, record.stepId)
-                localClient.upsert(record)
-            }
+            val migratedRecords = recordsToMigrate.map { record -> record.copy(userId = toUserId) }
 
             val updatedMap = _allProgress.value
                 .filterValues { record -> record.userId != fromUserId }
                 .toMutableMap()
 
-            for (record in migratedRecords) {
-                updatedMap[makeKey(record.userId, record.stepId)] = record
+            for (migratedRecord in migratedRecords) {
+                localClient.delete(fromUserId, migratedRecord.stepId)
+
+                val destinationKey = makeKey(toUserId, migratedRecord.stepId)
+                val existingDestinationRecord = updatedMap[destinationKey]
+
+                val shouldUpsertMigratedRecord = when {
+                    existingDestinationRecord == null -> true
+                    migratedRecord.updatedAt > existingDestinationRecord.updatedAt -> true
+                    migratedRecord.updatedAt < existingDestinationRecord.updatedAt -> false
+                    else -> {
+                        // Same timestamp - prefer the more advanced status.
+                        migratedRecord.status.ordinal > existingDestinationRecord.status.ordinal
+                    }
+                }
+
+                if (!shouldUpsertMigratedRecord) {
+                    continue
+                }
+
+                localClient.upsert(migratedRecord)
+                updatedMap[destinationKey] = migratedRecord
             }
 
-            _allProgress.value = updatedMap
+            _allProgress.value = updatedMap.toMap()
             recomputeProgressForCurrentUser()
         }
     }

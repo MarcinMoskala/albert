@@ -284,6 +284,33 @@ class UserProgressRepositoryImplTest {
         assertEquals(record1, progressMap["step-1"])
     }
 
+    @Test
+    fun migrateProgress_shouldNotOverwriteNewerDestinationRecordWithOlderAnonymousRecord() =
+        runTest {
+            val localClient = FakeUserProgressLocalClient()
+            val repository = createRepository(localClient)
+            testScheduler.advanceUntilIdle()
+
+            val anonymousOldRecord = createTestRecord(
+                userId = UserProgressRepository.ANONYMOUS_USER_ID,
+                stepId = "var-vs-val"
+            )
+                .copy(updatedAt = Instant.parse("1970-01-01T00:00:00Z"))
+            val userNewerRecord = createTestRecord(userId = "user-1", stepId = "var-vs-val")
+                .copy(
+                    updatedAt = Instant.parse("2025-12-29T09:46:47.319Z"),
+                    status = UserProgressStatus.REPEATING
+                )
+
+            repository.upsert(anonymousOldRecord)
+            repository.upsert(userNewerRecord)
+
+            repository.migrateProgress(UserProgressRepository.ANONYMOUS_USER_ID, "user-1")
+
+            val recordAfterMigration = repository.get("user-1", "var-vs-val")
+            assertEquals(userNewerRecord, recordAfterMigration)
+        }
+
     private fun createTestRecord(
         userId: String = "user-1",
         stepId: String = "step-1"

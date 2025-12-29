@@ -4,10 +4,8 @@ import com.marcinmoskala.albert.data.yaml.CourseYamlRepository
 import com.marcinmoskala.albert.domain.course.CourseRepository
 import com.marcinmoskala.albert.domain.course.CourseService
 import com.marcinmoskala.albert.di.serverModule
-import com.marcinmoskala.model.course.CoursesApi
-import com.marcinmoskala.model.course.ExactTextStepApi
-import com.marcinmoskala.model.course.MultipleAnswerStepApi
-import com.marcinmoskala.model.course.SingleAnswerStepApi
+import com.marcinmoskala.model.course.Courses
+import com.marcinmoskala.model.course.LessonStep
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
@@ -34,7 +32,7 @@ class CourseEndpointTest {
         val response = client.get("/course")
         assertEquals(HttpStatusCode.OK, response.status)
 
-        val body = response.body<CoursesApi>()
+        val body = response.body<Courses>()
         assertTrue(body.courses.isNotEmpty(), "Expected at least one course")
         val firstCourse = body.courses.first()
         assertTrue(firstCourse.lessons.isNotEmpty(), "Expected at least one lesson")
@@ -58,7 +56,7 @@ class CourseEndpointTest {
         val response = client.get("/course")
         assertEquals(HttpStatusCode.OK, response.status)
 
-        val body = response.body<CoursesApi>()
+        val body = response.body<Courses>()
         val course = body.courses.single()
         assertEquals("test-course", course.courseId)
         assertEquals("Test Course", course.title)
@@ -70,18 +68,18 @@ class CourseEndpointTest {
         val steps = lesson.steps
         assertEquals(3, steps.size)
 
-        val single = assertIs<SingleAnswerStepApi>(steps[0])
+        val single = assertIs<LessonStep.SingleAnswerQuestionLessonStep>(steps[0])
         assertEquals("single-step", single.stepId)
         assertEquals(listOf("Option A", "Option B", "Option C"), single.answers)
         assertEquals("Option B", single.correct)
         assertTrue(single.repeatable)
 
-        val multiple = assertIs<MultipleAnswerStepApi>(steps[1])
+        val multiple = assertIs<LessonStep.MultipleAnswerQuestionLessonStep>(steps[1])
         assertEquals(listOf("First", "Second", "Third"), multiple.answers)
         assertEquals(listOf("First", "Third"), multiple.correct)
         assertEquals(false, multiple.repeatable)
 
-        val exact = assertIs<ExactTextStepApi>(steps[2])
+        val exact = assertIs<LessonStep.ExactTextQuestionLessonStep>(steps[2])
         assertEquals(listOf("keyword", "KEYWORD"), exact.correct)
         assertTrue(exact.repeatable)
     }

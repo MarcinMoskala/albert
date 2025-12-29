@@ -169,3 +169,11 @@ compose.desktop {
         }
     }
 }
+
+tasks.named("jsBrowserProductionWebpack") {
+    doNotTrackState("Workaround for Gradle file normalization issue on Windows for generated .js.map inputs")
+}
+
+tasks.named("jsBrowserDevelopmentWebpack") {
+    dependsOn("jsProductionExecutableCompileSync")
+}

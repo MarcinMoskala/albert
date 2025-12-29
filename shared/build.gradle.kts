@@ -85,7 +85,7 @@ kotlin {
 
 if (enableAndroidTargets) {
     extensions.configure<LibraryExtension> {
-        namespace = "com.marcinmoskala.albert"
+        namespace = "com.marcinmoskala.shared"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         buildFeatures {
             buildConfig = true

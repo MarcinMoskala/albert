@@ -6,7 +6,7 @@ courses:
         name: Lesson One
         steps:
           - stepId: single-step
-            type: single-answer
+            type: question-single-answer
             question: Choose the only correct option.
             answers:
               - Option A
@@ -14,9 +14,9 @@ courses:
               - Option C
             correct: Option B
             explanation: Option B is correct for this single-answer question.
-            repetable: true
+            repeatable: true
           - stepId: multiple-step
-            type: multiple-answer
+            type: question-multiple-answer
             question: Choose all correct options.
             answers:
               - First
@@ -26,12 +26,12 @@ courses:
               - First
               - Third
             explanation: First and Third are correct answers.
-            repetable: false
+            repeatable: false
           - stepId: exact-step
-            type: exact-text
+            type: question-exact-text
             question: Type the exact keyword.
             correct:
               - keyword
               - KEYWORD
             explanation: Both lowercase and uppercase forms are accepted.
-            repetable: true
+            repeatable: true

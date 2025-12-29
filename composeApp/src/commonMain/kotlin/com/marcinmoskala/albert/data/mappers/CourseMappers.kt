@@ -1,22 +1,30 @@
 package com.marcinmoskala.albert.data.mappers
 
-import com.marcinmoskala.albert.domain.model.*
-import com.marcinmoskala.model.course.*
+import com.marcinmoskala.albert.domain.model.Course as DomainCourse
+import com.marcinmoskala.albert.domain.model.ExactTextStep as DomainExactTextStep
+import com.marcinmoskala.albert.domain.model.Lesson as DomainLesson
+import com.marcinmoskala.albert.domain.model.LessonStep as DomainLessonStep
+import com.marcinmoskala.albert.domain.model.MultipleAnswerStep as DomainMultipleAnswerStep
+import com.marcinmoskala.albert.domain.model.SingleAnswerStep as DomainSingleAnswerStep
+import com.marcinmoskala.albert.domain.model.TextStep as DomainTextStep
+import com.marcinmoskala.model.course.Course as SharedCourse
+import com.marcinmoskala.model.course.Lesson as SharedLesson
+import com.marcinmoskala.model.course.LessonStep as SharedLessonStep
 
-fun CourseApi.toDomain(): Course = Course(
+fun SharedCourse.toDomain(): DomainCourse = DomainCourse(
     courseId = courseId,
     title = title,
     lessons = lessons.map { it.toDomain() }
 )
 
-fun LessonApi.toDomain(): Lesson = Lesson(
+fun SharedLesson.toDomain(): DomainLesson = DomainLesson(
     lessonId = lessonId,
     name = name,
     steps = steps.map { it.toDomain() }
 )
 
-fun LessonStepApi.toDomain(): LessonStep = when (this) {
-    is SingleAnswerStepApi -> SingleAnswerStep(
+fun SharedLessonStep.toDomain(): DomainLessonStep = when (this) {
+    is SharedLessonStep.SingleAnswerQuestionLessonStep -> DomainSingleAnswerStep(
         stepId = stepId,
         question = question,
         explanation = explanation,
@@ -25,7 +33,7 @@ fun LessonStepApi.toDomain(): LessonStep = when (this) {
         correct = correct
     )
 
-    is MultipleAnswerStepApi -> MultipleAnswerStep(
+    is SharedLessonStep.MultipleAnswerQuestionLessonStep -> DomainMultipleAnswerStep(
         stepId = stepId,
         question = question,
         explanation = explanation,
@@ -34,7 +42,7 @@ fun LessonStepApi.toDomain(): LessonStep = when (this) {
         correct = correct
     )
 
-    is ExactTextStepApi -> ExactTextStep(
+    is SharedLessonStep.ExactTextQuestionLessonStep -> DomainExactTextStep(
         stepId = stepId,
         question = question,
         explanation = explanation,
@@ -42,10 +50,10 @@ fun LessonStepApi.toDomain(): LessonStep = when (this) {
         correct = correct
     )
 
-    is TextStepApi -> TextStep(
+    is SharedLessonStep.TextLessonStep -> DomainTextStep(
         stepId = stepId,
-        question = question,
-        explanation = explanation,
+        question = "",
+        explanation = "",
         repeatable = repeatable,
         text = text
     )
