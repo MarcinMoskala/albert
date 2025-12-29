@@ -1,7 +1,7 @@
 ---
 courses:
   - courseId: "course-kotlin_essentials"
-    title: "Course kotlin_essentials"
+    title: "Course Kotlin Essentials"
     lessons:
       - lessonId: "lesson-what-is-kotlin?"
         name: "What is Kotlin?"
