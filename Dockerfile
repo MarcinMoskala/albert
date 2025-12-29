@@ -30,6 +30,10 @@ RUN yes | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses && \
 WORKDIR /app
 COPY . /app
 
+# Allow passing backend URL at build time so the JS bundle gets the right endpoint
+ARG SERVER_URL
+ENV SERVER_URL=${SERVER_URL}
+
 # Ensure Gradle wrapper is executable
 RUN chmod +x /app/gradlew
 
