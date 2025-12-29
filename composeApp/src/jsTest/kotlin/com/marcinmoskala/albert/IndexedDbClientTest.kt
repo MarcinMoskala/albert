@@ -6,7 +6,7 @@ import com.marcinmoskala.database.UserProgressRecord
 import com.marcinmoskala.database.UserProgressStatus
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.js.Date
 import kotlin.test.Test
 import kotlin.test.assertEquals

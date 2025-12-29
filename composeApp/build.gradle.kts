@@ -127,7 +127,15 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            val serverUrl: String = System.getenv("SERVER_URL") ?: ""
+            buildConfigField("String", "SERVER_URL", "\"$serverUrl\"")
         }
+        getByName("debug") {
+            buildConfigField("String", "SERVER_URL", "\"http://10.0.2.2:8080\"")
+        }
+    }
+    buildFeatures {
+        buildConfig = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

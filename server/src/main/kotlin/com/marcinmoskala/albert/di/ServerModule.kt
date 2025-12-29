@@ -16,7 +16,6 @@ import com.marcinmoskala.database.UserProgressLocalClient
 import com.marcinmoskala.database.createUserProgressDatabase
 import com.marcinmoskala.database.DriverFactory
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import org.koin.dsl.module
 
 val serverModule = module {
@@ -32,7 +31,7 @@ val serverModule = module {
     // Progress
     single<UserProgressLocalClient> {
         val driverFactory = DriverFactory()
-        val driver = runBlocking { driverFactory.createDriver() }
+        val driver = driverFactory.createDriver()
         SqlDelightUserProgressLocalClient(createUserProgressDatabase(driver))
     }
     single { ProgressSynchronizer(get(), Dispatchers.Default) }

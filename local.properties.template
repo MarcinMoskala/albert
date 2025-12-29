@@ -10,9 +10,15 @@ sdk.dir=/path/to/android/sdk
 # Properties are automatically converted to UPPER_SNAKE_CASE environment variables:
 # firebase.project.id -> FIREBASE_PROJECT_ID
 # firebase.service.account.json -> FIREBASE_SERVICE_ACCOUNT_JSON
+# albert.db.path -> ALBERT_DB_PATH
 
 firebase.project.id=albert-8091e
 firebase.service.account.json={"type":"service_account","project_id":"albert-8091e",...}
+
+# Backend SQLite database location (used on server builds; optional locally)
+# Set to an absolute path when using a mounted volume in production, e.g. /data/albert.db
+# Leave commented or default to local file if not needed
+albert.db.path=/data/albert.db
 
 # You can add any custom properties here and they will be available as environment variables
 # Example: my.custom.property=value becomes MY_CUSTOM_PROPERTY=value

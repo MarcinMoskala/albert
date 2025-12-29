@@ -8,14 +8,16 @@ enum class Platform {
 }
 
 expect val platform: Platform
+expect val environmentServerUrl: String?
 
 const val SERVER_PORT = 8080
 
-val SERVER_HOST: String
+private val localServerHost: String
     get() = when (platform) {
         Platform.Android -> "10.0.2.2"
         else -> "localhost"
     }
 
 val SERVER_URL: String
-    get() = "http://$SERVER_HOST:$SERVER_PORT"
+    get() = environmentServerUrl?.takeIf { it.isNotBlank() }
+        ?: "http://$localServerHost:$SERVER_PORT"

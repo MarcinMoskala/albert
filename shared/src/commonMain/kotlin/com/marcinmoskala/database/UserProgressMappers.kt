@@ -2,7 +2,7 @@ package com.marcinmoskala.database
 
 import com.marcinmoskala.model.UserCourseProgressApi
 import com.marcinmoskala.model.UserProgressApi
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 fun UserProgressRecord.toApi(): UserProgressApi = UserProgressApi(
     userId = userId,

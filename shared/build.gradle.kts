@@ -1,5 +1,4 @@
 import com.android.build.gradle.LibraryExtension
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import app.cash.sqldelight.gradle.VerifyMigrationTask
 
@@ -36,10 +35,6 @@ kotlin {
         browser()
     }
     
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-    }
     
     sourceSets {
         commonMain.dependencies {
@@ -74,24 +69,11 @@ kotlin {
         }
         jsMain.dependencies {
             implementation(libs.ktor.client.js)
-            implementation(libs.sqldelight.web.worker.driver)
-            implementation(npm("@cashapp/sqldelight-sqljs-worker", libs.versions.sqldelight.get()))
-            implementation(npm("sql.js", "1.8.0"))
-        }
-        wasmJsMain.dependencies {
-            implementation(libs.ktor.client.js)
-            implementation(libs.sqldelight.web.worker.driver.wasm)
-            implementation(npm("@cashapp/sqldelight-sqljs-worker", libs.versions.sqldelight.get()))
-            implementation(npm("sql.js", "1.8.0"))
         }
         jvmTest.dependencies {
             implementation(libs.sqldelight.sqlite.driver)
         }
         jsTest.dependencies {
-            implementation(libs.sqldelight.web.worker.driver)
-        }
-        wasmJsTest.dependencies {
-            implementation(libs.sqldelight.web.worker.driver.wasm)
         }
         if (enableAndroidTargets) {
             androidUnitTest.dependencies {
@@ -103,8 +85,20 @@ kotlin {
 
 if (enableAndroidTargets) {
     extensions.configure<LibraryExtension> {
-        namespace = "com.marcinmoskala.albert.shared"
+        namespace = "com.marcinmoskala.albert"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
+        buildFeatures {
+            buildConfig = true
+        }
+        buildTypes {
+            getByName("debug") {
+                buildConfigField("String", "SERVER_URL", "\"\"")
+            }
+            getByName("release") {
+                val serverUrl: String = System.getenv("SERVER_URL") ?: ""
+                buildConfigField("String", "SERVER_URL", "\"$serverUrl\"")
+            }
+        }
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_11
             targetCompatibility = JavaVersion.VERSION_11
@@ -129,10 +123,8 @@ tasks.withType<VerifyMigrationTask>().configureEach {
     enabled = false
 }
 
-// JS browser tests are now enabled with proper webpack and karma configuration
-// WasmJS browser tests are disabled due to timeout issues (needs further investigation)
 tasks.configureEach {
-    if (name == "wasmJsBrowserTest" || name == "jsBrowserTest") {
+    if (name == "jsBrowserTest") {
         enabled = false
     }
 }
