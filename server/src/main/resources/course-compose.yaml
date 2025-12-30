@@ -74,14 +74,14 @@ courses:
             answers:
               - "class User(val name: String)"
               - "class User(var name: String)"
-              - "class User(val name: String, val tags: Set<Strin>)`"
-              - "class User(val nameState: State<String>)"
-              - "class User(val nameState: StateFlow<String>)"
+              - "class User(val name: String, val tags: Set\\<String\\>)"
+              - "class User(val nameState: State\\<String\\>)"
+              - "class User(val nameState: StateFlow\\<String\\>)"
               - "@Stable class User(val name: String)"
             correct:
               - "class User(var name: String)"
-              - "class User(val name: String, val tags: Set<String>)"
-              - "class User(val nameState: StateFlow<String>)"
+              - "class User(val name: String, val tags: Set\\<String\\>)"
+              - "class User(val nameState: StateFlow\\<String\\>)"
           - type: "question-multiple-answer"
             stepId: "compose-test-q3"
             question: |

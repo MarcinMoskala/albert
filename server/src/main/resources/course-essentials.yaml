@@ -267,14 +267,14 @@ courses:
             stepId: "lesson-02_first_program-{sample:-true}-q1"
             question: "Which of the following are valid Kotlin/JVM entry point declarations\
         \ (recognized as the program's main function) as shown in the section?"
-            explanation: "Kotlin recognizes top-level `main` with no args, `Array<String>`,\
+            explanation: "Kotlin recognizes top-level `main` with no args, `Array\\<String\\>`,\
         \ or `vararg String`; `suspend fun main()` is also supported. A companion\
-        \ object's `@JvmStatic` main is a valid JVM entry point. `List<String>` is\
+        \ object's `@JvmStatic` main is a valid JVM entry point. `List\\<String\\>` is\
         \ not a valid entry point parameter type."
             repeatable: true
             answers:
               - "`fun main()`"
-              - "`fun main(args: Array<String>)`"
+              - "`fun main(args: Array\\<String\\>)`"
               - "`fun main(vararg args: String)`"
               - |-
                 ```
@@ -286,10 +286,10 @@ courses:
                 }
                 ```
               - "`suspend fun main()`"
-              - "`fun main(args: List<String>)`"
+              - "`fun main(args: List\\<String\\>)`"
             correct:
               - "`fun main()`"
-              - "`fun main(args: Array<String>)`"
+              - "`fun main(args: Array\\<String\\>)`"
               - "`fun main(vararg args: String)`"
               - |-
                 ```
