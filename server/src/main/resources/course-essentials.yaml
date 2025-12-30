@@ -7,7 +7,7 @@ courses:
         name: "What is Kotlin?"
         steps:
           - type: "text"
-            stepId: "lesson-01_what_is_kotlin-{sample:-true}-text"
+            stepId: "lesson-01_what_is_kotlin-text"
             repeatable: false
             text: |-
               # What is Kotlin?
@@ -19,7 +19,7 @@ courses:
               * Statically typed means that each variable, object, and function has an associated type that is known at compile time.
               * General-purpose means that a language is designed to be used for building software in a wide variety of application domains across a multitude of hardware configurations and operating systems.
           - type: "question-single-answer"
-            stepId: "lesson-01_what_is_kotlin-{sample:-true}-q1"
+            stepId: "lesson-01_what_is_kotlin-q1"
             question: "In Kotlin, what does “statically typed” mean?"
             explanation: "In a statically typed language, types are known and checked at\
         \ compile time. Kotlin still has type inference, but inferred types are resolved\
@@ -32,7 +32,7 @@ courses:
               - "The language doesn’t support generics"
             correct: "Types are known and checked at compile time"
           - type: "question-multiple-answer"
-            stepId: "lesson-01_what_is_kotlin-{sample:-true}-q2"
+            stepId: "lesson-01_what_is_kotlin-q2"
             question: "Which statements correctly reflect the text about Kotlin?"
             explanation: "The text states Kotlin is open-source (compiler sources available),\
         \ multi-paradigm (OOP and FP), and multiplatform (e.g., Android and iOS).\
@@ -200,11 +200,18 @@ courses:
               - "Kotlin Multiplatform lets teams share code between Android and iOS."
               - "Library authors can publish a single library targeting multiple platforms."
               - "Compose began on Android and now targets desktop/web/iOS via KMP."
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-your-first-program-in-kotlin"
         name: "Your first program in Kotlin"
         steps:
           - type: "text"
-            stepId: "lesson-02_first_program-{sample:-true}-text"
+            stepId: "lesson-02_first_program-text"
             repeatable: false
             text: |-
               # Your first program in Kotlin
@@ -264,7 +271,7 @@ courses:
               
               ![](main_run.png)
           - type: "question-multiple-answer"
-            stepId: "lesson-02_first_program-{sample:-true}-q1"
+            stepId: "lesson-02_first_program-q1"
             question: "Which of the following are valid Kotlin/JVM entry point declarations\
         \ (recognized as the program's main function) as shown in the section?"
             explanation: "Kotlin recognizes top-level `main` with no args, `Array\\<String\\>`,\
@@ -302,7 +309,7 @@ courses:
                 ```
               - "`suspend fun main()`"
           - type: "question-single-answer"
-            stepId: "lesson-02_first_program-{sample:-true}-q2"
+            stepId: "lesson-02_first_program-q2"
             question: "You decide to place `main` inside a class's companion object. What\
         \ is required for the JVM to recognize it as the entry point?"
             explanation: "Inside a companion object, `main` must be exposed as a static\
@@ -554,6 +561,13 @@ courses:
               - "Build > Recompile as Java"
               - "Analyze > Infer nullity annotations"
             correct: "Tools > Kotlin > Show Kotlin Bytecode, then Decompile"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-variables"
         name: "Variables"
         steps:
@@ -696,6 +710,13 @@ courses:
                     y = 3
                 }
                 ```
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-basic-types,-their-literals-and-operations"
         name: "Basic types, their literals and operations"
         steps:
@@ -1664,6 +1685,13 @@ courses:
               - "val b1: Boolean = true"
               - "val b3: Boolean = 2 == 2"
               - "val b4: Boolean = 5 < 3"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-conditional-statements"
         name: "Conditional statements"
         steps:
@@ -2742,11 +2770,18 @@ courses:
               - "Any?"
               - "Nothing?"
             correct: "Int?"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-functions"
         name: "Functions"
         steps:
           - type: "text"
-            stepId: "lesson-06_functions-{sample:-true}-text"
+            stepId: "lesson-06_functions-text"
             repeatable: false
             text: |-
               # Functions
@@ -2806,7 +2841,7 @@ courses:
               }
               ```
           - type: "question-multiple-answer"
-            stepId: "lesson-06_functions-{sample:-true}-q1"
+            stepId: "lesson-06_functions-q1"
             question: "Which of the following Kotlin snippets compile as-is? Assume they\
         \ appear in the same file at top level."
             explanation: "Identifiers cannot start with a digit and cannot be a reserved\
@@ -3733,6 +3768,13 @@ courses:
               - "join(\"(\", \"a\", \"b\", suffix = \")\")"
               - "join(\"(\", suffix = \")\")"
               - "join(prefix = \"(\", suffix = \")\")"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-the-power-of-the-for-loop"
         name: "The power of the for-loop"
         steps:
@@ -4217,6 +4259,13 @@ courses:
               In this chapter, we've learned about using the for-loop. It is really simple and powerful in Kotlin, so it’s worth knowing how it works, even though it’s not used very often (due to Kotlin’s amazing functional features, which are often used instead).
               
               Now, let's talk about one of the most important Kotlin improvements over Java: good support for handling nullability.
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-inheritance"
         name: "Inheritance"
         steps:
@@ -5128,11 +5177,18 @@ courses:
               - "class A : Named { override val name = \"A\" }"
               - "class B : Named { override var name = \"B\" }"
               - "class E(override val name: String) : Named"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-data-classes"
         name: "Data classes"
         steps:
           - type: "text"
-            stepId: "lesson-11_data_classes-{sample:-true}-text"
+            stepId: "lesson-11_data_classes-text"
             repeatable: false
             text: |-
               # Data classes
@@ -5240,7 +5296,7 @@ courses:
               
               Let's discuss the aforementioned implicit data class methods and the differences between regular class behavior and data class behavior.
           - type: "question-multiple-answer"
-            stepId: "lesson-11_data_classes-{sample:-true}-q1"
+            stepId: "lesson-11_data_classes-q1"
             question: "Select all correct statements about Kotlin data classes and Any."
             explanation: "Data classes override equals/hashCode/toString and generate copy/componentN\
         \ that are not inherited and cannot be modified. Methods from Any are available\
@@ -5261,7 +5317,7 @@ courses:
         \ and cannot be overridden."
               - "Methods from Any (equals, hashCode, toString) can be called on any object."
           - type: "question-single-answer"
-            stepId: "lesson-11_data_classes-{sample:-true}-q2"
+            stepId: "lesson-11_data_classes-q2"
             question: |-
               Given:
               
@@ -6024,6 +6080,13 @@ courses:
               - "Use Triple<A, B, C> with C = Unit"
               - "Use a regular class and rely on reference equality"
             correct: "Define a custom data class with named properties"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-nullability"
         name: "Nullability"
         steps:
@@ -6846,6 +6909,13 @@ courses:
               - "val len: Int = s?.length ?: 0"
               - "val len: Int = if (s != null) s.length else 0"
               - "val len: Int = s!!.length"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-classes"
         name: "Classes"
         steps:
@@ -7523,6 +7593,13 @@ courses:
               - "Compiles if Nested is declared as a data class."
             correct: "Compilation error: Nested cannot access x; mark Nested as `inner`\
         \ to access the outer instance."
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-objects"
         name: "Objects"
         steps:
@@ -8146,6 +8223,13 @@ courses:
               - "Companion object"
               - "Object expression"
             correct: "Companion object"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-exceptions"
         name: "Exceptions"
         steps:
@@ -8923,6 +9007,13 @@ courses:
               - "A finally block runs after try/catch even if an exception is thrown or a\
         \ return is executed (unless the process terminates)."
               - "Throwable is the root of the exception hierarchy in Kotlin/JVM."
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-enum-classes\r"
         name: "Enum classes\r"
         steps:
@@ -9284,6 +9375,13 @@ courses:
               - "Enum classes support inheritance hierarchies; sealed classes cannot be subclassed."
             correct: "Enum classes represent a fixed set of constants; sealed classes define\
         \ a closed hierarchy of types and can model different data per subtype."
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-sealed-classes-and-interfaces"
         name: "Sealed classes and interfaces"
         steps:
@@ -9702,6 +9800,13 @@ courses:
               - "They restrict which classes can inherit from them."
               - "They enable `when` expressions to be exhaustive without `else` when all subtypes\
         \ are covered."
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-annotation-classes"
         name: "Annotation classes"
         steps:
@@ -10112,6 +10217,13 @@ courses:
               - "extension functions"
               - "extension functions and properties"
               - "extension"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-extensions"
         name: "Extensions"
         steps:
@@ -10868,6 +10980,13 @@ courses:
         \ noticing."
             correct: "Add a well-named extension function on a third-party type to express\
         \ a domain-specific, frequently used operation you can’t add as a member."
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-collections"
         name: "Collections"
         steps:
@@ -12723,6 +12842,13 @@ courses:
               - "Map"
               - "Array"
             correct: "Map"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-operator-overloading"
         name: "Operator overloading"
         steps:
@@ -13821,11 +13947,18 @@ courses:
               - "operator var get(row: Int, col: Int): Int"
             correct: "operator fun get(row: Int, col: Int): Int and operator fun set(row:\
         \ Int, col: Int, value: Int)"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-the-beauty-of-kotlin’s-type-system"
         name: "The beauty of Kotlin’s type system"
         steps:
           - type: "text"
-            stepId: "lesson-20_type_system-{sample:-true}-text"
+            stepId: "lesson-20_type_system-text"
             repeatable: false
             text: |-
               # The beauty of Kotlin’s type system
@@ -13846,7 +13979,7 @@ courses:
               
               The typing system also gives us very convenient nullability support, smart type inference, and much more. In this chapter, we will reveal a lot of Kotlin magic. I always love talking about this in my workshops because I see the stunning beauty of how Kotlin’s type system is so well designed that all these pieces fit perfectly together and give us a great programming experience. I find this topic fascinating, but I will also try to add some useful hints that show where this knowledge can be useful in practice. I hope you will enjoy discovering it as much as I did.
           - type: "question-single-answer"
-            stepId: "lesson-20_type_system-{sample:-true}-q1"
+            stepId: "lesson-20_type_system-q1"
             question: |-
               Why does this compile?
               
@@ -13869,7 +14002,7 @@ courses:
             correct: "Because return has type Nothing, a subtype of every type, so it fits\
         \ the expected non-null type."
           - type: "question-multiple-answer"
-            stepId: "lesson-20_type_system-{sample:-true}-q2"
+            stepId: "lesson-20_type_system-q2"
             question: |-
               Which lines compile? Assume this function:
               
@@ -14603,6 +14736,13 @@ courses:
               - "Nothing?"
               - "Unit"
             correct: "Any"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
       - lessonId: "lesson-generics"
         name: "Generics"
         steps:
@@ -15568,3 +15708,10 @@ courses:
             correct:
               - "in"
               - "out"
+          - type: "text"
+            stepId: "lesson-01-promo"
+            repeatable: false
+            text: |-
+              I hope you found this lesson useful! This material comes from the book [Kotlin Essentials](https://leanpub.com/kotlin_developers). If you want to pay respect to the autor, consider buying a copy. 
+              
+              If you want to participate in a Kotlin workshop or organize Kotlin training in your company, check our offer on [kt.academy](https://kt.academy/).
