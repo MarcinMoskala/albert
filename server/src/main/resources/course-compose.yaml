@@ -63,7 +63,6 @@ courses:
               - "UserSettings, because uiState is unstable"
             correct:
               - "Text that displays name"
-              - "Text that displays surname"
               - "UserCard"
               - "UserScreen"
           - type: "question-multiple-answer"
@@ -73,16 +72,16 @@ courses:
             explanation: "A is stable, because it only has stable val properties. B isn’t, because it has var property. C isn’t because it uses Set, which isn’t stable. D is, because State is stable in Compose. E isn’t because StateFlow isn’t stable. F is, because @Stable enforces stability."
             repeatable: false
             answers:
-              - "`class User(val name: String)`"
-              - "`class User(var name: String)`"
-              - "`class User(var name: String, val tags: Set<String>)`"
-              - "`class User(var nameState: State<String>)`"
-              - "`class User(var nameState: StateFlow<String>)`"
-              - "`@Stable class User(var name: String)`"
+              - "class User(val name: String)"
+              - "class User(var name: String)"
+              - "class User(val name: String, val tags: Set<Strin>)`"
+              - "class User(val nameState: State<String>)"
+              - "class User(val nameState: StateFlow<String>)"
+              - "@Stable class User(val name: String)"
             correct:
-              - "`class User(var name: String)`"
-              - "`class User(var name: String, val tags: Set<String>)`"
-              - "`class User(var nameState: StateFlow<String>)`"
+              - "class User(var name: String)"
+              - "class User(val name: String, val tags: Set<String>)"
+              - "class User(val nameState: StateFlow<String>)"
           - type: "question-multiple-answer"
             stepId: "compose-test-q3"
             question: |
@@ -149,3 +148,17 @@ courses:
               - "AndroidFragment is not calling onUpdate  when recomposed"
               - "AndroidFragment does not support previewing, so it will fail on preview"
               - "AndroidFragment required FragmentActivity, so without using it, this will crash"
+          - type: "text"
+            stepId: "advanced-compose-info"
+            repeatable: false
+            text: |-
+              Were those questions challenging? If wouldn't be if you finished the [Advanced Compose](https://advancedcompose.com/) cohort course! 
+              
+              It covers the most important topics, that typical Compose developers lack, including: 
+               * Solid mental models for state, side-effects, and recomposition; how to diagnose and prevent laggy UI.
+               * How modifiers work, and how their order affects UI; when to write custom modifiers and how to implement them correctly.
+               * Patterns for navigation and state hoisting that scale across the whole application.
+               * How to write tests for Compose UI.
+               * Reliable Compose UI testing: semantics, idling, and screenshot testing to catch regressions.
+               * Perils and pitfalls of the most common architectural patterns: MVVM, UiState, UiAction.
+               * Best practices, everyday use cases, and mistakes to avoid in Compose projects.

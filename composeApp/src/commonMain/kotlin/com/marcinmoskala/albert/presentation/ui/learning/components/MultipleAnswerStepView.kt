@@ -65,9 +65,13 @@ fun MultipleAnswerStepView(
                 Card(
                     colors = CardDefaults.cardColors(
                         containerColor = if (uiState.isCorrect)
-                            MaterialTheme.colorScheme.primaryContainer
+                            CorrectHighlightGreen
                         else
-                            MaterialTheme.colorScheme.errorContainer
+                            MaterialTheme.colorScheme.errorContainer,
+                        contentColor = if (uiState.isCorrect)
+                            OnCorrectContainerGreen
+                        else
+                            MaterialTheme.colorScheme.onErrorContainer
                     )
                 ) {
                     Column(
@@ -79,7 +83,7 @@ fun MultipleAnswerStepView(
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = if (uiState.isCorrect)
-                                MaterialTheme.colorScheme.onPrimaryContainer
+                                OnCorrectContainerGreen
                             else
                                 MaterialTheme.colorScheme.onErrorContainer
                         )
@@ -126,18 +130,21 @@ private fun MultipleAnswerOption(
     val isWrong = correctAnswers != null && selected && answer !in correctAnswers
     val isMissed = correctAnswers != null && !selected && answer in correctAnswers
 
+    val (backgroundColor, contentColor) = when {
+        isCorrect && selected -> CorrectHighlightGreen to OnCorrectContainerGreen
+        isMissed -> CorrectContainerGreen to OnCorrectContainerGreen
+        isWrong -> MaterialTheme.colorScheme.errorContainer to MaterialTheme.colorScheme.onErrorContainer
+        selected -> MaterialTheme.colorScheme.secondaryContainer to MaterialTheme.colorScheme.onSecondaryContainer
+        else -> MaterialTheme.colorScheme.surfaceVariant to MaterialTheme.colorScheme.onSurfaceVariant
+    }
+
     Surface(
         modifier = modifier.fillMaxWidth(),
         onClick = onToggle,
         enabled = enabled,
         shape = MaterialTheme.shapes.medium,
-        color = when {
-            isCorrect && selected -> MaterialTheme.colorScheme.primaryContainer
-            isWrong -> MaterialTheme.colorScheme.errorContainer
-            isMissed -> MaterialTheme.colorScheme.tertiaryContainer
-            selected -> MaterialTheme.colorScheme.secondaryContainer
-            else -> MaterialTheme.colorScheme.surfaceVariant
-        },
+        color = backgroundColor,
+        contentColor = contentColor,
         border = if (selected && correctAnswers == null) {
             ButtonDefaults.outlinedButtonBorder(enabled = true).copy(
                 width = 2.dp,

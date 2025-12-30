@@ -69,11 +69,11 @@ fun SingleAnswerStepView(
                 Card(
                     colors = CardDefaults.cardColors(
                         containerColor = if (uiState.isCorrect)
-                            MaterialTheme.colorScheme.primaryContainer
+                            CorrectHighlightGreen
                         else
                             MaterialTheme.colorScheme.errorContainer,
                         contentColor = if (uiState.isCorrect)
-                            MaterialTheme.colorScheme.onPrimaryContainer
+                            OnCorrectContainerGreen
                         else
                             MaterialTheme.colorScheme.onErrorContainer
                     )
@@ -129,6 +129,13 @@ private fun AnswerOption(
     val isCorrect = correctAnswer != null && answer == correctAnswer
     val isWrong = correctAnswer != null && selected && answer != correctAnswer
 
+    val (backgroundColor, contentColor) = when {
+        isCorrect -> CorrectHighlightGreen to OnCorrectContainerGreen
+        isWrong -> MaterialTheme.colorScheme.errorContainer to MaterialTheme.colorScheme.onErrorContainer
+        selected -> MaterialTheme.colorScheme.secondaryContainer to MaterialTheme.colorScheme.onSecondaryContainer
+        else -> MaterialTheme.colorScheme.surfaceVariant to MaterialTheme.colorScheme.onSurfaceVariant
+    }
+
     Surface(
         modifier = modifier
             .fillMaxWidth()
@@ -139,12 +146,8 @@ private fun AnswerOption(
                 role = Role.RadioButton
             ),
         shape = MaterialTheme.shapes.medium,
-        color = when {
-            isCorrect -> MaterialTheme.colorScheme.primaryContainer
-            isWrong -> MaterialTheme.colorScheme.errorContainer
-            selected -> MaterialTheme.colorScheme.secondaryContainer
-            else -> MaterialTheme.colorScheme.surfaceVariant
-        },
+        color = backgroundColor,
+        contentColor = contentColor,
         border = if (selected && correctAnswer == null) {
             ButtonDefaults.outlinedButtonBorder(enabled = true).copy(
                 width = 2.dp,

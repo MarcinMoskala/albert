@@ -61,9 +61,13 @@ fun ExactTextStepView(
                 Card(
                     colors = CardDefaults.cardColors(
                         containerColor = if (uiState.isCorrect)
-                            MaterialTheme.colorScheme.primaryContainer
+                            CorrectHighlightGreen
                         else
-                            MaterialTheme.colorScheme.errorContainer
+                            MaterialTheme.colorScheme.errorContainer,
+                        contentColor = if (uiState.isCorrect)
+                            OnCorrectContainerGreen
+                        else
+                            MaterialTheme.colorScheme.onErrorContainer
                     )
                 ) {
                     Column(
@@ -75,7 +79,7 @@ fun ExactTextStepView(
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = if (uiState.isCorrect)
-                                MaterialTheme.colorScheme.onPrimaryContainer
+                                OnCorrectContainerGreen
                             else
                                 MaterialTheme.colorScheme.onErrorContainer
                         )
@@ -83,7 +87,7 @@ fun ExactTextStepView(
                             text = step.explanation,
                             style = MaterialTheme.typography.bodyMedium,
                             color = if (uiState.isCorrect)
-                                MaterialTheme.colorScheme.onPrimaryContainer
+                                OnCorrectContainerGreen
                             else
                                 MaterialTheme.colorScheme.onErrorContainer
                         )
