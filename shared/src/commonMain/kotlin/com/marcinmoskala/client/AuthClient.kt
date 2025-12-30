@@ -11,7 +11,7 @@ import io.ktor.http.contentType
 
 class AuthClient(private val httpClient: HttpClient) {
     suspend fun login(request: LoginRequest): LoginResponse {
-        return httpClient.post("/login") {
+        return httpClient.post("/api/login") {
             contentType(ContentType.Application.Json)
             setBody(request)
         }.body()

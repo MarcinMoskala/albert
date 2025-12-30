@@ -9,21 +9,19 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
-fun Application.configureAuthRouting() {
+fun Route.configureAuthRouting() {
     val authService by inject<AuthService>()
 
-    routing {
-        post("/login") {
-            try {
-                val request = call.receive<LoginRequest>()
-                val response = authService.login(request)
-                call.respond(HttpStatusCode.OK, response)
-            } catch (e: Exception) {
-                call.respond(
-                    HttpStatusCode.Unauthorized,
-                    mapOf("error" to (e.message ?: "Authentication failed"))
-                )
-            }
+    post("/login") {
+        try {
+            val request = call.receive<LoginRequest>()
+            val response = authService.login(request)
+            call.respond(HttpStatusCode.OK, response)
+        } catch (e: Exception) {
+            call.respond(
+                HttpStatusCode.Unauthorized,
+                mapOf("error" to (e.message ?: "Authentication failed"))
+            )
         }
     }
 }

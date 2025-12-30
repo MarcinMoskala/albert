@@ -9,7 +9,7 @@ import java.io.IOException
 import kotlin.use
 
 class CourseYamlRepository(
-    resourcePaths: List<String> = listOf("courses.yaml"),
+    resourcePaths: List<String> = listOf("course-essentials.yaml", "course-compose.yaml"),
     private val yaml: Yaml = Yaml(
         configuration = YamlConfiguration(
             polymorphismStyle = PolymorphismStyle.Property,

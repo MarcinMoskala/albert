@@ -9,14 +9,12 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
-fun Application.configureProgressRouting() {
+fun Route.configureProgressRouting() {
     val progressService by inject<ProgressService>()
 
-    routing {
-        put("/synchronize") {
-            val progress = call.receive<UserCourseProgressApi>()
-            val synchronized = progressService.synchronize(progress)
-            call.respond(HttpStatusCode.OK, synchronized)
-        }
+    put("/synchronize") {
+        val progress = call.receive<UserCourseProgressApi>()
+        val synchronized = progressService.synchronize(progress)
+        call.respond(HttpStatusCode.OK, synchronized)
     }
 }

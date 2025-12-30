@@ -1,0 +1,151 @@
+---
+courses:
+  - courseId: "compose-test"
+    title: "Compose"
+    lessons:
+      - lessonId: "compose-test"
+        name: "Compose test"
+        steps:
+          - type: "question-multiple-answer"
+            stepId: "compose-test-q1"
+            question: |
+              ```kotlin
+              data class UserUiState(
+                  val user: UserUi,
+                  val userSettings: UserSettingsUi,
+              )
+              
+              data class UserUi(
+                  val name: String,
+                  val surname: String,
+              )
+              
+              data class UserSettingsUi(
+                  val allowNewsletter: Boolean,
+              )
+              
+              @Composable
+              fun UserScreen(viewModel: UserScreenViewModel = injectViewModel()) {
+                  val uiState: UserUi by viewModel.uiState.collectAsStateWithLifecycle()
+                  UserCard(uiState.user)
+                  UserSettings(uiState.userSettings, { viewModel.toggleAllowNewsletter(it) })
+              }
+              
+              @Composable
+              fun UserCard(user: UserUi) {
+                  Text(user.name)
+                  Text(user.surname)
+              }
+              
+              @Composable
+              fun UserSettings(userSettings: UserSettingsUi, toggleAllowNewsletter: (Boolean) -> Unit) {
+                  Switch(
+                      checked = userSettings.allowNewsletter,
+                      onCheckedChange = toggleAllowNewsletter
+                  )
+              }              
+              ```
+              
+              What will recompose if on the view model:
+              
+              ```kotlin
+              _uiState.update { it.copy(user = it.user.copy(name = "New name")) }
+              ```
+            explanation: "StateFlow with UserUiState is observed where we read it, so in UserScreen, because in UserScreen we call uiState.user and uiState.userSettings. This recomposition propagates to UserCard, because the user inside UserUiState changed, but not to UserSettings. userSettings hasn’t changed, and the lambda expression is stable and memoized by default. Inside UserCard, the first Text gets recomposed, but the second one skips recomposition, because it receives the same value as the previous one."
+            repeatable: false
+            answers:
+              - "Text that displays name"
+              - "Text that displays surname"
+              - "UserCard"
+              - "UserScreen"
+              - "Switch"
+              - "UserSettings, because lambda is used instead of a function reference"
+              - "UserSettings, because uiState is unstable"
+            correct:
+              - "Text that displays name"
+              - "Text that displays surname"
+              - "UserCard"
+              - "UserScreen"
+          - type: "question-multiple-answer"
+            stepId: "compose-test-q2"
+            question: |
+              Which of those classes are *unstable* in Compose?
+            explanation: "A is stable, because it only has stable val properties. B isn’t, because it has var property. C isn’t because it uses Set, which isn’t stable. D is, because State is stable in Compose. E isn’t because StateFlow isn’t stable. F is, because @Stable enforces stability."
+            repeatable: false
+            answers:
+              - "`class User(val name: String)`"
+              - "`class User(var name: String)`"
+              - "`class User(var name: String, val tags: Set<String>)`"
+              - "`class User(var nameState: State<String>)`"
+              - "`class User(var nameState: StateFlow<String>)`"
+              - "`@Stable class User(var name: String)`"
+            correct:
+              - "`class User(var name: String)`"
+              - "`class User(var name: String, val tags: Set<String>)`"
+              - "`class User(var nameState: StateFlow<String>)`"
+          - type: "question-multiple-answer"
+            stepId: "compose-test-q3"
+            question: |
+              Which functions (a, b, c, or d) will be called when the button “Click me” is clicked?
+              
+              ```kotlin
+              fun Text() {
+                  val text by remember { mutableStateOf("Hello, World") }
+                  a()
+                  Card {
+                      b()
+                      Column {
+                          c()
+                          if (text.isNotEmpty()) {
+                              d()
+                              Text(text)
+                          }
+                      }
+                  }
+                  Button({ text += "!" }) {
+                      Text("Click me")
+                  }
+              }            
+              ```
+            explanation: "When text gets changed, its reader scope gets recomposed. We read text in Column, but Column is an inline function, so it is Card scope, which includes b(), c(), and d()."
+            repeatable: false
+            answers:
+              - "a()"
+              - "b()"
+              - "c()"
+              - "d()"
+            correct:
+              - "b()"
+              - "c()"
+              - "d()"
+          - type: "question-multiple-answer"
+            stepId: "compose-test-q4"
+            question: |
+              What is wrong in here?
+              
+              ```kotlin
+              @Composable
+              fun ClickableChangeable(
+                  onClick: () -> Unit,
+                  textSize: Float = 20f
+              ) {
+                  AndroidFragment<ClickableChangeableFragment>(
+                      onUpdate = { fragment ->
+                          fragment.textSize = textSize
+                          fragment.onClickListener = { onClick() }
+                      },
+                      modifier = Modifier.fillMaxSize(),
+                  )
+              }       
+              ```
+            explanation: "When text gets changed, its reader scope gets recomposed. We read text in Column, but Column is an inline function, so it is Card scope, which includes b(), c(), and d()."
+            repeatable: false
+            answers:
+              - "Nothing, it is perfectly fine"
+              - "AndroidFragment is not calling onUpdate  when recomposed"
+              - "AndroidFragment does not support previewing, so it will fail on preview"
+              - "AndroidFragment required FragmentActivity, so without using it, this will crash"
+            correct:
+              - "AndroidFragment is not calling onUpdate  when recomposed"
+              - "AndroidFragment does not support previewing, so it will fail on preview"
+              - "AndroidFragment required FragmentActivity, so without using it, this will crash"

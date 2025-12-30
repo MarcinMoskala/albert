@@ -1,6 +1,8 @@
 package com.marcinmoskala.albert.presentation.ui.learning.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,6 +26,7 @@ fun ExactTextStepView(
     }
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = modifier
@@ -31,65 +34,71 @@ fun ExactTextStepView(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        AlbertMarkdown(
-            content = step.question,
-            modifier = Modifier.fillMaxWidth(),
-        )
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .verticalScroll(scrollState),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            AlbertMarkdown(
+                content = step.question,
+                modifier = Modifier.fillMaxWidth(),
+            )
 
-        OutlinedTextField(
-            value = uiState.userAnswer,
-            onValueChange = { viewModel.updateAnswer(it) },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !uiState.isSubmitted,
-            label = { Text("Your answer") },
-            placeholder = { Text("Type your answer here...") },
-            isError = uiState.isSubmitted && !uiState.isCorrect,
-            singleLine = true
-        )
+            OutlinedTextField(
+                value = uiState.userAnswer,
+                onValueChange = { viewModel.updateAnswer(it) },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !uiState.isSubmitted,
+                label = { Text("Your answer") },
+                placeholder = { Text("Type your answer here...") },
+                isError = uiState.isSubmitted && !uiState.isCorrect,
+                singleLine = true
+            )
 
-        if (uiState.isSubmitted) {
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = if (uiState.isCorrect)
-                        MaterialTheme.colorScheme.primaryContainer
-                    else
-                        MaterialTheme.colorScheme.errorContainer
-                )
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+            if (uiState.isSubmitted) {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = if (uiState.isCorrect)
+                            MaterialTheme.colorScheme.primaryContainer
+                        else
+                            MaterialTheme.colorScheme.errorContainer
+                    )
                 ) {
-                    Text(
-                        text = if (uiState.isCorrect) "Correct!" else "Incorrect",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = if (uiState.isCorrect)
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        else
-                            MaterialTheme.colorScheme.onErrorContainer
-                    )
-                    Text(
-                        text = step.explanation,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = if (uiState.isCorrect)
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        else
-                            MaterialTheme.colorScheme.onErrorContainer
-                    )
-                    if (!uiState.isCorrect) {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
                         Text(
-                            text = "Expected: ${step.correct.joinToString(" or ")}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onErrorContainer,
-                            modifier = Modifier.padding(top = 4.dp)
+                            text = if (uiState.isCorrect) "Correct!" else "Incorrect",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = if (uiState.isCorrect)
+                                MaterialTheme.colorScheme.onPrimaryContainer
+                            else
+                                MaterialTheme.colorScheme.onErrorContainer
                         )
+                        Text(
+                            text = step.explanation,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = if (uiState.isCorrect)
+                                MaterialTheme.colorScheme.onPrimaryContainer
+                            else
+                                MaterialTheme.colorScheme.onErrorContainer
+                        )
+                        if (!uiState.isCorrect) {
+                            Text(
+                                text = "Expected: ${step.correct.joinToString(" or ")}",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onErrorContainer,
+                                modifier = Modifier.padding(top = 4.dp)
+                            )
+                        }
                     }
                 }
             }
         }
-
-        Spacer(modifier = Modifier.weight(1f))
 
         Button(
             onClick = {

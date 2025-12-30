@@ -12,11 +12,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.AppTheme
+import com.marcinmoskala.albert.presentation.navigation.AppDestination
 import com.marcinmoskala.albert.presentation.common.SnackbarController
 import com.marcinmoskala.albert.presentation.navigation.AppNavHost
+import com.marcinmoskala.albert.presentation.navigation.BrowserNavigator
 import com.marcinmoskala.albert.presentation.navigation.Navigator
+import com.marcinmoskala.albert.presentation.navigation.rememberBrowserNavigator
 import com.marcinmoskala.albert.presentation.navigation.handleNavigationCommands
-import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 
@@ -25,6 +27,8 @@ import org.koin.compose.koinInject
 fun App() {
     AppTheme {
         val navController = rememberNavController()
+        val browserNavigator: BrowserNavigator? = rememberBrowserNavigator(navController)
+        val startDestination = browserNavigator?.initialDestination ?: AppDestination.Main
         val snackbarHostState = remember { SnackbarHostState() }
         val snackbarController: SnackbarController = koinInject()
         val navigator: Navigator = koinInject()
@@ -35,8 +39,8 @@ fun App() {
             }
         }
 
-        LaunchedEffect(Unit) {
-            navigator.handleNavigationCommands(navController)
+        LaunchedEffect(browserNavigator) {
+            navigator.handleNavigationCommands(navController, browserNavigator)
         }
 
         Scaffold(
@@ -45,6 +49,7 @@ fun App() {
         ) { paddingValues ->
             AppNavHost(
                 navController = navController,
+                startDestination = startDestination,
                 modifier = Modifier.padding(paddingValues)
             )
         }

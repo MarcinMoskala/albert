@@ -1,16 +1,14 @@
 package com.marcinmoskala.albert.endpoints
 
+import com.marcinmoskala.albert.domain.course.CourseService
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
-import com.marcinmoskala.albert.domain.course.CourseService
 
-fun Application.configureCourseRouting() {
+fun Route.configureCourseRouting() {
     val courseService: CourseService by inject()
-    routing {
-        get("/course") {
-            call.respond(courseService.getCourses())
-        }
+    get("/course") {
+        call.respond(courseService.getCourses())
     }
 }

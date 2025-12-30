@@ -1,5 +1,6 @@
 package com.marcinmoskala.albert.presentation.ui.learning
 
+import com.marcinmoskala.albert.domain.model.Course
 import com.marcinmoskala.albert.domain.model.LessonStep
 import com.marcinmoskala.albert.domain.repository.CourseRepository
 import com.marcinmoskala.albert.domain.repository.UserProgressRepository
@@ -14,6 +15,8 @@ import com.marcinmoskala.database.UserProgressStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.time.Clock
@@ -42,14 +45,16 @@ class LearningViewModel(
 
     init {
         viewModelScope.launch {
+            val courses = ensureCourses()
             val now: Instant = Clock.System.now()
-            val lessonSteps = getAllSteps()
+            val lessonSteps = getAllSteps(courses)
                 .filter { shouldBeSeen(it, now) }
             steps.value = lessonSteps
-            if (lessonSteps.isEmpty()) {
-                navigator.navigateBack()
-            } else {
-                _uiState.update { it.copy(currentStep = lessonSteps.first(), remainingSteps = lessonSteps.size) }
+            _uiState.update { state ->
+                when {
+                    lessonSteps.isEmpty() -> state.copy(currentStep = null, remainingSteps = 0)
+                    else -> state.copy(currentStep = lessonSteps.first(), remainingSteps = lessonSteps.size)
+                }
             }
         }
     }
@@ -104,8 +109,14 @@ class LearningViewModel(
         navigator.navigateBack()
     }
 
-    private fun getAllSteps(): List<LessonStep> {
-        val courses = courseRepository.courses.value
+    private suspend fun ensureCourses(): List<Course> {
+        val cached = courseRepository.courses.value
+        if (cached.isNotEmpty()) return cached
+        courseRepository.refresh()
+        return courseRepository.courses.filter { it.isNotEmpty() }.first()
+    }
+
+    private fun getAllSteps(courses: List<Course>): List<LessonStep> {
         return when {
             // Review all mode - collect all steps from all lessons
             courseId == null && lessonId == null -> {
@@ -129,6 +140,10 @@ class LearningViewModel(
 
             else -> emptyList()
         }
+    }
+
+    private fun List<LessonStep>.reorderForRequestedStep(): List<LessonStep> {
+        return this
     }
 }
 

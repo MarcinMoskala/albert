@@ -43,7 +43,9 @@ val appModule = module {
     single { AuthClient(get()) }
     single { SynchronizeClient(get()) }
     single<Settings> { Settings() }
-    single<CourseRepository> { CourseRepositoryImpl(get()) }
+    single<CourseRepository>(createdAtStart = true) {
+        CourseRepositoryImpl(get(), get())
+    }
     single<UserRepository> { UserRepositoryImpl(get(), get()) }
 
     // Background scope for repository

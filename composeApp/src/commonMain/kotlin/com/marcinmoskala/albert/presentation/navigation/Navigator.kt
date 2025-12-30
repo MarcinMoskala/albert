@@ -29,15 +29,22 @@ class NavigatorImpl : Navigator {
     }
 }
 
-suspend fun Navigator.handleNavigationCommands(navController: NavHostController) {
+suspend fun Navigator.handleNavigationCommands(
+    navController: NavHostController,
+    browserNavigator: BrowserNavigator? = null
+) {
     navigationCommands.collect { command ->
         when (command) {
             is NavigationCommand.NavigateTo -> {
                 navController.navigate(command.destination)
+                browserNavigator?.handleNavigate(command.destination)
             }
 
             is NavigationCommand.NavigateBack -> {
-                navController.navigateUp()
+                val handledByBrowser = browserNavigator?.handleNavigateBack() == true
+                if (!handledByBrowser) {
+                    navController.navigateUp()
+                }
             }
         }
     }

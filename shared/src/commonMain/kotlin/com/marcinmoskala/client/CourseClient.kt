@@ -8,5 +8,5 @@ import io.ktor.client.request.get
 class CourseClient(
     private val httpClient: HttpClient
 ) {
-    suspend fun fetchCourses(): Courses = httpClient.get("/course").body()
+    suspend fun fetchCourses(): Courses = httpClient.get("/api/course").body()
 }

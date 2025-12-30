@@ -15,11 +15,12 @@ import com.marcinmoskala.albert.presentation.ui.login.LoginScreen
 @Composable
 fun AppNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    startDestination: AppDestination = AppDestination.Main
 ) {
     NavHost(
         navController = navController,
-        startDestination = AppDestination.Main,
+        startDestination = startDestination,
         modifier = modifier
     ) {
         composable<AppDestination.Main> {

@@ -1,8 +1,10 @@
 package com.marcinmoskala.albert.presentation.ui.learning.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +30,7 @@ fun SingleAnswerStepView(
     }
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = modifier
@@ -35,54 +38,60 @@ fun SingleAnswerStepView(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        AlbertMarkdown(
-            content = step.question,
-            modifier = Modifier.fillMaxWidth()
-        )
-
         Column(
             modifier = Modifier
                 .weight(1f)
-                .selectableGroup(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .fillMaxWidth()
+                .verticalScroll(scrollState),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            step.answers.forEach { answer ->
-                AnswerOption(
-                    answer = answer,
-                    selected = uiState.selectedAnswer == answer,
-                    correctAnswer = if (uiState.isSubmitted) step.correct else null,
-                    onSelect = { viewModel.selectAnswer(answer) },
-                    enabled = !uiState.isSubmitted
-                )
-            }
-        }
+            AlbertMarkdown(
+                content = step.question,
+                modifier = Modifier.fillMaxWidth()
+            )
 
-        if (uiState.isSubmitted) {
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = if (uiState.isCorrect)
-                        MaterialTheme.colorScheme.primaryContainer
-                    else
-                        MaterialTheme.colorScheme.errorContainer,
-                    contentColor = if (uiState.isCorrect)
-                        MaterialTheme.colorScheme.onPrimaryContainer
-                    else
-                        MaterialTheme.colorScheme.onErrorContainer
-                )
+            Column(
+                modifier = Modifier.selectableGroup(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                step.answers.forEach { answer ->
+                    AnswerOption(
+                        answer = answer,
+                        selected = uiState.selectedAnswer == answer,
+                        correctAnswer = if (uiState.isSubmitted) step.correct else null,
+                        onSelect = { viewModel.selectAnswer(answer) },
+                        enabled = !uiState.isSubmitted
+                    )
+                }
+            }
+
+            if (uiState.isSubmitted) {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = if (uiState.isCorrect)
+                            MaterialTheme.colorScheme.primaryContainer
+                        else
+                            MaterialTheme.colorScheme.errorContainer,
+                        contentColor = if (uiState.isCorrect)
+                            MaterialTheme.colorScheme.onPrimaryContainer
+                        else
+                            MaterialTheme.colorScheme.onErrorContainer
+                    )
                 ) {
-                    Text(
-                        text = if (uiState.isCorrect) "Correct!" else "Incorrect",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                    AlbertMarkdown(
-                        content = step.explanation,
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = if (uiState.isCorrect) "Correct!" else "Incorrect",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        AlbertMarkdown(
+                            content = step.explanation,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                 }
             }
         }

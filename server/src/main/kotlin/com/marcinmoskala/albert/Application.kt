@@ -13,6 +13,7 @@ import io.ktor.server.http.content.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.json.Json
@@ -87,21 +88,47 @@ fun Application.module(extraModules: List<Module> = emptyList()) {
         })
     }
     routing {
-        // Health check endpoint
-        get("/health") {
-            call.respondText("OK", ContentType.Text.Plain, HttpStatusCode.OK)
-        }
+        // API routes (prefixed with /api)
+        route("/api") {
+            // Health check endpoint
+            get("/health") {
+                call.respondText("OK", ContentType.Text.Plain, HttpStatusCode.OK)
+            }
 
-        // API routes
-        configureCourseRouting()
-        configureAuthRouting()
-        configureProgressRouting()
+            configureCourseRouting()
+            configureAuthRouting()
+            configureProgressRouting()
+        }
 
         // Static content serving
         staticResources("/app/", "static") {
             default("index.html")
         }
         get { call.respondRedirect("/app/") }
+        // SPA fallback for deep links under /app/**
+        get("/app/{...}") {
+            val requestedPath = call.request.path().removePrefix("/app/").trimStart('/')
+
+            // If requesting a static asset (contains an extension), try to serve it directly or 404.
+            if (requestedPath.contains('.')) {
+                val asset = this::class.java.classLoader.getResource("static/$requestedPath")
+                if (asset != null) {
+                    val contentType = ContentType.defaultForFilePath(requestedPath)
+                    call.respondBytes(asset.readBytes(), contentType)
+                } else {
+                    call.respond(HttpStatusCode.NotFound)
+                }
+                return@get
+            }
+
+            // Otherwise serve SPA shell for deep links
+            val resource = this::class.java.classLoader.getResource("static/index.html")
+            if (resource != null) {
+                call.respondBytes(resource.readBytes(), ContentType.Text.Html)
+            } else {
+                call.respond(HttpStatusCode.NotFound)
+            }
+        }
 
         // Serve files from the repo's `server/static` directory under `/static/*`
         val staticDir = listOf(

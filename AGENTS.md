@@ -8,6 +8,8 @@ Make sure you only complete once the project builds, and tests are passing. ALWA
 
 Make time-constrained requests, to prevent situations where a command never ends.
 
+Primary collaborator: Marcin (Windows 10 user). Keep updates concise and practical.
+
 # Project structure
 
 `shared/src/commonMain/kotlin/com/marcinmoskala/client` - all clients in Ktor used to make requests from clients to server or for integration tests in backend. 
@@ -151,6 +153,7 @@ sealed class MainUiState {
 - Use `kotlinx.serialization` for all data that needs to be serialized.
 - Put code shared between Frontend and Backend in the `shared` module (models, constants, common logic).
 - Do not use deprecated `kotlinx.datetime.Instant`, use `kotlin.time.Instant` instead
+- Always use trailing comma to avoid unnecessary changes in git diffs.
   
 ### Nomenclature
 

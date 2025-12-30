@@ -28,7 +28,7 @@ class ApplicationTest {
         application {
             module()
         }
-        val response = client.get("/health")
+        val response = client.get("/api/health")
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals("OK", response.bodyAsText())
     }

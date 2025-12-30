@@ -29,7 +29,7 @@ class CourseEndpointTest {
             install(ContentNegotiation) { json() }
         }
 
-        val response = client.get("/course")
+        val response = client.get("/api/course")
         assertEquals(HttpStatusCode.OK, response.status)
 
         val body = response.body<Courses>()
@@ -53,7 +53,7 @@ class CourseEndpointTest {
             install(ContentNegotiation) { json() }
         }
 
-        val response = client.get("/course")
+        val response = client.get("/api/course")
         assertEquals(HttpStatusCode.OK, response.status)
 
         val body = response.body<Courses>()

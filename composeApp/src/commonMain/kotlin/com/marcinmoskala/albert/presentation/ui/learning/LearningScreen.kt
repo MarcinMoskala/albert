@@ -139,6 +139,5 @@ private fun LearningContent(
                 }
             }
         }
-
     }
 }

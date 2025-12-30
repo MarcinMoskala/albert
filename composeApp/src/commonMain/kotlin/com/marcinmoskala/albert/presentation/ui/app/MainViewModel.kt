@@ -45,10 +45,6 @@ class MainViewModel(
             initialValue = MainUiState()
         )
 
-    init {
-        refresh()
-    }
-
     fun refresh() {
         viewModelScope.launch {
             courseRepository.refresh()

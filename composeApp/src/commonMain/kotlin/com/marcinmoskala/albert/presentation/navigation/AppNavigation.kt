@@ -19,3 +19,4 @@ sealed interface AppDestination {
     @Serializable
     data object ResetProgressDialog : AppDestination
 }
+

@@ -12,7 +12,7 @@ class SynchronizeClient(
     private val httpClient: HttpClient,
 ) {
     suspend fun synchronize(payload: UserCourseProgressApi): UserCourseProgressApi =
-        httpClient.put("/synchronize") {
+        httpClient.put("/api/synchronize") {
             contentType(ContentType.Application.Json)
             setBody(payload)
         }.body()
