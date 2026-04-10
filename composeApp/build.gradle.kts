@@ -175,6 +175,7 @@ compose.desktop {
 }
 
 tasks.named("jsBrowserProductionWebpack") {
+    dependsOn("jsDevelopmentExecutableCompileSync")
     doNotTrackState("Workaround for Gradle file normalization issue on Windows for generated .js.map inputs")
 }
 

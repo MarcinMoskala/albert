@@ -14,7 +14,14 @@ import com.mmk.kmpauth.firebase.github.GithubButtonUiContainer
 import com.mmk.kmpauth.firebase.google.GoogleButtonUiContainerFirebase
 import com.mmk.kmpauth.uihelper.google.GoogleSignInButton
 import dev.gitlive.firebase.auth.FirebaseUser
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+
+@Preview
+@Composable
+private fun LoginScreenPreview() {
+    LoginScreen()
+}
 
 // Platform-specific login buttons implemented per target
 @OptIn(ExperimentalMaterial3Api::class)
